@@ -50,7 +50,7 @@ export default function WishlistPage() {
                     e.stopPropagation();
                     toggleWishlist(product.id);
                   }}
-                  style={{ position: "absolute", top: 10, right: 10, width: 36, height: 36, border: "none", borderRadius: "50%", background: "rgba(255,255,255,.85)", backdropFilter: "blur(4px)", boxShadow: "0 4px 10px rgba(184,134,146,.18)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17, lineHeight: 1 }}
+                  className="dm-card-wishlist-btn"
                 >
                   <span style={{ color: "#c97f8d" }}>♥</span>
                 </button>
@@ -77,14 +77,14 @@ export default function WishlistPage() {
                   <button
                     onClick={() => moveToCart(product.id)}
                     className="dm-btn-primary"
-                    style={{ width: "100%", fontSize: 12.5, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", padding: "10px 0" }}
+                    style={{ width: "100%", fontSize: 12.5, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", padding: "13px 0" }}
                   >
                     Move to Cart
                   </button>
                   <button
                     onClick={() => toggleWishlist(product.id)}
                     className="dm-btn-outline"
-                    style={{ width: "100%", fontSize: 12, fontWeight: 500, letterSpacing: ".06em", textTransform: "uppercase", padding: "8px 0" }}
+                    style={{ width: "100%", fontSize: 12, fontWeight: 500, letterSpacing: ".06em", textTransform: "uppercase", padding: "12px 0" }}
                   >
                     Remove
                   </button>

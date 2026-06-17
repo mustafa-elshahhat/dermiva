@@ -90,23 +90,26 @@ export default function CheckoutPage() {
   return (
     <div className="dm-fade" style={{ maxWidth: 1100, margin: "0 auto", width: "100%", padding: "clamp(20px,3vw,32px) clamp(16px,4vw,40px) clamp(40px,5vw,64px)" }}>
       <h1 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(32px,4.5vw,46px)", color: "#5a4145", margin: "0 0 22px" }}>Checkout</h1>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(290px,1fr))", gap: "clamp(18px,2.5vw,32px)", alignItems: "start" }}>
+      <div className="dm-grid-responsive-two-col" style={{ gap: "clamp(18px,2.5vw,32px)", alignItems: "start" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
           {/* customer */}
           <div style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 24 }}>
             <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: 22, color: "#5a4145", margin: "0 0 18px" }}>Customer Information</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <div>
-                <input value={form.name} onChange={(e) => setField("name", e.target.value)} placeholder="Full Name *" style={{ ...inputBase, border: border("name") }} />
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label htmlFor="checkout-name" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Full Name *</label>
+                <input id="checkout-name" value={form.name} onChange={(e) => setField("name", e.target.value)} placeholder="Full Name *" style={{ ...inputBase, border: border("name") }} />
                 {errors.name ? <div style={{ fontSize: 11.5, color: "#cf6b6b", marginTop: 5 }}>{errors.name}</div> : null}
               </div>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <div style={{ flex: "1 1 160px" }}>
-                  <input value={form.email} onChange={(e) => setField("email", e.target.value)} placeholder="Email *" style={{ ...inputBase, border: border("email") }} />
+                <div style={{ flex: "1 1 160px", display: "flex", flexDirection: "column", gap: 4 }}>
+                  <label htmlFor="checkout-email" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Email *</label>
+                  <input id="checkout-email" value={form.email} onChange={(e) => setField("email", e.target.value)} placeholder="Email *" style={{ ...inputBase, border: border("email") }} />
                   {errors.email ? <div style={{ fontSize: 11.5, color: "#cf6b6b", marginTop: 5 }}>{errors.email}</div> : null}
                 </div>
-                <div style={{ flex: "1 1 160px" }}>
-                  <input value={form.phone} onChange={(e) => setField("phone", e.target.value)} placeholder="Phone *" style={{ ...inputBase, border: border("phone") }} />
+                <div style={{ flex: "1 1 160px", display: "flex", flexDirection: "column", gap: 4 }}>
+                  <label htmlFor="checkout-phone" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Phone *</label>
+                  <input id="checkout-phone" value={form.phone} onChange={(e) => setField("phone", e.target.value)} placeholder="Phone *" style={{ ...inputBase, border: border("phone") }} />
                   {errors.phone ? <div style={{ fontSize: 11.5, color: "#cf6b6b", marginTop: 5 }}>{errors.phone}</div> : null}
                 </div>
               </div>
@@ -117,17 +120,20 @@ export default function CheckoutPage() {
           <div style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 24 }}>
             <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: 22, color: "#5a4145", margin: "0 0 18px" }}>Shipping Address</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <div>
-                <input value={form.address} onChange={(e) => setField("address", e.target.value)} placeholder="Street Address *" style={{ ...inputBase, border: border("address") }} />
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label htmlFor="checkout-address" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Street Address *</label>
+                <input id="checkout-address" value={form.address} onChange={(e) => setField("address", e.target.value)} placeholder="Street Address *" style={{ ...inputBase, border: border("address") }} />
                 {errors.address ? <div style={{ fontSize: 11.5, color: "#cf6b6b", marginTop: 5 }}>{errors.address}</div> : null}
               </div>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <div style={{ flex: "1 1 140px" }}>
-                  <input value={form.city} onChange={(e) => setField("city", e.target.value)} placeholder="City *" style={{ ...inputBase, border: border("city") }} />
+                <div style={{ flex: "1 1 140px", display: "flex", flexDirection: "column", gap: 4 }}>
+                  <label htmlFor="checkout-city" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>City *</label>
+                  <input id="checkout-city" value={form.city} onChange={(e) => setField("city", e.target.value)} placeholder="City *" style={{ ...inputBase, border: border("city") }} />
                   {errors.city ? <div style={{ fontSize: 11.5, color: "#cf6b6b", marginTop: 5 }}>{errors.city}</div> : null}
                 </div>
-                <div style={{ flex: "1 1 140px" }}>
-                  <input value={form.gov} onChange={(e) => setField("gov", e.target.value)} placeholder="Governorate *" style={{ ...inputBase, border: border("gov") }} />
+                <div style={{ flex: "1 1 140px", display: "flex", flexDirection: "column", gap: 4 }}>
+                  <label htmlFor="checkout-gov" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Governorate *</label>
+                  <input id="checkout-gov" value={form.gov} onChange={(e) => setField("gov", e.target.value)} placeholder="Governorate *" style={{ ...inputBase, border: border("gov") }} />
                   {errors.gov ? <div style={{ fontSize: 11.5, color: "#cf6b6b", marginTop: 5 }}>{errors.gov}</div> : null}
                 </div>
               </div>
@@ -181,7 +187,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* summary */}
-        <div style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 24, position: "sticky", top: 84 }}>
+        <div className="dm-sticky-panel" style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 24 }}>
           <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: 22, color: "#5a4145", margin: "0 0 16px" }}>Your Order</h3>
           <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 16, maxHeight: 230, overflow: "auto" }}>
             {lines.map((it) => (

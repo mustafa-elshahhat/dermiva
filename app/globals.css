@@ -24,11 +24,22 @@ body {
   color: #5a4145;
 }
 
+/* Accessible focus outline styles */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #b76e79;
+  outline-offset: 2px;
+}
 input:focus,
 select:focus,
 textarea:focus {
   outline: none;
 }
+
 
 a {
   text-decoration: none;
@@ -105,8 +116,13 @@ a {
 /* ---------- responsive product / category grids ---------- */
 .dm-grid-products {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: clamp(12px, 1.6vw, 20px);
+}
+@media (min-width: 360px) {
+  .dm-grid-products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 @media (min-width: 768px) {
   .dm-grid-products {
@@ -124,11 +140,17 @@ a {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(12px, 1.6vw, 20px);
 }
-@media (min-width: 560px) {
+@media (min-width: 600px) {
+  .dm-grid-cats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 900px) {
   .dm-grid-cats {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
 
 /* ---------- buttons ---------- */
 .dm-btn-primary {
@@ -176,8 +198,8 @@ a {
   background: none;
   border: none;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -189,26 +211,40 @@ a {
 .dm-icon-btn:hover {
   background: #f7e6ea;
 }
+@media (min-width: 1024px) {
+  .dm-icon-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
 
 .dm-add-btn {
   border: none;
   cursor: pointer;
   background: linear-gradient(135deg, #d79aa6, #c07f8d);
   color: #fff;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 6px 14px rgba(192, 127, 141, 0.34);
-  font-size: 17px;
+  font-size: 18px;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 .dm-add-btn:hover {
   background: linear-gradient(135deg, #cf8d9a, #b5707f);
   box-shadow: 0 8px 18px rgba(192, 127, 141, 0.46);
 }
+@media (min-width: 1024px) {
+  .dm-add-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 17px;
+  }
+}
+
 
 /* ---------- cards with hover lift ---------- */
 .dm-card {
@@ -315,3 +351,123 @@ textarea::placeholder {
   box-shadow: 0 4px 14px rgba(184, 134, 146, 0.15);
   transform: translateY(-2px);
 }
+
+/* Card wishlist button responsive sizing */
+.dm-card-wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 10px rgba(184,134,146,.18);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+.dm-card-wishlist-btn:hover {
+  transform: scale(1.05);
+}
+@media (min-width: 1024px) {
+  .dm-card-wishlist-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 17px;
+  }
+}
+
+/* Responsive utilities */
+.dm-grid-responsive-two-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(18px, 2.5vw, 32px);
+}
+@media (min-width: 768px) {
+  .dm-grid-responsive-two-col {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.dm-sticky-panel {
+  position: static;
+}
+@media (min-width: 768px) {
+  .dm-sticky-panel {
+    position: sticky;
+    top: 84px;
+  }
+}
+
+.dm-address-two-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 480px) {
+  .dm-address-two-col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.dm-header-desktop-only {
+  display: none !important;
+}
+@media (min-width: 768px) {
+  .dm-header-desktop-only {
+    display: flex !important;
+  }
+}
+
+.dm-logo-text {
+  display: inline;
+}
+@media (max-width: 420px) {
+  .dm-logo-text {
+    display: none;
+  }
+}
+
+.dm-hero-container {
+  padding: clamp(28px, 4vw, 56px);
+}
+@media (max-width: 360px) {
+  .dm-hero-container {
+    padding: 16px !important;
+  }
+}
+
+.dm-hero-child-left {
+  flex: 1 1 320px;
+  min-width: 280px;
+}
+.dm-hero-child-right {
+  flex: 1 1 320px;
+  min-width: 280px;
+}
+@media (max-width: 480px) {
+  .dm-hero-child-left,
+  .dm-hero-child-right {
+    flex-basis: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+.dm-grid-three-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 768px) {
+  .dm-grid-three-col {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+

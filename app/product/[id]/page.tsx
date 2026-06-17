@@ -33,9 +33,9 @@ export default function ProductPage() {
     <div className="dm-fade" style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(18px,3vw,28px) clamp(16px,4vw,40px) clamp(40px,5vw,64px)" }}>
       <div style={{ marginBottom: 18, fontSize: 12.5, color: "#a98e93" }}>Home / Shop / <span style={{ color: "#7c6065" }}>{p.name}</span></div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: "clamp(24px,3vw,44px)", alignItems: "start" }}>
+      <div className="dm-grid-responsive-two-col" style={{ gap: "clamp(24px,3vw,44px)", alignItems: "start" }}>
         {/* gallery */}
-        <div style={{ position: "sticky", top: 84 }}>
+        <div className="dm-sticky-panel">
           <div style={{ background: "radial-gradient(120% 120% at 70% 20%,#fbeef0,#f3d9e0 70%,#edccd5)", borderRadius: 24, aspectRatio: "1/1", display: "flex", alignItems: "center", justifyContent: "center", padding: "10%", position: "relative" }}>
             {p.tag ? (
               <div style={{ position: "absolute", top: 18, left: 18, background: "linear-gradient(135deg,#d9a24f,#c2974f)", color: "#fff", fontSize: 12, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", padding: "6px 14px", borderRadius: 999 }}>{p.tag}</div>

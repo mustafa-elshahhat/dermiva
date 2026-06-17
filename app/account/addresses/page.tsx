@@ -178,18 +178,27 @@ export default function AddressesPage() {
             {editId ? "Edit Address" : "Add New Address"}
           </h3>
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <div>
-              <input value={formName} onChange={(e) => setFormName(e.target.value)} placeholder="Full Name *" style={inputBase} />
+            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              <label htmlFor="address-name" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Full Name *</label>
+              <input id="address-name" value={formName} onChange={(e) => setFormName(e.target.value)} placeholder="Full Name *" style={inputBase} />
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-              <input value={formPhone} onChange={(e) => setFormPhone(e.target.value)} placeholder="Phone *" style={inputBase} />
-              <input value={formCity} onChange={(e) => setFormCity(e.target.value)} placeholder="City *" style={inputBase} />
+            <div className="dm-address-two-col">
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label htmlFor="address-phone" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Phone *</label>
+                <input id="address-phone" value={formPhone} onChange={(e) => setFormPhone(e.target.value)} placeholder="Phone *" style={inputBase} />
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label htmlFor="address-city" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>City *</label>
+                <input id="address-city" value={formCity} onChange={(e) => setFormCity(e.target.value)} placeholder="City *" style={inputBase} />
+              </div>
             </div>
-            <div>
-              <input value={formGov} onChange={(e) => setFormGov(e.target.value)} placeholder="Governorate *" style={inputBase} />
+            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              <label htmlFor="address-gov" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Governorate *</label>
+              <input id="address-gov" value={formGov} onChange={(e) => setFormGov(e.target.value)} placeholder="Governorate *" style={inputBase} />
             </div>
-            <div>
-              <input value={formAddress} onChange={(e) => setFormAddress(e.target.value)} placeholder="Street Address *" style={inputBase} />
+            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              <label htmlFor="address-street" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Street Address *</label>
+              <input id="address-street" value={formAddress} onChange={(e) => setFormAddress(e.target.value)} placeholder="Street Address *" style={inputBase} />
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8, margin: "6px 0" }}>
               <input
@@ -220,7 +229,7 @@ export default function AddressesPage() {
               <button onClick={handleAddNew} className="dm-btn-primary" style={{ padding: "10px 24px" }}>Add Address</button>
             </div>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
+            <div className="dm-grid-responsive-two-col" style={{ gap: 16 }}>
               {addresses.map((addr) => (
                 <div
                   key={addr.id}

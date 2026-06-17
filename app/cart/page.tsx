@@ -25,7 +25,7 @@ export default function CartPage() {
           <button onClick={() => router.push("/shop")} className="dm-btn-primary" style={{ fontSize: 13, letterSpacing: ".1em", textTransform: "uppercase", padding: "14px 34px" }}>Start Shopping</button>
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(290px,1fr))", gap: "clamp(18px,2.5vw,32px)", alignItems: "start" }}>
+        <div className="dm-grid-responsive-two-col" style={{ gap: "clamp(18px,2.5vw,32px)", alignItems: "start" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
             {lines.map((it) => (
               <div key={it.id} style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 18, padding: 14, display: "flex", gap: 14, alignItems: "center" }}>
@@ -36,12 +36,12 @@ export default function CartPage() {
                   <div onClick={() => router.push(`/product/${it.id}`)} className="dm-serif" style={{ cursor: "pointer", fontWeight: 600, fontSize: 19, color: "#4f3a3e", lineHeight: 1.1 }}>{it.name}</div>
                   <div style={{ fontSize: 12, color: "#a98e93", marginBottom: 8 }}>{it.sub}</div>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-                    <div style={{ display: "flex", alignItems: "center", border: "1px solid #e3c3cc", borderRadius: 999, overflow: "hidden" }}>
-                      <button aria-label="Decrease" onClick={() => setQty(it.id, -1)} style={{ border: "none", background: "none", cursor: "pointer", width: 32, height: 32, fontSize: 17, color: "#b07c88" }}>−</button>
-                      <span style={{ minWidth: 26, textAlign: "center", fontSize: 14, color: "#5a4145" }}>{it.qty}</span>
-                      <button aria-label="Increase" onClick={() => setQty(it.id, 1)} style={{ border: "none", background: "none", cursor: "pointer", width: 32, height: 32, fontSize: 17, color: "#b07c88" }}>+</button>
+                    <div style={{ display: "flex", alignItems: "center", border: "1px solid #e3c3cc", borderRadius: 999, overflow: "hidden", height: 44 }}>
+                      <button aria-label="Decrease" onClick={() => setQty(it.id, -1)} style={{ border: "none", background: "none", cursor: "pointer", width: 44, height: 44, fontSize: 17, color: "#b07c88" }}>−</button>
+                      <span style={{ minWidth: 28, textAlign: "center", fontSize: 14, color: "#5a4145" }}>{it.qty}</span>
+                      <button aria-label="Increase" onClick={() => setQty(it.id, 1)} style={{ border: "none", background: "none", cursor: "pointer", width: 44, height: 44, fontSize: 17, color: "#b07c88" }}>+</button>
                     </div>
-                    <button onClick={() => removeFromCart(it.id)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: 12.5, color: "#bd8a93", textDecoration: "underline" }}>Remove</button>
+                    <button onClick={() => removeFromCart(it.id)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: 12.5, color: "#bd8a93", textDecoration: "underline", padding: "10px 14px" }}>Remove</button>
                   </div>
                 </div>
                 <div style={{ flex: "0 0 auto", fontSize: 16, fontWeight: 600, color: "#4f3a3e", whiteSpace: "nowrap" }}>{money(it.price * it.qty)}</div>
@@ -52,7 +52,7 @@ export default function CartPage() {
             ) : null}
           </div>
 
-          <div style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 24, position: "sticky", top: 84 }}>
+          <div className="dm-sticky-panel" style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 24 }}>
             <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: 24, color: "#5a4145", margin: "0 0 18px" }}>Order Summary</h3>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, color: "#7c6065", marginBottom: 11 }}><span>Subtotal</span><span>{money(subtotal)}</span></div>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, color: "#7c6065", marginBottom: 11 }}><span>Shipping</span><span>{shipping === 0 ? "Free" : money(shipping)}</span></div>

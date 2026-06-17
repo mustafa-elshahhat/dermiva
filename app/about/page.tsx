@@ -27,7 +27,7 @@ export default function AboutPage() {
 
       {/* Narrative Section */}
       <section style={{ maxWidth: 1000, margin: "0 auto", width: "100%", padding: "clamp(40px,5vw,64px) clamp(16px,4vw,40px)" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: 36, alignItems: "center" }}>
+        <div className="dm-grid-responsive-two-col" style={{ gap: 36, alignItems: "center" }}>
           <div style={{ height: "clamp(280px,36vw,400px)", background: "linear-gradient(160deg,#faecef,#f6dfe5)", borderRadius: 24, padding: "12%", display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
             <div style={{ width: "45%", height: "92%", animation: "dmFloat 6s ease-in-out infinite" }}><Bottle kind="serum" name="Super Serum" /></div>
             <div style={{ width: "38%", height: "64%", animation: "dmFloat 6s ease-in-out infinite .5s" }}><Bottle kind="tube" name="Lip Balm" /></div>
@@ -48,7 +48,7 @@ export default function AboutPage() {
       <section style={{ background: "#fff", borderTop: "1px solid #f0dde1", borderBottom: "1px solid #f0dde1" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(44px,6vw,72px) clamp(16px,4vw,40px)" }}>
           <h2 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(28px,3.5vw,38px)", color: "#5a4145", textAlign: "center", marginBottom: 36 }}>What Defines Us</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24 }}>
+          <div className="dm-grid-three-col">
             <div style={{ background: "#fdf6f4", border: "1px solid #f0dde1", borderRadius: 20, padding: 28, textAlign: "center" }}>
               <div style={{ fontSize: 32, marginBottom: 12 }}>🔬</div>
               <h3 className="dm-serif" style={{ fontSize: 20, color: "#4f3a3e", fontWeight: 600, margin: "0 0 8px" }}>Active Formulations</h3>

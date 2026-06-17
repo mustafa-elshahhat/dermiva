@@ -47,7 +47,7 @@ export default function AccountPage() {
         <button onClick={() => { logout(); router.push("/"); }} className="dm-btn-outline" style={{ fontSize: 13, fontWeight: 500, padding: "10px 22px", border: "1px solid #e3c3cc", color: "#8a7378" }}>Sign Out</button>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: 24 }}>
+      <div className="dm-grid-responsive-two-col" style={{ gap: 24 }}>
         {/* Profile Card */}
         <div style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 24 }}>
           <h3 className="dm-serif" style={{ fontWeight: 600, fontSize: 22, color: "#5a4145", margin: "0 0 16px", borderBottom: "1px solid #f5eef0", paddingBottom: 10 }}>Account Details</h3>

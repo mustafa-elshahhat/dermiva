@@ -46,15 +46,17 @@ export default function ContactPage() {
         Have questions about formulations, order shipping, or returns? We&apos;re here to help.
       </p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: 32, alignItems: "start" }}>
+      <div className="dm-grid-responsive-two-col" style={{ gap: 32, alignItems: "start" }}>
         {/* Contact Form & Info */}
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           {/* Form */}
           <div style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 24 }}>
             <h3 className="dm-serif" style={{ fontWeight: 600, fontSize: 22, color: "#5a4145", margin: "0 0 16px" }}>Send us a message</h3>
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label htmlFor="contact-name" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Your Name *</label>
                 <input
+                  id="contact-name"
                   value={name}
                   onChange={(e) => { setName(e.target.value); setErrors(prev => ({ ...prev, name: undefined })); }}
                   placeholder="Your Name *"
@@ -63,8 +65,10 @@ export default function ContactPage() {
                 {errors.name ? <div style={{ fontSize: 11.5, color: "#cf6b6b", marginTop: 4 }}>{errors.name}</div> : null}
               </div>
 
-              <div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label htmlFor="contact-email" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Your Email *</label>
                 <input
+                  id="contact-email"
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setErrors(prev => ({ ...prev, email: undefined })); }}
                   placeholder="Your Email *"
@@ -74,8 +78,10 @@ export default function ContactPage() {
                 {errors.email ? <div style={{ fontSize: 11.5, color: "#cf6b6b", marginTop: 4 }}>{errors.email}</div> : null}
               </div>
 
-              <div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label htmlFor="contact-subject" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Subject (Optional)</label>
                 <input
+                  id="contact-subject"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   placeholder="Subject (Optional)"
@@ -83,8 +89,10 @@ export default function ContactPage() {
                 />
               </div>
 
-              <div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <label htmlFor="contact-message" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>Your Message *</label>
                 <textarea
+                  id="contact-message"
                   value={message}
                   onChange={(e) => { setMessage(e.target.value); setErrors(prev => ({ ...prev, message: undefined })); }}
                   placeholder="Your Message * (Min. 10 characters)"
@@ -122,7 +130,7 @@ export default function ContactPage() {
                 <div key={i} style={{ borderBottom: "1px solid #f5eef0", paddingBottom: 12 }}>
                   <button
                     onClick={() => toggleFaq(i)}
-                    style={{ width: "100%", border: "none", background: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", textAlign: "left", padding: "6px 0", fontSize: 15, fontWeight: 600, color: "#4f3a3e", fontFamily: "var(--font-jost),sans-serif" }}
+                    style={{ width: "100%", border: "none", background: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", textAlign: "left", padding: "12px 8px", fontSize: 15, fontWeight: 600, color: "#4f3a3e", fontFamily: "var(--font-jost),sans-serif" }}
                   >
                     <span>{faq.q}</span>
                     <span style={{ color: "#b76e79", fontSize: 16, fontWeight: 700 }}>{active ? "−" : "+"}</span>

@@ -34,8 +34,8 @@ export default function HomePage() {
     <div className="dm-fade">
       {/* HERO */}
       <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(18px,3vw,32px) clamp(16px,4vw,40px)" }}>
-        <div style={{ background: "radial-gradient(120% 120% at 80% 10%,#fbe2e7,#f4cdd6 55%,#eec1cd)", borderRadius: 28, overflow: "hidden", display: "flex", flexWrap: "wrap", alignItems: "center", gap: 20, padding: "clamp(28px,4vw,56px)", position: "relative" }}>
-          <div style={{ flex: "1 1 320px", minWidth: 280, position: "relative", zIndex: 2 }}>
+        <div className="dm-hero-container" style={{ background: "radial-gradient(120% 120% at 80% 10%,#fbe2e7,#f4cdd6 55%,#eec1cd)", borderRadius: 28, overflow: "hidden", display: "flex", flexWrap: "wrap", alignItems: "center", gap: 20, position: "relative" }}>
+          <div className="dm-hero-child-left" style={{ position: "relative", zIndex: 2 }}>
             <div style={{ fontSize: 13, letterSpacing: ".18em", textTransform: "uppercase", color: "#b07c88", fontWeight: 600, marginBottom: 14 }}>Science-Driven Skincare</div>
             <h1 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(40px,6.5vw,66px)", lineHeight: 1.02, color: "#9a5d6a", margin: "0 0 16px" }}>
               Reveal Your
@@ -50,7 +50,7 @@ export default function HomePage() {
             </div>
             <button onClick={() => router.push("/shop")} className="dm-btn-primary" style={{ fontSize: 15, fontWeight: 500, letterSpacing: ".12em", textTransform: "uppercase", padding: "15px 38px" }}>Shop Now</button>
           </div>
-          <div style={{ flex: "1 1 320px", minWidth: 280, position: "relative", height: "clamp(280px,38vw,420px)", display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "clamp(4px,1vw,14px)" }}>
+          <div className="dm-hero-child-right" style={{ position: "relative", height: "clamp(280px,38vw,420px)", display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "clamp(4px,1vw,14px)" }}>
             <div style={{ position: "absolute", bottom: "6%", left: "6%", right: "6%", height: "14%", background: "linear-gradient(180deg,#f6ece0,#e7d4c2)", borderRadius: "50%/40%", filter: "blur(2px)" }} />
             <div style={{ width: "26%", height: "62%", animation: "dmFloat 6s ease-in-out infinite" }}><Bottle kind="tube" name="Lip Balm" /></div>
             <div style={{ width: "34%", height: "88%", zIndex: 2, animation: "dmFloat 5s ease-in-out infinite .4s" }}><Bottle kind="serum" name="Super Serum" /></div>
@@ -137,8 +137,8 @@ export default function HomePage() {
 
       {/* COLLECTION BANNER */}
       <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "0 clamp(16px,4vw,40px) clamp(36px,5vw,56px)" }}>
-        <div onClick={() => router.push("/category/hair")} style={{ cursor: "pointer", background: "radial-gradient(120% 120% at 85% 50%,#f3d3da,#ecbfc9 60%,#e3aeba)", borderRadius: 24, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 20, padding: "clamp(28px,4vw,48px)", overflow: "hidden" }}>
-          <div style={{ flex: "1 1 280px", minWidth: 260 }}>
+        <div onClick={() => router.push("/category/hair")} className="dm-hero-container" style={{ cursor: "pointer", background: "radial-gradient(120% 120% at 85% 50%,#f3d3da,#ecbfc9 60%,#e3aeba)", borderRadius: 24, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 20, overflow: "hidden" }}>
+          <div className="dm-hero-child-left">
             <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(30px,4.5vw,48px)", color: "#8f5360", margin: "0 0 10px", lineHeight: 1.02 }}>
               Hair Therapy
               <br />
@@ -147,7 +147,7 @@ export default function HomePage() {
             <p style={{ fontSize: 15, color: "#7c5560", margin: "0 0 22px", maxWidth: 340 }}>Stronger, shinier &amp; healthier hair you&apos;ll love — powered by nourishing oils and repair actives.</p>
             <span className="dm-btn-primary" style={{ display: "inline-block", fontSize: 13, fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", padding: "13px 30px" }}>Explore Collection</span>
           </div>
-          <div style={{ flex: "1 1 240px", minWidth: 220, height: "clamp(180px,24vw,240px)", display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 10 }}>
+          <div className="dm-hero-child-right" style={{ height: "clamp(180px,24vw,240px)", display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 10 }}>
             <div style={{ width: "34%", height: "70%" }}><Bottle kind="pump" name="Hair Oil" /></div>
             <div style={{ width: "38%", height: "54%" }}><Bottle kind="jar" name="Hair Mask" /></div>
             <div style={{ width: "30%", height: "80%" }}><Bottle kind="pump" name="Shampoo" /></div>
