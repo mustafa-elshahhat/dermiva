@@ -65,6 +65,15 @@ export default async function PolicyPage({ params }: Props) {
             {policy.intro}
           </p>
 
+          <section style={{ background: "#fdf6f4", border: "1px solid #f0dde1", borderRadius: 18, padding: 18, marginBottom: 28 }}>
+            <h2 className="dm-serif" style={{ fontWeight: 700, fontSize: 24, color: "#5a4145", margin: "0 0 12px" }}>{t("policy.summaryTitle")}</h2>
+            <ul style={{ display: "flex", flexDirection: "column", gap: 9, paddingInlineStart: 18, margin: 0 }}>
+              {policy.summary.map((item) => (
+                <li key={item} style={{ fontSize: 14.5, color: "#7c6065", lineHeight: 1.6 }}>{item}</li>
+              ))}
+            </ul>
+          </section>
+
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
             {policy.sections.map((sec, idx) => (
               <div key={idx} style={{ borderBottom: idx < policy.sections.length - 1 ? "1px solid #f5eef0" : "none", paddingBottom: idx < policy.sections.length - 1 ? 20 : 0 }}>

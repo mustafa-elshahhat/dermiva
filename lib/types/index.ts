@@ -2,6 +2,7 @@
 // surface, or from a specific module (e.g. "@/lib/types/product") when needed.
 
 export type { Localized, ApiError, ApiResult } from "./common";
+export type { QuestionAnswerViewModel, QuickFactViewModel, ProductGuidanceViewModel } from "./content";
 export type { Locale, Direction } from "./locale";
 export type {
   ProductId,

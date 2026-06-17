@@ -2,8 +2,10 @@ import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import ProductImage from "@/components/ProductImage";
 import ProductGrid from "@/components/ProductGrid";
+import { ContentSection, ProductGuidance, ProductQuestions } from "@/components/content/ContentBlocks";
 import { RawIcon, TRUST_ICONS } from "@/components/icons";
 import { getAllProducts } from "@/lib/mock/catalog.mock";
 import { getProductById, getCategoryByKey, getRelatedProducts } from "@/lib/api/catalog.service";
@@ -12,6 +14,7 @@ import { buildNoIndexRobots } from "@/lib/seo/robots";
 import { routes } from "@/lib/seo/routes";
 import { JsonLdScript } from "@/lib/seo/structured-data-script";
 import { buildBreadcrumbListJsonLd, buildProductJsonLd } from "@/lib/seo/structured-data";
+import { buildProductGuidanceVM } from "@/lib/view-models/content.vm";
 import { formatList } from "@/lib/locale/format";
 import type { Locale } from "@/i18n/routing";
 import ProductActions from "./ProductActions";
@@ -54,10 +57,12 @@ export default async function ProductPage({ params }: Props) {
   const p = result.data;
   const t = await getTranslations();
   const categoryResult = await getCategoryByKey(p.categoryKey, locale);
+  const category = categoryResult.ok ? categoryResult.data : null;
   const content = categoryResult.ok
     ? categoryResult.data.content
-    : { desc: "", benefits: [] as string[], ingredients: [] as string[], howto: "" };
+    : { desc: "", summary: "", bestFor: [] as string[], benefits: [] as string[], ingredients: [] as string[], howto: "", chooseGuidance: [] as string[], questionAnswers: [] };
   const categoryLabel = categoryResult.ok ? categoryResult.data.label : p.categoryKey;
+  const guidance = category ? buildProductGuidanceVM(p, category, locale) : null;
   const relatedResult = await getRelatedProducts(p.categoryKey, p.id, locale);
   const related = relatedResult.ok ? relatedResult.data : [];
   const name = p.name;
@@ -110,6 +115,14 @@ export default async function ProductPage({ params }: Props) {
             <div className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(30px,4vw,40px)", color: "#b76e79", marginBottom: 18 }}>{p.priceFormatted}</div>
             <p style={{ fontSize: 15.5, color: "#7c6065", lineHeight: 1.65, margin: "0 0 22px", maxWidth: 480 }}>{content.desc}</p>
 
+            {guidance ? (
+              <section style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 18, padding: 18, marginBottom: 22 }}>
+                <h2 className="dm-serif" style={{ fontWeight: 700, fontSize: 23, color: "#5a4145", margin: "0 0 8px" }}>{t("product.answerTitle", { name })}</h2>
+                <p style={{ fontSize: 14.5, color: "#7c6065", lineHeight: 1.65, margin: "0 0 12px" }}>{guidance.shortAnswer}</p>
+                {category ? <Link href={category.href} style={{ color: "#9a5d6a", fontSize: 14, fontWeight: 700 }}>{t("product.categoryLink", { category: category.label })}</Link> : null}
+              </section>
+            ) : null}
+
             <div className="dm-product-benefits-container">
               {content.benefits.map((b) => (
                 <div key={b} className="dm-product-benefit-badge">
@@ -147,6 +160,24 @@ export default async function ProductPage({ params }: Props) {
             </div>
           </div>
         </div>
+
+        {guidance ? (
+          <ContentSection title={t("product.guidanceTitle")}>
+            <ProductGuidance
+              guidance={guidance}
+              labels={{
+                bestFor: t("product.bestFor"),
+                benefits: t("product.benefits"),
+                routine: t("product.routine"),
+                ingredients: t("product.ingredientHighlights"),
+                goodToKnow: t("product.goodToKnow"),
+              }}
+            />
+            <div style={{ marginTop: 20 }}>
+              <ProductQuestions title={t("product.questionsTitle")} guidance={guidance} />
+            </div>
+          </ContentSection>
+        ) : null}
 
         {/* related */}
         <div style={{ marginTop: "clamp(40px,5vw,60px)" }}>

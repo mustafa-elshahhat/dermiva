@@ -96,6 +96,14 @@ export const CATEGORY_CONTENT: Record<CategoryKey, CategoryContent> = {
       en: "A lightweight, fast-absorbing treatment formulated to brighten, smooth and visibly renew your skin with every use.",
       ar: "علاج خفيف سريع الامتصاص مصمم لتفتيح البشرة وتنعيمها وتجديدها بشكل ملحوظ مع كل استخدام.",
     },
+    summary: {
+      en: "Dermiva Face Care brings together serums, pads and daily glow essentials for smoother-looking, brighter-looking skin as part of a cosmetic routine.",
+      ar: "تجمع العناية بالوجه من Dermiva بين السيرومات والبادز وأساسيات الإشراق اليومي لمظهر بشرة أنعم وأكثر إشراقًا ضمن روتين تجميلي.",
+    },
+    bestFor: {
+      en: ["Daily face routines", "Dull-looking skin", "Uneven-looking texture", "Lightweight layering"],
+      ar: ["روتين الوجه اليومي", "البشرة باهتة المظهر", "الملمس غير المتجانس", "الاستخدام بطبقات خفيفة"],
+    },
     benefits: {
       en: ["Brightens & evens tone", "Boosts hydration", "Smooths texture"],
       ar: ["يفتّح ويوحّد لون البشرة", "يعزّز الترطيب", "ينعّم الملمس"],
@@ -108,11 +116,35 @@ export const CATEGORY_CONTENT: Record<CategoryKey, CategoryContent> = {
       en: "Apply 3–4 drops to clean skin morning and evening. Follow with moisturizer and SPF during the day.",
       ar: "ضعي 3–4 قطرات على بشرة نظيفة صباحًا ومساءً. اتبعيها بمرطّب وواقٍ من الشمس خلال النهار.",
     },
+    chooseGuidance: {
+      en: ["Choose serums when you want lightweight targeted care.", "Choose pads when you want a simple texture-smoothing step.", "Layer face products gradually and keep daytime SPF in your routine."],
+      ar: ["اختاري السيرومات عندما ترغبين في عناية خفيفة ومركّزة.", "اختاري البادز عندما تحتاجين خطوة بسيطة لتحسين ملمس البشرة.", "أدخلي منتجات الوجه تدريجيًا واحرصي على واقي الشمس نهارًا."],
+    },
+    questionAnswers: {
+      en: [
+        { question: "What is Dermiva Face Care for?", answer: "It supports cosmetic face routines focused on hydration, glow and smoother-looking texture." },
+        { question: "Which Dermiva products help with glow or texture?", answer: "Super Serum, Vitamin C Serum and Glow Peel Pads are positioned for glow and smoother-looking texture within the face care range." },
+        { question: "How should a face care routine be used?", answer: "Start with clean skin, apply lightweight treatments first, moisturize, and use SPF during the day." }
+      ],
+      ar: [
+        { question: "ما وظيفة عناية الوجه من Dermiva؟", answer: "تدعم روتين العناية التجميلي بالوجه مع التركيز على الترطيب والإشراق وملمس أنعم مظهرًا." },
+        { question: "أي منتجات Dermiva مناسبة للإشراق أو الملمس؟", answer: "Super Serum وVitamin C Serum وGlow Peel Pads مناسبة ضمن فئة عناية الوجه للإشراق وملمس أنعم مظهرًا." },
+        { question: "كيف يُستخدم روتين عناية الوجه؟", answer: "ابدئي ببشرة نظيفة، ثم المنتجات الخفيفة أولًا، وبعدها المرطّب، واستخدمي واقي الشمس نهارًا." }
+      ],
+    },
   },
   hair: {
     desc: {
       en: "Nourishing care that strengthens strands, tames frizz and restores healthy, glossy shine from root to tip.",
       ar: "عناية مغذّية تقوّي الخصلات وتروّض التطاير وتعيد اللمعان الصحي من الجذور حتى الأطراف.",
+    },
+    summary: {
+      en: "Dermiva Hair Care covers oils, masks and shampoo for softer-feeling, shinier-looking hair and easier routine care.",
+      ar: "تشمل عناية الشعر من Dermiva الزيوت والماسكات والشامبو لشعر أنعم ملمسًا وأكثر لمعانًا ومناسب لروتين أسهل.",
+    },
+    bestFor: {
+      en: ["Dry-feeling hair", "Frizz-prone lengths", "Shine-focused routines", "Wash-day repair care"],
+      ar: ["الشعر الجاف الملمس", "الأطراف المعرضة للتطاير", "روتين يركز على اللمعان", "عناية يوم غسل الشعر"],
     },
     benefits: {
       en: ["Strengthens & repairs", "Adds shine", "Reduces frizz"],
@@ -126,11 +158,35 @@ export const CATEGORY_CONTENT: Record<CategoryKey, CategoryContent> = {
       en: "Massage through damp or dry hair, focusing on mid-lengths and ends. Use 2–3 times a week.",
       ar: "دلّكيه على الشعر الرطب أو الجاف مع التركيز على الأطوال الوسطى والأطراف. استخدميه 2–3 مرات أسبوعيًا.",
     },
+    chooseGuidance: {
+      en: ["Use shampoo as the cleansing step on wash days.", "Use a mask when hair needs richer conditioning.", "Use oil on mid-lengths and ends for shine and softness."],
+      ar: ["استخدمي الشامبو كخطوة تنظيف في يوم غسل الشعر.", "استخدمي الماسك عندما يحتاج الشعر إلى ترطيب أغنى.", "استخدمي الزيت على منتصف الشعر والأطراف للمعان والنعومة."],
+    },
+    questionAnswers: {
+      en: [
+        { question: "What is Dermiva Hair Care for?", answer: "It supports cosmetic hair routines focused on softer feel, smoother-looking lengths and healthy-looking shine." },
+        { question: "How can oils, masks and shampoo fit together?", answer: "Cleanse with shampoo, condition with a mask when needed, then finish with oil on mid-lengths and ends." },
+        { question: "Who should consider hair repair products?", answer: "Anyone building a routine for dry-feeling, frizz-prone or dull-looking hair can consider this category." }
+      ],
+      ar: [
+        { question: "ما وظيفة عناية الشعر من Dermiva؟", answer: "تدعم روتين الشعر التجميلي للنعومة وملمس أكثر انتظامًا ولمعان صحي المظهر." },
+        { question: "كيف يمكن الجمع بين الزيت والماسك والشامبو؟", answer: "ابدئي بالشامبو للتنظيف، ثم الماسك عند الحاجة لترطيب أغنى، وأنهي بالزيت على منتصف الشعر والأطراف." },
+        { question: "لمن تناسب منتجات إصلاح الشعر؟", answer: "تناسب من يرغب في روتين للشعر الجاف الملمس أو المعرض للتطاير أو الباهت المظهر." }
+      ],
+    },
   },
   body: {
     desc: {
       en: "Rich yet breathable body care that deeply nourishes, softens and leaves skin smooth with a subtle glow.",
       ar: "عناية غنية وقابلة للتنفّس بالجسم تغذّي بعمق وتنعّم وتترك البشرة ملساء بإشراقة خفيفة.",
+    },
+    summary: {
+      en: "Dermiva Body Care includes lotion, scrub and body butter for softer-feeling skin, comfort and a smoother-looking finish.",
+      ar: "تشمل عناية الجسم من Dermiva اللوشن والمقشر وزبدة الجسم لبشرة أنعم ملمسًا وأكثر راحة ومظهرًا أكثر نعومة.",
+    },
+    bestFor: {
+      en: ["Daily body moisture", "Dry-feeling areas", "Shower routines", "Soft, comfortable skin"],
+      ar: ["ترطيب الجسم اليومي", "المناطق الجافة الملمس", "روتين الاستحمام", "بشرة ناعمة ومريحة"],
     },
     benefits: {
       en: ["Deeply nourishes", "Softens skin", "Long-lasting comfort"],
@@ -144,11 +200,35 @@ export const CATEGORY_CONTENT: Record<CategoryKey, CategoryContent> = {
       en: "Apply generously to clean skin and massage until absorbed. Use daily for best results.",
       ar: "ضعي كمية وفيرة على بشرة نظيفة ودلّكي حتى الامتصاص. استخدميه يوميًا لأفضل النتائج.",
     },
+    chooseGuidance: {
+      en: ["Use scrub occasionally when skin feels rough or needs polishing.", "Use lotion for lighter daily moisture.", "Use body butter when you want a richer, more comforting finish."],
+      ar: ["استخدمي المقشر من وقت لآخر عندما تشعرين بخشونة أو ترغبين في تنعيم الملمس.", "استخدمي اللوشن لترطيب يومي خفيف.", "استخدمي زبدة الجسم عندما ترغبين في عناية أغنى وراحة أكثر."],
+    },
+    questionAnswers: {
+      en: [
+        { question: "What is Dermiva Body Care for?", answer: "It supports cosmetic body routines for softer-feeling, smoother-looking and more comfortable skin." },
+        { question: "When should body lotion be used?", answer: "Use body lotion on clean skin when you want lightweight daily moisture." },
+        { question: "When should body scrub or butter be used?", answer: "Use scrub occasionally for polishing, then follow with lotion or body butter for comfort." }
+      ],
+      ar: [
+        { question: "ما وظيفة عناية الجسم من Dermiva؟", answer: "تدعم روتين الجسم التجميلي لبشرة أنعم ملمسًا وأكثر نعومة وراحة." },
+        { question: "متى يُستخدم لوشن الجسم؟", answer: "استخدمي اللوشن على بشرة نظيفة عندما ترغبين في ترطيب يومي خفيف." },
+        { question: "متى يُستخدم مقشر الجسم أو الزبدة؟", answer: "استخدمي المقشر من وقت لآخر للتنعيم، ثم اتبعيه بلوشن أو زبدة جسم للراحة." }
+      ],
+    },
   },
   lip: {
     desc: {
       en: "A silky, conditioning formula that softens, smooths and adds a hint of natural-looking plumpness to lips.",
       ar: "تركيبة حريرية مرطّبة تنعّم وتملّس وتضيف امتلاءً طبيعي المظهر للشفاه.",
+    },
+    summary: {
+      en: "Dermiva Lip Care focuses on balms and oils for softer-feeling lips, smoother-looking texture and easy daily touch-ups.",
+      ar: "تركز عناية الشفاه من Dermiva على البلسم والزيوت لشفاه أنعم ملمسًا وملمس أكثر نعومة ولمسات يومية سهلة.",
+    },
+    bestFor: {
+      en: ["Daily lip comfort", "Dry-feeling lips", "Glossy finish", "On-the-go touch-ups"],
+      ar: ["راحة الشفاه اليومية", "الشفاه الجافة الملمس", "لمسة لامعة", "تجديد سريع خلال اليوم"],
     },
     benefits: {
       en: ["Softens & smooths", "Adds subtle plump", "Lasting moisture"],
@@ -161,6 +241,22 @@ export const CATEGORY_CONTENT: Record<CategoryKey, CategoryContent> = {
     howto: {
       en: "Glide over lips as needed throughout the day. Reapply after eating or drinking.",
       ar: "مرّريه على الشفاه حسب الحاجة طوال اليوم. أعيدي وضعه بعد الأكل أو الشرب.",
+    },
+    chooseGuidance: {
+      en: ["Choose balm when you want easy comfort and moisture.", "Choose lip oil when you want a glossier finish.", "Reapply either format whenever lips feel dry."],
+      ar: ["اختاري البلسم عندما ترغبين في راحة وترطيب سهلين.", "اختاري زيت الشفاه عندما ترغبين في لمسة أكثر لمعانًا.", "أعيدي استخدام أي منهما عندما تشعرين بجفاف الشفاه."],
+    },
+    questionAnswers: {
+      en: [
+        { question: "What is Dermiva Lip Care for?", answer: "It supports daily cosmetic lip routines for softness, comfort and a smoother-looking finish." },
+        { question: "What is the difference between lip balm and lip oil?", answer: "Lip balm is a simple comfort step, while lip oil adds a glossier finish with a conditioned feel." },
+        { question: "When should lip care be reapplied?", answer: "Reapply whenever lips feel dry, especially after eating or drinking." }
+      ],
+      ar: [
+        { question: "ما وظيفة عناية الشفاه من Dermiva؟", answer: "تدعم روتين الشفاه التجميلي اليومي للنعومة والراحة ومظهر أكثر نعومة." },
+        { question: "ما الفرق بين بلسم الشفاه وزيت الشفاه؟", answer: "البلسم خطوة بسيطة للراحة، أما زيت الشفاه فيمنح لمسة أكثر لمعانًا مع إحساس مرطّب." },
+        { question: "متى يجب إعادة استخدام عناية الشفاه؟", answer: "أعيدي استخدامها عندما تشعرين بجفاف الشفاه، خاصة بعد الأكل أو الشرب." }
+      ],
     },
   },
 };

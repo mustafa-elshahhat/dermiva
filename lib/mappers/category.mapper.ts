@@ -13,9 +13,13 @@ import { getHeroImageSet } from "@/lib/images";
 export function toCategoryContentVM(content: CategoryContent, locale: Locale): CategoryContentViewModel {
   return {
     desc: content.desc[locale],
+    summary: content.summary[locale],
+    bestFor: content.bestFor[locale],
     benefits: content.benefits[locale],
     ingredients: content.ingredients[locale],
     howto: content.howto[locale],
+    chooseGuidance: content.chooseGuidance[locale],
+    questionAnswers: content.questionAnswers[locale],
   };
 }
 

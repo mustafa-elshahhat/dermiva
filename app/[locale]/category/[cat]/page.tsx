@@ -10,6 +10,7 @@ import { buildNoIndexRobots } from "@/lib/seo/robots";
 import { routes } from "@/lib/seo/routes";
 import { JsonLdScript } from "@/lib/seo/structured-data-script";
 import { buildBreadcrumbListJsonLd, buildCategoryCollectionPageJsonLd } from "@/lib/seo/structured-data";
+import { CategoryGuidance } from "@/components/content/ContentBlocks";
 import CategoryContent from "./CategoryContent";
 
 export function generateStaticParams() {
@@ -75,7 +76,22 @@ export default async function CategoryPage({ params }: Props) {
         </section>
 
         <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(22px,3vw,32px) clamp(16px,4vw,40px) clamp(40px,5vw,64px)" }}>
+          <CategoryGuidance
+            category={category}
+            products={products}
+            labels={{
+              title: t("category.guidanceTitle"),
+              bestFor: t("category.bestFor"),
+              benefits: t("category.benefits"),
+              focus: t("category.careFocus"),
+              choose: t("category.choose"),
+              questions: t("category.questions"),
+              relatedProducts: t("category.relatedProducts"),
+            }}
+          />
+          <div style={{ marginTop: "clamp(32px,5vw,52px)" }}>
           <CategoryContent products={products} />
+          </div>
         </section>
       </div>
     </>

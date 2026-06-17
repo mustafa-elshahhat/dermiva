@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { QuickFacts } from "@/components/content/ContentBlocks";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { routes } from "@/lib/seo/routes";
@@ -30,6 +31,12 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const tCommon = await getTranslations("common");
   const tNav = await getTranslations("nav");
   const pageName = `${t("titleLine1")} ${t("titleLine2")}`;
+  const brandFacts = [
+    { label: t("factBrand"), value: t("factBrandValue") },
+    { label: t("factFocus"), value: t("factFocusValue") },
+    { label: t("factMarket"), value: t("factMarketValue") },
+    { label: t("factCurrency"), value: t("factCurrencyValue") },
+  ];
   const pageJsonLd = [
     buildBreadcrumbListJsonLd(locale, [
       { name: tCommon("home"), path: routes.home() },
@@ -60,6 +67,10 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           </p>
           <Link href="/shop" className="dm-btn-primary" style={{ display: "inline-block", padding: "14px 38px", fontSize: 14, fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", textDecoration: "none", textAlign: "center" }}>{t("shopCollection")}</Link>
         </div>
+      </section>
+
+      <section style={{ maxWidth: 1000, margin: "0 auto", width: "100%", padding: "clamp(32px,5vw,54px) clamp(16px,4vw,40px) 0" }}>
+        <QuickFacts title={t("factsTitle")} facts={brandFacts} />
       </section>
 
       {/* Narrative Section */}

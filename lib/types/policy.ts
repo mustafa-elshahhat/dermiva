@@ -8,6 +8,7 @@ export type PolicyKey = "shipping" | "returns" | "privacy" | "terms";
 export interface Policy {
   title: Localized<string>;
   intro: Localized<string>;
+  summary: Localized<string[]>;
   sections: { h: Localized<string>; b: Localized<string> }[];
 }
 
@@ -16,5 +17,6 @@ export interface PolicyViewModel {
   slug: PolicyKey;
   title: string;
   intro: string;
+  summary: string[];
   sections: { h: string; b: string }[];
 }

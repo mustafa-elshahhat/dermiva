@@ -8,6 +8,7 @@ export function toPolicyVM(slug: PolicyKey, policy: Policy, locale: Locale): Pol
     slug,
     title: policy.title[locale],
     intro: policy.intro[locale],
+    summary: policy.summary[locale],
     sections: policy.sections.map((s) => ({ h: s.h[locale], b: s.b[locale] })),
   };
 }

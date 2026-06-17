@@ -50,6 +50,15 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
           {t("subtitle")}
         </p>
 
+        <section style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 24, marginBottom: 28 }}>
+          <h2 className="dm-serif" style={{ fontWeight: 700, fontSize: 26, color: "#5a4145", margin: "0 0 14px" }}>{t("supportTopicsTitle")}</h2>
+          <ul style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(170px,1fr))", gap: 10, padding: 0, margin: 0, listStyle: "none" }}>
+            {[t("supportOrders"), t("supportShipping"), t("supportReturns"), t("supportProducts"), t("supportPayments")].map((item) => (
+              <li key={item} style={{ background: "#fdf6f4", border: "1px solid #f0dde1", borderRadius: 999, padding: "10px 14px", color: "#7c6065", fontSize: 14, fontWeight: 600 }}>{item}</li>
+            ))}
+          </ul>
+        </section>
+
         <div className="dm-grid-responsive-two-col" style={{ gap: 32, alignItems: "start" }}>
           {/* Contact Form & Info */}
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -64,6 +73,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 <div>✉ <strong>{t("emailLabel")}</strong> support@dermiva.com</div>
                 <div>📍 <strong>{t("addressLabel")}</strong> {t("addressValue")}</div>
                 <div style={{ marginTop: 8, fontSize: 12, color: "#a98e93" }}>{t("hours")}</div>
+                {/* TODO: Confirm final public phone, email, address and social links before production launch. */}
               </div>
             </div>
           </div>

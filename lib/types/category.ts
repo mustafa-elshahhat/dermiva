@@ -1,6 +1,7 @@
 // Category domain + view-model types.
 
 import type { Localized } from "./common";
+import type { QuestionAnswerViewModel } from "./content";
 import type { CategoryKey, BottleKind } from "./product";
 import type { ResponsiveImageSet } from "@/lib/images";
 
@@ -27,17 +28,25 @@ export interface Category {
 /** Marketing/usage copy keyed by category (shared by its products). */
 export interface CategoryContent {
   desc: Localized<string>;
+  summary: Localized<string>;
+  bestFor: Localized<string[]>;
   benefits: Localized<string[]>;
   ingredients: Localized<string[]>;
   howto: Localized<string>;
+  chooseGuidance: Localized<string[]>;
+  questionAnswers: Localized<QuestionAnswerViewModel[]>;
 }
 
 /** Locale-resolved category content. */
 export interface CategoryContentViewModel {
   desc: string;
+  summary: string;
+  bestFor: string[];
   benefits: string[];
   ingredients: string[];
   howto: string;
+  chooseGuidance: string[];
+  questionAnswers: QuestionAnswerViewModel[];
 }
 
 /** Compact category tile (e.g. search "browse categories"): label + preview. */

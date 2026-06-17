@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import ProductImage from "@/components/ProductImage";
 import ProductGrid from "@/components/ProductGrid";
+import { ContentSection } from "@/components/content/ContentBlocks";
 import { RawIcon, PROMISE_ICONS } from "@/components/icons";
 import { getCategories, getCategoryByKey, getBestSellers, getProductById } from "@/lib/api/catalog.service";
 import { getHeroImageSet, HOME_HERO, HOME_HERO_RTL, HAIR_COLLECTION, HAIR_COLLECTION_RTL } from "@/lib/images";
@@ -61,6 +62,28 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <Link href="/shop" className="dm-btn-primary dm-hero__cta">{t("common.shopNow")}</Link>
           </div>
         </div>
+      </section>
+
+      {/* SHOPPING GUIDANCE */}
+      <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(20px,4vw,44px) clamp(16px,4vw,40px) 0" }}>
+        <ContentSection title={t("home.guidanceTitle")}>
+          <div className="dm-grid-three-col">
+            <article style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 22 }}>
+              <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: 23, color: "#5a4145", margin: "0 0 10px" }}>{t("home.whatTitle")}</h3>
+              <p style={{ fontSize: 14.5, color: "#7c6065", lineHeight: 1.65, margin: 0 }}>{t("home.whatText")}</p>
+            </article>
+            <article style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 22 }}>
+              <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: 23, color: "#5a4145", margin: "0 0 10px" }}>{t("home.shopTitle")}</h3>
+              <p style={{ fontSize: 14.5, color: "#7c6065", lineHeight: 1.65, margin: "0 0 14px" }}>{t("home.shopText")}</p>
+              <Link href="/shop" style={{ color: "#9a5d6a", fontWeight: 700, fontSize: 14 }}>{t("nav.shopAll")}</Link>
+            </article>
+            <article style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 22 }}>
+              <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: 23, color: "#5a4145", margin: "0 0 10px" }}>{t("home.routineTitle")}</h3>
+              <p style={{ fontSize: 14.5, color: "#7c6065", lineHeight: 1.65, margin: "0 0 14px" }}>{t("home.routineText")}</p>
+              <Link href="/category/face" style={{ color: "#9a5d6a", fontWeight: 700, fontSize: 14 }}>{t("nav.faceCare")}</Link>
+            </article>
+          </div>
+        </ContentSection>
       </section>
 
       {/* SHOP BY CATEGORY */}
