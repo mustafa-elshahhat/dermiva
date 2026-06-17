@@ -10,6 +10,7 @@ import { routes } from "@/lib/seo/routes";
 import { JsonLdScript } from "@/lib/seo/structured-data-script";
 import { buildBreadcrumbListJsonLd, buildPolicyWebPageJsonLd } from "@/lib/seo/structured-data";
 import type { Locale } from "@/i18n/routing";
+import EventReporter from "@/components/analytics/EventReporter";
 
 export function generateStaticParams() {
   return [{ slug: "shipping" }, { slug: "returns" }, { slug: "privacy" }, { slug: "terms" }];
@@ -54,6 +55,7 @@ export default async function PolicyPage({ params }: Props) {
   return (
     <>
       <JsonLdScript data={pageJsonLd} />
+      <EventReporter name="policy_view" payload={{ locale, route: policyPath, policySlug: policy.slug }} />
       <div className="dm-fade" style={{ maxWidth: 800, margin: "0 auto", width: "100%", padding: "clamp(24px,4vw,40px) clamp(16px,4vw,40px) clamp(40px,5vw,64px)" }}>
         <div style={{ marginBottom: 12, fontSize: 12.5, color: "#a98e93" }}>{t("common.home")} / {t("policy.breadcrumb")} / <span style={{ color: "#7c6065" }}>{policy.title}</span></div>
 

@@ -47,12 +47,16 @@ export default function LoginForm() {
         <p style={{ fontSize: 14, color: "#a98e93", margin: 0 }}>{t("auth.loginSubtitle")}</p>
       </div>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+      <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 18 }}>
         <div>
           <label htmlFor="email" style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#7c6065", marginBottom: 6, letterSpacing: ".02em" }}>{t("auth.fieldEmail")}</label>
           <input
             id="email"
             type="email"
+            autoComplete="email"
+            required
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error ? "login-form-error" : undefined}
             value={email}
             onChange={(e) => { setEmail(e.target.value); setError(""); }}
             placeholder={t("auth.placeholderEmail")}
@@ -65,6 +69,10 @@ export default function LoginForm() {
           <input
             id="password"
             type="password"
+            autoComplete="current-password"
+            required
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error ? "login-form-error" : undefined}
             value={password}
             onChange={(e) => { setPassword(e.target.value); setError(""); }}
             placeholder="••••••••"
@@ -73,7 +81,7 @@ export default function LoginForm() {
         </div>
 
         {error ? (
-          <div style={{ fontSize: 13, color: "#cf6b6b", textAlign: "center", background: "#fff5f5", borderRadius: 8, padding: "8px 12px", border: "1px solid #fce8e8" }}>
+          <div id="login-form-error" role="alert" style={{ fontSize: 13, color: "#b94f4f", textAlign: "center", background: "#fff5f5", borderRadius: 8, padding: "8px 12px", border: "1px solid #fce8e8" }}>
             {error}
           </div>
         ) : null}

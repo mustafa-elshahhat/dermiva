@@ -5,6 +5,7 @@ import BrandLogo from "./BrandLogo";
 import MobileMenu from "./MobileMenu";
 import HeaderActions from "./HeaderActions";
 import LanguageSwitcher from "./LanguageSwitcher";
+import NavLink from "./NavLink";
 
 const NAV = [
   { key: "home", href: "/" },
@@ -38,9 +39,9 @@ export default function SiteHeader() {
 
           <nav className="dm-nav">
             {NAV.map((n) => (
-              <Link key={n.href} href={n.href} className="dm-navlink">
+              <NavLink key={n.href} href={n.href} className="dm-navlink">
                 {t(n.key)}
-              </Link>
+              </NavLink>
             ))}
           </nav>
 

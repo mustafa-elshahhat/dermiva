@@ -1,137 +1,154 @@
-# Dermiva — E-Commerce Prototype
+# Dermiva — Bilingual Skincare E-commerce Storefront
 
-A premium, fully responsive storefront prototype for **Dermiva**, a science-driven skincare, haircare, bodycare, and lip care brand made with care in Egypt. Built with the Next.js App Router, it delivers a complete shopping experience — browsing, search, filtering, cart, wishlist, checkout, and account flows — as a polished, client-ready frontend.
-
-## Overview
-
-Dermiva is a static, front-end e-commerce experience. All catalog, pricing, and content data is bundled with the app (no backend or database required), and cart, wishlist, and account state persist in the browser. This makes it ideal as a presentation build and a foundation for a production storefront.
-
-- Prices are in Egyptian Pounds (EGP).
-- Egypt-focused payment methods: Cash on Delivery, Mobile Wallets, Fawry Pay, and InstaPay.
-- Art-directed responsive imagery (mobile / tablet / desktop) across hero, category, and collection banners.
+Dermiva is a bilingual English/Arabic storefront built with the Next.js App Router. It provides a production-ready frontend foundation with API-ready services for a future .NET backend, focused on skincare, haircare, bodycare, and lip care shopping flows.
 
 ## Features
 
-- **Responsive design** — tuned from 360px phones up to 1920px desktops, with no horizontal overflow.
-- **Product catalog** — 12 products across four categories (Face, Hair, Body, Lip).
-- **Category pages** — art-directed hero banners, category content, benefits, ingredients, and how-to.
-- **Search, filtering & sorting** — live search plus price and sort controls.
-- **Cart** — add / remove / update quantities, promo code field, and live totals.
-- **Wishlist** — toggle favourites and move items straight to the cart.
-- **Checkout** — validated delivery form with Egypt-specific payment options and a success state.
-- **Account area** — profile, order history, order details, and saved addresses.
-- **Content pages** — About, Contact (with FAQs), and shipping / returns / privacy / terms policies.
-- **Brand-consistent UI** — single-source logo, payments, social links, and product imagery.
-- **SEO & sharing** — metadata, Open Graph image, and a complete favicon / app-icon set.
+- English/Arabic locale routing with `/en` and `/ar` paths
+- RTL/LTR support with locale-aware direction and typography
+- Local fonts served from `public/fonts`
+- Product, category, policy, payment, and social data layers
+- API-ready async services backed by mock data in frontend-only mode
+- Cart and wishlist with browser persistence
+- Checkout UI flow with frontend validation and mock order success state
+- Account, order, and saved-address mock flows
+- SEO metadata per route
+- `sitemap.xml` and `robots.txt`
+- JSON-LD structured data
+- GEO/AEO visible content structure for product, category, policy, and support pages
+- Practical accessibility improvements for navigation, forms, focus states, skip link, and status messages
+- Typed analytics/events readiness with no vendor enabled by default
+- Responsive design for mobile, tablet, and desktop
 
 ## Tech Stack
 
-- [Next.js 15](https://nextjs.org/) (App Router)
-- [React 19](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/) (strict mode)
-- CSS (global stylesheet with design tokens) + inline styles
-- Google Fonts (Cormorant Garamond, Jost) via `next/font`
-- ESLint (`next/core-web-vitals`)
+- Next.js 15 App Router
+- React 19
+- TypeScript
+- next-intl
+- Global CSS with design tokens, responsive utilities, and local fonts
+- ESLint with `next/core-web-vitals`
 
 ## Project Structure
 
-```
-dermiva/
-├── app/                  # App Router pages, layouts, and route-level UI
-│   ├── account/          # Account, orders, order detail, addresses
-│   ├── category/[cat]/   # Category pages (face / hair / body / lip)
-│   ├── product/[id]/     # Product detail pages
-│   ├── policy/[slug]/    # Shipping / returns / privacy / terms
-│   ├── cart, checkout, wishlist, search, shop, login, register, about, contact
-│   ├── layout.tsx        # Root layout, fonts, and metadata
-│   ├── globals.css       # Global styles and design tokens
-│   └── not-found.tsx     # 404 page
-├── components/           # Reusable UI (header, footer, product cards, etc.)
-├── lib/                  # Catalog, payments, social data, and the store
-│   ├── catalog.ts        # Products, categories, content, policies, helpers
-│   ├── payments.ts       # Payment methods (single source of truth)
-│   ├── social.ts         # Social links (single source of truth)
-│   └── store.tsx         # Cart / wishlist / auth / toast state provider
-├── public/               # Static assets (see Assets below)
-└── config files          # next.config.mjs, tsconfig.json, .eslintrc.json
+```txt
+app/[locale]/              Localized App Router pages and layouts
+components/                Shared storefront UI components
+components/content/        Reusable visible content/GEO/AEO blocks
+components/analytics/      Vendor-neutral analytics reporter components
+lib/api/                   Async API-ready service layer
+lib/mock/                  Current mock data source for frontend-only mode
+lib/mappers/               Domain-to-view-model mapping utilities
+lib/view-models/           UI-ready view-model builders
+lib/types/                 Shared TypeScript domain and view-model types
+lib/seo/                   SEO metadata, URL, robots, and structured-data helpers
+lib/analytics/             Typed analytics event layer and no-op/debug providers
+messages/                  English and Arabic translation files
+public/                    Static images, icons, payment assets, and local fonts
 ```
 
-## Routes
+## Internationalization
 
-| Route | Description |
-| --- | --- |
-| `/` | Homepage (hero, categories, best sellers, featured product, collection banner) |
-| `/shop` | Full product listing with search, filters, and sorting |
-| `/category/[cat]` | Category page — `face`, `hair`, `body`, `lip` |
-| `/product/[id]` | Product detail page |
-| `/cart` | Shopping cart |
-| `/checkout` | Checkout form and order summary |
-| `/wishlist` | Saved products |
-| `/search` | Search results |
-| `/login`, `/register` | Authentication screens |
-| `/account` | Account overview |
-| `/account/orders`, `/account/orders/[no]` | Order history and detail |
-| `/account/addresses` | Saved addresses |
-| `/about`, `/contact` | Brand story and contact / FAQs |
-| `/policy/[slug]` | `shipping`, `returns`, `privacy`, `terms` |
-| `*` | Custom 404 page |
+- English routes use `/en` and LTR layout.
+- Arabic routes use `/ar` and RTL layout.
+- Product names remain English intentionally in both locales.
+- Dermiva remains English intentionally in both locales.
+- UI strings live in `messages/en.json` and `messages/ar.json`.
 
-## Assets
+## Data Architecture
 
-All static assets live under `public/`, in kebab-case folders and filenames for case-safe deployment on Linux/Vercel:
+The frontend data flow is:
 
-```
-public/
-├── brand/                      # Logo, favicons, app icons, OG image
-├── hero/                       # Homepage hero (desktop / tablet / mobile)
-├── category/
-│   ├── category-card/          # "Shop by Category" card images
-│   └── category-hero/          # Per-category responsive hero banners
-├── hair-therapy-collection/    # Collection banner (desktop / tablet / mobile)
-├── products/packshots/         # Product images (WebP)
-├── payments/                   # Payment method logos
-├── icons/social/               # Social media icons (SVG)
-├── about/                      # About page imagery
-└── favicon.ico
+```txt
+types -> mock data -> mappers -> view models -> async services -> UI
 ```
 
-Product packshots and banners are served as optimised **WebP**. The brand logo is a transparent WebP, and social icons are SVGs.
+Mock data is the current source while the app runs in frontend-only mode. Service functions are asynchronous and API-ready, so a future backend swap should mostly change service bodies or adapters rather than UI components.
+
+## SEO And Discovery
+
+- Route metadata is generated per page.
+- Canonical and hreflang alternates are generated through the SEO helpers.
+- `sitemap.xml` and `robots.txt` are provided by App Router route files.
+- JSON-LD structured data is rendered for organization, website, product, category, contact, policy, and breadcrumb contexts where applicable.
+- GEO/AEO visible content structure is included across storefront and content pages.
+- Cart, checkout, account, search, login, register, and other utility pages are configured as noindex where appropriate.
+
+## Accessibility
+
+The storefront includes practical accessibility improvements such as keyboard-operable navigation, visible focus states, a skip link to main content, semantic sections, labeled form controls, connected validation errors, accessible toast/status messages, useful product image alt text, and RTL-aware layout handling.
+
+This project does not claim formal WCAG certification.
+
+## Analytics Readiness
+
+- Analytics events are defined in a typed, vendor-neutral layer.
+- The default provider is no-op.
+- Optional debug logging is available only when explicitly enabled with public env flags.
+- Web Vitals reporting is routed through the same abstraction when analytics is enabled.
+- No third-party analytics vendor is enabled by default.
+- No cookies, user identifiers, fingerprinting, or PII tracking are used in this phase.
+- Real provider integration and consent handling are required before enabling production marketing or behavioral tracking.
+
+## Environment Variables
+
+All variables are optional for local builds.
+
+```env
+NEXT_PUBLIC_SITE_URL=
+NEXT_PUBLIC_API_BASE_URL=
+NEXT_PUBLIC_ANALYTICS_ENABLED=
+NEXT_PUBLIC_ANALYTICS_DEBUG=
+NEXT_PUBLIC_ANALYTICS_PROVIDER=
+```
+
+- `NEXT_PUBLIC_SITE_URL`: Public canonical storefront URL. Falls back to `https://dermiva-eg.vercel.app`.
+- `NEXT_PUBLIC_API_BASE_URL`: Public future backend base URL. Empty means mock-data mode.
+- `NEXT_PUBLIC_ANALYTICS_ENABLED`: Set to `true`, `1`, or `yes` to enable analytics dispatch.
+- `NEXT_PUBLIC_ANALYTICS_DEBUG`: Set to `true`, `1`, or `yes` to log safe analytics payloads in development only.
+- `NEXT_PUBLIC_ANALYTICS_PROVIDER`: Provider selector. Currently resolves to `noop` unless debug logging is explicitly enabled.
+
+No frontend secrets are required.
 
 ## Getting Started
 
-Requirements: **Node.js 18.18+** (Node 20 LTS recommended) and npm.
-
 ```bash
-# Install dependencies
 npm install
-
-# Start the development server
 npm run dev
+npm run build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+## Deployment
 
-## Available Scripts
+The storefront is Vercel-ready as a Next.js frontend. Set `NEXT_PUBLIC_SITE_URL` to the final production domain before launch. A future API base URL can be configured with `NEXT_PUBLIC_API_BASE_URL` when the backend is available.
 
-| Script | Description |
-| --- | --- |
-| `npm run dev` | Start the development server |
-| `npm run build` | Create an optimised production build |
-| `npm run start` | Run the production build locally |
-| `npm run lint` | Run ESLint |
+Final public business contact details and social profile URLs should be confirmed before launch.
 
-## Deployment on Vercel
+## Production Checklist
 
-This is a standard Next.js App Router application and deploys to [Vercel](https://vercel.com/) with zero configuration:
+- Set the final domain in `NEXT_PUBLIC_SITE_URL`.
+- Confirm public phone, email, address, and social links.
+- Replace placeholder social URLs.
+- Connect the real backend/API.
+- Connect the real checkout/payment backend.
+- Add consent handling before real marketing analytics.
+- Validate sitemap and robots output after deployment.
+- Test Open Graph cards.
+- Run an accessibility smoke test.
+- Verify Arabic RTL pages.
+- Verify product and category routes.
+- Verify noindex utility pages.
 
-1. Push the repository to GitHub.
-2. Import the project into Vercel.
-3. Vercel auto-detects Next.js — no custom build settings, environment variables, or `vercel.json` are required.
+## Scripts
 
-The default build command is `next build` and the output is served automatically. No backend, database, or secrets are needed.
+| Script | Command | Description |
+| --- | --- | --- |
+| `dev` | `next dev` | Start the development server |
+| `build` | `next build` | Create a production build |
+| `start` | `next start` | Run the production build locally |
+| `lint` | `next lint` | Run ESLint |
 
-## Notes
+## License / Ownership
 
-- This is a **client-ready frontend prototype**. Catalog, orders, and account data are static/mock and stored in the browser; there is no live backend, payment processing, or authentication service.
-- Replace the placeholder social profile URLs in `lib/social.ts` and confirm the support contact details before going live.
-- All product, category, and payment data is centralised in `lib/` to keep the UI consistent and easy to update.
+License: Not specified.

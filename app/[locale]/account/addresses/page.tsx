@@ -45,7 +45,7 @@ export default function AddressesPage() {
 
   if (!hydrated) {
     return (
-      <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, color: "#a98e93" }}>
+      <div role="status" aria-live="polite" style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, color: "#a98e93" }}>
         {t("account.addressesLoading")}
       </div>
     );
@@ -159,28 +159,28 @@ export default function AddressesPage() {
           <h3 className="dm-serif" style={{ fontWeight: 600, fontSize: 22, color: "#5a4145", margin: "0 0 18px" }}>
             {editId ? t("account.addressesEditTitle") : t("account.addressesAddTitle")}
           </h3>
-          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 14 }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               <label htmlFor="address-name" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>{t("account.addressesFullName")} *</label>
-              <input id="address-name" value={formName} onChange={(e) => setFormName(e.target.value)} placeholder={`${t("account.addressesFullName")} *`} style={inputBase} />
+              <input id="address-name" type="text" autoComplete="name" required aria-invalid={formError ? true : undefined} aria-describedby={formError ? "address-form-error" : undefined} value={formName} onChange={(e) => setFormName(e.target.value)} placeholder={`${t("account.addressesFullName")} *`} style={inputBase} />
             </div>
             <div className="dm-address-two-col">
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 <label htmlFor="address-phone" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>{t("account.addressesPhone")} *</label>
-                <input id="address-phone" value={formPhone} onChange={(e) => setFormPhone(e.target.value)} placeholder={`${t("account.addressesPhone")} *`} style={inputBase} />
+                <input id="address-phone" type="tel" autoComplete="tel" required aria-invalid={formError ? true : undefined} aria-describedby={formError ? "address-form-error" : undefined} value={formPhone} onChange={(e) => setFormPhone(e.target.value)} placeholder={`${t("account.addressesPhone")} *`} style={inputBase} />
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 <label htmlFor="address-city" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>{t("account.addressesCity")} *</label>
-                <input id="address-city" value={formCity} onChange={(e) => setFormCity(e.target.value)} placeholder={`${t("account.addressesCity")} *`} style={inputBase} />
+                <input id="address-city" type="text" autoComplete="address-level2" required aria-invalid={formError ? true : undefined} aria-describedby={formError ? "address-form-error" : undefined} value={formCity} onChange={(e) => setFormCity(e.target.value)} placeholder={`${t("account.addressesCity")} *`} style={inputBase} />
               </div>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               <label htmlFor="address-gov" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>{t("account.addressesGovernorate")} *</label>
-              <input id="address-gov" value={formGov} onChange={(e) => setFormGov(e.target.value)} placeholder={`${t("account.addressesGovernorate")} *`} style={inputBase} />
+              <input id="address-gov" type="text" autoComplete="address-level1" required aria-invalid={formError ? true : undefined} aria-describedby={formError ? "address-form-error" : undefined} value={formGov} onChange={(e) => setFormGov(e.target.value)} placeholder={`${t("account.addressesGovernorate")} *`} style={inputBase} />
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               <label htmlFor="address-street" style={{ fontSize: 13, fontWeight: 500, color: "#7c6065" }}>{t("account.addressesStreet")} *</label>
-              <input id="address-street" value={formAddress} onChange={(e) => setFormAddress(e.target.value)} placeholder={`${t("account.addressesStreet")} *`} style={inputBase} />
+              <input id="address-street" type="text" autoComplete="address-line1" required aria-invalid={formError ? true : undefined} aria-describedby={formError ? "address-form-error" : undefined} value={formAddress} onChange={(e) => setFormAddress(e.target.value)} placeholder={`${t("account.addressesStreet")} *`} style={inputBase} />
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8, margin: "6px 0" }}>
               <input
@@ -194,7 +194,7 @@ export default function AddressesPage() {
             </div>
 
             {formError ? (
-              <div style={{ fontSize: 13.5, color: "#cf6b6b" }}>{formError}</div>
+              <div id="address-form-error" role="alert" style={{ fontSize: 13.5, color: "#b94f4f" }}>{formError}</div>
             ) : null}
 
             <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
@@ -232,8 +232,8 @@ export default function AddressesPage() {
                   </div>
 
                   <div style={{ display: "flex", gap: 12, borderTop: "1px solid #f5eef0", paddingTop: 14 }}>
-                    <button onClick={() => handleEdit(addr)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#b76e79", textDecoration: "underline", padding: 0 }}>{t("account.addressesEdit")}</button>
-                    <button onClick={() => handleDelete(addr.id)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: 13, fontWeight: 500, color: "#bd8a93", textDecoration: "underline", padding: 0 }}>{t("account.addressesDelete")}</button>
+                    <button type="button" onClick={() => handleEdit(addr)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#b76e79", textDecoration: "underline", padding: "8px 4px" }}>{t("account.addressesEdit")}</button>
+                    <button type="button" onClick={() => handleDelete(addr.id)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: 13, fontWeight: 500, color: "#a75f6c", textDecoration: "underline", padding: "8px 4px" }}>{t("account.addressesDelete")}</button>
                   </div>
                 </div>
               ))}

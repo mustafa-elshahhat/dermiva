@@ -17,6 +17,7 @@ import { StoreProvider } from "@/lib/store";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ToastHost from "@/components/ToastHost";
+import AnalyticsProvider from "@/components/analytics/AnalyticsProvider";
 
 const cormorant = localFont({
   src: [
@@ -157,6 +158,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   const messages = await getMessages();
+  const tCommon = await getTranslations({ locale, namespace: "common" });
   const globalJsonLd = [
     buildOrganizationJsonLd(locale),
     buildWebSiteJsonLd(locale),
@@ -171,14 +173,19 @@ export default async function LocaleLayout({
       <body>
         <JsonLdScript data={globalJsonLd} />
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <StoreProvider>
-            <div className="dm-page-shell">
-              <SiteHeader />
-              <main style={{ flex: 1 }}>{children}</main>
-              <SiteFooter />
-            </div>
-            <ToastHost />
-          </StoreProvider>
+          <AnalyticsProvider>
+            <StoreProvider>
+              <a href="#main-content" className="dm-skip-link">
+                {tCommon("skipToMain")}
+              </a>
+              <div className="dm-page-shell">
+                <SiteHeader />
+                <main id="main-content" tabIndex={-1} style={{ flex: 1 }}>{children}</main>
+                <SiteFooter />
+              </div>
+              <ToastHost />
+            </StoreProvider>
+          </AnalyticsProvider>
         </NextIntlClientProvider>
       </body>
     </html>

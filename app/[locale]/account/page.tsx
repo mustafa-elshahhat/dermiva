@@ -89,9 +89,9 @@ export default function AccountPage() {
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {orders.slice(0, 2).map((order) => (
-                <div
+                <Link
                   key={order.no}
-                  onClick={() => router.push(`/account/orders/${order.no}`)}
+                  href={`/account/orders/${order.no}`}
                   className="dm-order-row"
                   style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", cursor: "pointer" }}
                 >
@@ -103,7 +103,7 @@ export default function AccountPage() {
                     <div style={{ fontSize: 14.5, fontWeight: 600, color: "#b76e79" }}>{order.totalFormatted}</div>
                     <div style={{ fontSize: 11.5, color: order.status === "delivered" ? "#5b9e7a" : "#b08a4e", fontWeight: 600 }}>{statusLabel(order.statusKey)}</div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}

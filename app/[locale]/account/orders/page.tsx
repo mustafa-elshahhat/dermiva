@@ -52,9 +52,9 @@ export default function OrdersPage() {
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {orders.map((order) => (
-            <div
+            <Link
               key={order.no}
-              onClick={() => router.push(`/account/orders/${order.no}`)}
+              href={`/account/orders/${order.no}`}
               className="dm-order-row"
               style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", padding: 20, gap: 16 }}
             >
@@ -77,7 +77,7 @@ export default function OrdersPage() {
                   <path d="M9 18l6-6-6-6" />
                 </svg>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

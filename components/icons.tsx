@@ -6,27 +6,27 @@ import React from "react";
 type IconProps = { size?: number };
 
 export const SearchIcon = ({ size = 20 }: IconProps) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
+  <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
     <circle cx="11" cy="11" r="7" />
     <path d="M21 21l-4-4" />
   </svg>
 );
 
 export const AccountIcon = ({ size = 20 }: IconProps) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
+  <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
     <circle cx="12" cy="8" r="4" />
     <path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
   </svg>
 );
 
 export const HeartIcon = ({ size = 20 }: IconProps) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
+  <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
     <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z" />
   </svg>
 );
 
 export const CartIcon = ({ size = 20 }: IconProps) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
+  <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7}>
     <path d="M5 7h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 7z" />
     <path d="M8.5 7V5.5a3.5 3.5 0 0 1 7 0V7" />
   </svg>
@@ -35,7 +35,7 @@ export const CartIcon = ({ size = 20 }: IconProps) => (
 // Raw SVG strings rendered where a small inline glyph is needed inside content
 // tiles (promise / trust / value / account icons).
 export const RawIcon = ({ svg }: { svg: string }) => (
-  <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }} dangerouslySetInnerHTML={{ __html: svg }} />
+  <span aria-hidden="true" style={{ display: "flex", alignItems: "center", justifyContent: "center" }} dangerouslySetInnerHTML={{ __html: svg }} />
 );
 
 export const PROMISE_ICONS = {

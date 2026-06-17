@@ -27,18 +27,23 @@ export default function FilterControls({
   filter,
   onChange,
   selectBg = "#fdf6f4",
+  idPrefix = "product-filter",
 }: {
   filter: FilterState;
   onChange: (patch: Partial<FilterState>) => void;
   selectBg?: string;
+  idPrefix?: string;
 }) {
   const t = useTranslations("sorting");
+  const priceId = `${idPrefix}-max-price`;
+  const sortId = `${idPrefix}-sort`;
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <span style={{ fontSize: 12.5, color: "#a98e93", whiteSpace: "nowrap" }}>{t("maxPrice", { max: filter.max })}</span>
+        <label htmlFor={priceId} style={{ fontSize: 12.5, color: "#7c6065", whiteSpace: "nowrap" }}>{t("maxPrice", { max: filter.max })}</label>
         <input
+          id={priceId}
           type="range"
           min={120}
           max={700}
@@ -49,8 +54,8 @@ export default function FilterControls({
         />
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-        <span style={{ fontSize: 12.5, color: "#a98e93" }}>{t("label")}</span>
-        <select value={filter.sort} onChange={(e) => onChange({ sort: e.target.value })} style={{ ...selectStyle, background: selectBg }}>
+        <label htmlFor={sortId} style={{ fontSize: 12.5, color: "#7c6065" }}>{t("label")}</label>
+        <select id={sortId} value={filter.sort} onChange={(e) => onChange({ sort: e.target.value })} style={{ ...selectStyle, background: selectBg }}>
           {SORT_VALUES.map((value) => (
             <option key={value} value={value}>
               {t(SORT_LABEL_KEY[value])}

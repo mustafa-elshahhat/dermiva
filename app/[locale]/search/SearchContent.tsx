@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 import ProductImage from "@/components/ProductImage";
 import ProductGrid from "@/components/ProductGrid";
 import type { ProductViewModel } from "@/lib/types/product";
 import type { CategoryTileViewModel } from "@/lib/types/category";
 import { searchProductVMs } from "@/lib/view-models/product.vm";
 import { useSearch, useHydrated } from "@/lib/store";
+import { trackEvent } from "@/lib/analytics/analytics";
 
 interface Props {
   products: ProductViewModel[];
@@ -17,24 +18,35 @@ interface Props {
 
 export default function SearchContent({ products, categoryTiles }: Props) {
   const t = useTranslations();
+  const locale = useLocale();
+  const route = usePathname();
   const { recent } = useSearch();
   const hydrated = useHydrated();
   const [query, setQuery] = useState("");
   const q = query.trim();
   const results = searchProductVMs(products, query);
+  const trackedView = useRef(false);
+
+  useEffect(() => {
+    if (trackedView.current) return;
+    trackedView.current = true;
+    trackEvent("search_view", { locale, route, queryLength: 0, resultCount: products.length });
+  }, [locale, products.length, route]);
 
   return (
     <div className="dm-fade" style={{ maxWidth: 1100, margin: "0 auto", width: "100%", padding: "clamp(24px,4vw,40px) clamp(16px,4vw,40px) clamp(40px,5vw,64px)" }}>
       <h1 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(32px,4.5vw,46px)", color: "#5a4145", margin: "0 0 18px", textAlign: "center" }}>{t("search.title")}</h1>
       <div style={{ position: "relative", maxWidth: 600, margin: "0 auto 24px" }}>
+        <label htmlFor="site-search" className="sr-only">{t("search.placeholder")}</label>
         <input
+          id="site-search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t("search.placeholder")}
           autoFocus
           style={{ width: "100%", border: "1px solid #e3c3cc", background: "#fff", borderRadius: 999, padding: "16px 22px", paddingInlineStart: 52, fontSize: 15, fontFamily: "var(--font-jost),sans-serif", color: "#5a4145", boxSizing: "border-box", boxShadow: "0 8px 20px rgba(184,134,146,.12)" }}
         />
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b89ca1" strokeWidth={1.8} style={{ position: "absolute", insetInlineStart: 20, top: "50%", transform: "translateY(-50%)" }}>
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b89ca1" strokeWidth={1.8} style={{ position: "absolute", insetInlineStart: 20, top: "50%", transform: "translateY(-50%)" }}>
           <circle cx="11" cy="11" r="7" />
           <path d="M21 21l-4-4" />
         </svg>
@@ -68,14 +80,14 @@ export default function SearchContent({ products, categoryTiles }: Props) {
         </div>
       ) : results.length === 0 ? (
         <div style={{ textAlign: "center", padding: "54px 20px", background: "#fff", borderRadius: 20, border: "1px solid #f0dde1", maxWidth: 600, margin: "0 auto" }}>
-          <div style={{ fontSize: 46, marginBottom: 12 }}>🔍</div>
-          <h3 className="dm-serif" style={{ fontSize: 24, color: "#5a4145", margin: "0 0 8px" }}>{t("search.noResultsTitle")}</h3>
+          <div aria-hidden="true" style={{ fontSize: 46, marginBottom: 12 }}>🔍</div>
+          <h2 className="dm-serif" style={{ fontSize: 24, color: "#5a4145", margin: "0 0 8px" }}>{t("search.noResultsTitle")}</h2>
           <p style={{ fontSize: 14, color: "#a98e93", margin: 0 }}>{t("search.noResultsText")}</p>
         </div>
       ) : (
         <>
           <div style={{ fontSize: 13, color: "#a98e93", marginBottom: 16, textAlign: "center" }}>{t("common.resultsCount", { count: results.length })}</div>
-          <ProductGrid products={results} />
+          <ProductGrid products={results} tracking={{ clickEventName: "search_result_click", queryLength: q.length }} />
         </>
       )}
     </div>

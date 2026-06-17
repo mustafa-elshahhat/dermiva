@@ -22,7 +22,8 @@
     "decrease": "Decrease",
     "increase": "Increase",
     "decreaseQty": "Decrease quantity",
-    "increaseQty": "Increase quantity"
+    "increaseQty": "Increase quantity",
+    "skipToMain": "Skip to main content"
   },
   "nav": {
     "home": "Home",

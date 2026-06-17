@@ -1,11 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname } from "@/i18n/navigation";
 import { useToast } from "@/lib/store";
+import { trackEvent } from "@/lib/analytics/analytics";
 
 export default function SubscribeForm() {
   const t = useTranslations("subscribe");
+  const locale = useLocale();
+  const route = usePathname();
   const { showToast } = useToast();
   const [email, setEmail] = useState("");
 
@@ -15,12 +19,17 @@ export default function SubscribeForm() {
       return;
     }
     showToast("subscribed");
+    trackEvent("newsletter_submit", { locale, route, status: "success" });
     setEmail("");
   };
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: 10, maxWidth: 460, margin: "0 auto" }}>
+      <label htmlFor="newsletter-email" className="sr-only">{t("placeholder")}</label>
       <input
+        id="newsletter-email"
+        type="email"
+        autoComplete="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder={t("placeholder")}

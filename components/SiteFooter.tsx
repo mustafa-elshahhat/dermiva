@@ -46,9 +46,10 @@ export default function SiteFooter() {
                 >
                   <Image
                     src={pm.image}
-                    alt={label}
+                    alt=""
                     width={32}
                     height={32}
+                    aria-hidden="true"
                     className="dm-footer-payment-icon"
                   />
                   <span className="dm-footer-payment-label" style={{ fontWeight: 600, color: "#8a7378", letterSpacing: ".04em", whiteSpace: "nowrap" }}>
@@ -82,7 +83,8 @@ export default function SiteFooter() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={s.icon}
-                  alt={s.label}
+                  alt=""
+                  aria-hidden="true"
                   width={24}
                   height={24}
                   style={{ objectFit: "contain", display: "block" }}

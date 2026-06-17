@@ -12,6 +12,7 @@ import { JsonLdScript } from "@/lib/seo/structured-data-script";
 import { buildBreadcrumbListJsonLd, buildCategoryCollectionPageJsonLd } from "@/lib/seo/structured-data";
 import { CategoryGuidance } from "@/components/content/ContentBlocks";
 import CategoryContent from "./CategoryContent";
+import EventReporter from "@/components/analytics/EventReporter";
 
 export function generateStaticParams() {
   return [{ cat: "face" }, { cat: "hair" }, { cat: "body" }, { cat: "lip" }];
@@ -58,6 +59,7 @@ export default async function CategoryPage({ params }: Props) {
   return (
     <>
       <JsonLdScript data={pageJsonLd} />
+      <EventReporter name="category_view" payload={{ locale, route: routes.category(category.key), categoryKey: category.key, resultCount: products.length }} />
       <div className="dm-fade">
         <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(18px,3vw,28px) clamp(16px,4vw,40px) 0" }}>
           <div className="dm-cat-hero">

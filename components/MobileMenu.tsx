@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import BrandLogo from "./BrandLogo";
 import LanguageSwitcher from "./LanguageSwitcher";
+import NavLink from "./NavLink";
 
 const DRAWER_LINKS = [
   { key: "home", href: "/" },
@@ -22,6 +23,7 @@ const DRAWER_LINKS = [
 
 export default function MobileMenu() {
   const t = useTranslations("nav");
+  const drawerId = "mobile-navigation-menu";
   const [menuOpen, setMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -59,12 +61,15 @@ export default function MobileMenu() {
     <>
       <button
         aria-label={t("openMenu")}
+        aria-expanded={menuOpen}
+        aria-controls={drawerId}
+        aria-haspopup="dialog"
         ref={menuButtonRef}
         onClick={() => setMenuOpen(true)}
         className="dm-burger"
         style={{ background: "none", border: "none", cursor: "pointer", padding: 8 }}
       >
-        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: 4 }}>
           <span style={{ width: 22, height: 2, background: "#7c5f64", borderRadius: 2, display: "block" }} />
           <span style={{ width: 22, height: 2, background: "#7c5f64", borderRadius: 2, display: "block" }} />
           <span style={{ width: 22, height: 2, background: "#7c5f64", borderRadius: 2, display: "block" }} />
@@ -77,6 +82,10 @@ export default function MobileMenu() {
           style={{ position: "fixed", inset: 0, height: "100dvh", zIndex: 1000, background: "rgba(80,55,60,.4)", backdropFilter: "blur(2px)" }}
         >
           <div
+            id={drawerId}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t("openMenu")}
             onClick={(e) => e.stopPropagation()}
             className="dm-drawer"
             style={{
@@ -106,18 +115,18 @@ export default function MobileMenu() {
                 className="dm-icon-btn"
                 style={{ width: 44, height: 44, fontSize: 24, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", background: "none", border: "none", color: "#7c5f64" }}
               >
-                ✕
+                <span aria-hidden="true">✕</span>
               </button>
             </div>
             {DRAWER_LINKS.map((l, i) => (
-              <Link
+              <NavLink
                 key={l.href + i}
                 href={l.href}
                 onClick={() => setMenuOpen(false)}
                 style={{ cursor: "pointer", padding: "13px 8px", borderBottom: i < DRAWER_LINKS.length - 1 ? "1px solid #f0dde1" : "none", fontSize: 15, color: "#5a4145" }}
               >
                 {t(l.key)}
-              </Link>
+              </NavLink>
             ))}
             <div style={{ marginTop: 16 }}>
               <LanguageSwitcher compact />

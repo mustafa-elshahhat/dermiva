@@ -18,6 +18,7 @@ import { buildProductGuidanceVM } from "@/lib/view-models/content.vm";
 import { formatList } from "@/lib/locale/format";
 import type { Locale } from "@/i18n/routing";
 import ProductActions from "./ProductActions";
+import EventReporter from "@/components/analytics/EventReporter";
 
 export function generateStaticParams() {
   return getAllProducts().map((p) => ({ id: p.id }));
@@ -90,6 +91,7 @@ export default async function ProductPage({ params }: Props) {
   return (
     <>
       <JsonLdScript data={pageJsonLd} />
+      <EventReporter name="product_view" payload={{ locale, route: routes.product(p.id), productId: p.id, categoryKey: p.categoryKey, price: p.price, currency: "EGP" }} />
       <div className="dm-fade" style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(18px,3vw,28px) clamp(16px,4vw,40px) clamp(40px,5vw,64px)" }}>
         <div style={{ marginBottom: 18, fontSize: 12.5, color: "#a98e93" }}>{t("common.home")} / {t("common.shop")} / <span style={{ color: "#7c6065" }}>{name}</span></div>
 
@@ -132,7 +134,7 @@ export default async function ProductPage({ params }: Props) {
               ))}
             </div>
 
-            <ProductActions productId={p.id} />
+            <ProductActions productId={p.id} productName={p.name} categoryKey={p.categoryKey} price={p.price} />
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: 14, padding: "16px 0", borderTop: "1px solid #f0dde1", borderBottom: "1px solid #f0dde1", marginBottom: 24 }}>
               {TRUST.map((tr) => (

@@ -4,6 +4,7 @@ import React from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
+import { trackEvent } from "@/lib/analytics/analytics";
 
 // Switches the current route to the other locale, preserving the path and any
 // dynamic params (e.g. /ar/product/super-serum <-> /en/product/super-serum).
@@ -19,6 +20,7 @@ export default function LanguageSwitcher({ compact = false }: { compact?: boolea
   const switchTo = () => {
     // usePathname() from i18n/navigation returns the resolved, locale-stripped
     // pathname (e.g. /product/super-serum), so switching locale keeps the route.
+    trackEvent("language_switch", { locale, route: pathname, fromLocale: locale, toLocale: other });
     router.replace(pathname, { locale: other });
   };
 

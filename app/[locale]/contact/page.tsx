@@ -69,9 +69,9 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
             <div style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 20 }}>
               <h3 className="dm-serif" style={{ fontWeight: 600, fontSize: 20, color: "#5a4145", margin: "0 0 12px" }}>{t("directContact")}</h3>
               <div style={{ display: "flex", flexDirection: "column", gap: 10, fontSize: 14, color: "#7c6065" }}>
-                <div>📞 <strong>{t("phoneLabel")}</strong> +20 100 123 4567</div>
-                <div>✉ <strong>{t("emailLabel")}</strong> support@dermiva.com</div>
-                <div>📍 <strong>{t("addressLabel")}</strong> {t("addressValue")}</div>
+                <div><span aria-hidden="true">📞</span> <strong>{t("phoneLabel")}</strong> +20 100 123 4567</div>
+                <div><span aria-hidden="true">✉</span> <strong>{t("emailLabel")}</strong> support@dermiva.com</div>
+                <div><span aria-hidden="true">📍</span> <strong>{t("addressLabel")}</strong> {t("addressValue")}</div>
                 <div style={{ marginTop: 8, fontSize: 12, color: "#a98e93" }}>{t("hours")}</div>
                 {/* TODO: Confirm final public phone, email, address and social links before production launch. */}
               </div>

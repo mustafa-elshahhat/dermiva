@@ -22,7 +22,8 @@
     "decrease": "تقليل",
     "increase": "زيادة",
     "decreaseQty": "تقليل الكمية",
-    "increaseQty": "زيادة الكمية"
+    "increaseQty": "زيادة الكمية",
+    "skipToMain": "تخطي إلى المحتوى الرئيسي"
   },
   "nav": {
     "home": "الرئيسية",
