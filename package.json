@@ -2,6 +2,7 @@
   "name": "dermiva",
   "version": "0.1.0",
   "private": true,
+  "description": "Dermiva — a responsive, science-driven skincare e-commerce storefront prototype built with Next.js.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -20,18 +20,18 @@ export interface Product {
 }
 
 export const PRODUCTS: Product[] = [
-  { id: "super-serum", cat: "face", name: "Super Serum", sub: "30 ml", price: 550, kind: "serum", tag: "Best Seller", rating: "4.9", reviews: 128, packshotImage: "/products/packshots/Super%20Serum.png" },
-  { id: "glow-peel-pads", cat: "face", name: "Glow Peel Pads", sub: "30 Pads", price: 480, kind: "jar", tag: "Best Seller", rating: "4.8", reviews: 96, packshotImage: "/products/packshots/Glow%20Peel%20Pads.png" },
-  { id: "vitamin-c-serum", cat: "face", name: "Vitamin C Serum", sub: "30 ml", price: 580, kind: "serum", tag: "", rating: "4.7", reviews: 41, packshotImage: "/products/packshots/Vitamin%20C%20Serum.png" },
-  { id: "niacinamide", cat: "face", name: "Niacinamide 10%", sub: "30 ml", price: 520, kind: "serum", tag: "", rating: "4.8", reviews: 87, packshotImage: "/products/packshots/Niacinamide%2010%25.png" },
-  { id: "hair-therapy-oil", cat: "hair", name: "Hair Therapy Oil", sub: "100 ml", price: 600, kind: "pump", tag: "Best Seller", rating: "4.9", reviews: 74, packshotImage: "/products/packshots/Hair%20Therapy%20Oil.png" },
-  { id: "hair-mask", cat: "hair", name: "Hair Mask", sub: "200 g", price: 520, kind: "jar", tag: "", rating: "4.8", reviews: 53, packshotImage: "/products/packshots/Hair%20Mask.png" },
-  { id: "repair-shampoo", cat: "hair", name: "Repair Shampoo", sub: "300 ml", price: 320, kind: "pump", tag: "", rating: "4.5", reviews: 44, packshotImage: "/products/packshots/Repair%20Shampoo.png" },
-  { id: "body-lotion", cat: "body", name: "Nourish Body Lotion", sub: "250 ml", price: 390, kind: "pump", tag: "", rating: "4.6", reviews: 38, packshotImage: "/products/packshots/Nourish%20Body%20Lotion.png" },
-  { id: "body-scrub", cat: "body", name: "Glow Body Scrub", sub: "200 g", price: 350, kind: "jar", tag: "", rating: "4.7", reviews: 29, packshotImage: "/products/packshots/Glow%20Body%20Scrub.png" },
-  { id: "shea-butter", cat: "body", name: "Shea Body Butter", sub: "150 g", price: 410, kind: "jar", tag: "New", rating: "4.9", reviews: 33, packshotImage: "/products/packshots/Shea%20Body%20Butter.png" },
-  { id: "lip-balm", cat: "lip", name: "Lip Balm", sub: "Strawberry", price: 120, kind: "tube", tag: "New", rating: "4.7", reviews: 210, packshotImage: "/products/packshots/Lip%20Balm.png" },
-  { id: "lip-oil", cat: "lip", name: "Plumping Lip Oil", sub: "10 ml", price: 180, kind: "tube", tag: "New", rating: "4.8", reviews: 62, packshotImage: "/products/packshots/Plumping%20Lip%20Oil.png" },
+  { id: "super-serum", cat: "face", name: "Super Serum", sub: "30 ml", price: 550, kind: "serum", tag: "Best Seller", rating: "4.9", reviews: 128, packshotImage: "/products/packshots/super-serum.webp" },
+  { id: "glow-peel-pads", cat: "face", name: "Glow Peel Pads", sub: "30 Pads", price: 480, kind: "jar", tag: "Best Seller", rating: "4.8", reviews: 96, packshotImage: "/products/packshots/glow-peel-pads.webp" },
+  { id: "vitamin-c-serum", cat: "face", name: "Vitamin C Serum", sub: "30 ml", price: 580, kind: "serum", tag: "", rating: "4.7", reviews: 41, packshotImage: "/products/packshots/vitamin-c-serum.webp" },
+  { id: "niacinamide", cat: "face", name: "Niacinamide 10%", sub: "30 ml", price: 520, kind: "serum", tag: "", rating: "4.8", reviews: 87, packshotImage: "/products/packshots/niacinamide-10.webp" },
+  { id: "hair-therapy-oil", cat: "hair", name: "Hair Therapy Oil", sub: "100 ml", price: 600, kind: "pump", tag: "Best Seller", rating: "4.9", reviews: 74, packshotImage: "/products/packshots/hair-therapy-oil.webp" },
+  { id: "hair-mask", cat: "hair", name: "Hair Mask", sub: "200 g", price: 520, kind: "jar", tag: "", rating: "4.8", reviews: 53, packshotImage: "/products/packshots/hair-mask.webp" },
+  { id: "repair-shampoo", cat: "hair", name: "Repair Shampoo", sub: "300 ml", price: 320, kind: "pump", tag: "", rating: "4.5", reviews: 44, packshotImage: "/products/packshots/repair-shampoo.webp" },
+  { id: "body-lotion", cat: "body", name: "Nourish Body Lotion", sub: "250 ml", price: 390, kind: "pump", tag: "", rating: "4.6", reviews: 38, packshotImage: "/products/packshots/nourish-body-lotion.webp" },
+  { id: "body-scrub", cat: "body", name: "Glow Body Scrub", sub: "200 g", price: 350, kind: "jar", tag: "", rating: "4.7", reviews: 29, packshotImage: "/products/packshots/glow-body-scrub.webp" },
+  { id: "shea-butter", cat: "body", name: "Shea Body Butter", sub: "150 g", price: 410, kind: "jar", tag: "New", rating: "4.9", reviews: 33, packshotImage: "/products/packshots/shea-body-butter.webp" },
+  { id: "lip-balm", cat: "lip", name: "Lip Balm", sub: "Strawberry", price: 120, kind: "tube", tag: "New", rating: "4.7", reviews: 210, packshotImage: "/products/packshots/lip-balm.webp" },
+  { id: "lip-oil", cat: "lip", name: "Plumping Lip Oil", sub: "10 ml", price: 180, kind: "tube", tag: "New", rating: "4.8", reviews: 62, packshotImage: "/products/packshots/plumping-lip-oil.webp" },
 ];
 
 export interface CategoryHeroImages {
@@ -54,7 +54,7 @@ export const CATS: Record<CategoryKey, CategoryInfo> = {
   face: {
     label: "Face Care",
     tagline: "Serums, treatments & glow essentials for radiant skin.",
-    cardImage: "/category/category-card/Face%20Care%20Card.webp",
+    cardImage: "/category/category-card/face-care-card.webp",
     heroImages: {
       desktop: "/category/category-hero/face-care-desktop.webp",
       tablet: "/category/category-hero/face-care-tablet.webp",
@@ -64,7 +64,7 @@ export const CATS: Record<CategoryKey, CategoryInfo> = {
   hair: {
     label: "Hair Care",
     tagline: "Oils, masks & repair for stronger, shinier hair.",
-    cardImage: "/category/category-card/Hair%20Care%20Card.webp",
+    cardImage: "/category/category-card/hair-care-card.webp",
     heroImages: {
       desktop: "/category/category-hero/hair-care-desktop.webp",
       tablet: "/category/category-hero/hair-care-tablet.webp",
@@ -74,7 +74,7 @@ export const CATS: Record<CategoryKey, CategoryInfo> = {
   body: {
     label: "Body Care",
     tagline: "Lotions, scrubs & butters for soft, nourished skin.",
-    cardImage: "/category/category-card/Body%20Care%20Card.webp",
+    cardImage: "/category/category-card/body-care-card.webp",
     heroImages: {
       desktop: "/category/category-hero/body-care-desktop.webp",
       tablet: "/category/category-hero/body-care-tablet.webp",
@@ -84,7 +84,7 @@ export const CATS: Record<CategoryKey, CategoryInfo> = {
   lip: {
     label: "Lip Care",
     tagline: "Balms & oils for soft, smooth, plump lips.",
-    cardImage: "/category/category-card/Lip%20Care%20Card.webp",
+    cardImage: "/category/category-card/lip-care-card.webp",
     heroImages: {
       desktop: "/category/category-hero/lip-care-desktop.webp",
       tablet: "/category/category-hero/lip-care-tablet.webp",

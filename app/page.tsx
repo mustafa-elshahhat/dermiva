@@ -25,9 +25,9 @@ export default function HomePage() {
       <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(18px,3vw,32px) clamp(16px,4vw,40px)" }}>
         <div className="dm-hero">
           <picture className="dm-hero__media">
-            <source media="(min-width: 1024px)" srcSet="/hero/Desktop.webp" />
-            <source media="(min-width: 768px)" srcSet="/hero/Tablet.webp" />
-            <img src="/hero/Mobile.webp" alt="Dermiva Super Serum, Glow Peel Pads and Lip Balm collection" fetchPriority="high" />
+            <source media="(min-width: 1024px)" srcSet="/hero/desktop.webp" />
+            <source media="(min-width: 768px)" srcSet="/hero/tablet.webp" />
+            <img src="/hero/mobile.webp" alt="Dermiva Super Serum, Glow Peel Pads and Lip Balm collection" fetchPriority="high" />
           </picture>
           <div className="dm-hero__overlay" aria-hidden="true" />
           <div className="dm-hero__content">

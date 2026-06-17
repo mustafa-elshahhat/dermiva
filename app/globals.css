@@ -481,7 +481,7 @@ textarea::placeholder {
   overflow: hidden;
   display: flex;
   align-items: flex-start; /* mobile: text sits in the upper part */
-  aspect-ratio: 1024 / 1536; /* Mobile.webp 2:3 portrait */
+  aspect-ratio: 1024 / 1536; /* mobile.webp 2:3 portrait */
   box-shadow: 0 16px 40px rgba(184, 134, 146, 0.16);
 }
 .dm-hero__media,
@@ -605,7 +605,7 @@ textarea::placeholder {
 
 @media (min-width: 768px) {
   .dm-hero {
-    aspect-ratio: 1448 / 1086; /* Tablet.webp 4:3 */
+    aspect-ratio: 1448 / 1086; /* tablet.webp 4:3 */
     align-items: center; /* text vertically centered, on the left */
   }
   .dm-hero__overlay {
@@ -630,7 +630,7 @@ textarea::placeholder {
 
 @media (min-width: 1024px) {
   .dm-hero {
-    aspect-ratio: 1672 / 941; /* Desktop.webp ~16:9 */
+    aspect-ratio: 1672 / 941; /* desktop.webp ~16:9 */
     min-height: 540px;
   }
   .dm-hero__overlay {

@@ -26,7 +26,7 @@ export default function AboutPage() {
           <div style={{ height: "clamp(280px,36vw,400px)", borderRadius: 24, overflow: "hidden" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/Our%20Story/Our%20Story.webp"
+              src="/about/our-story.webp"
               alt="Dermiva skincare products"
               style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
             />

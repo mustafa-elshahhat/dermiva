@@ -2,10 +2,9 @@
 // This single list is the source of truth for every component that
 // renders social icons (footer, contact page, etc.).
 //
-// ⚠️ UPDATE ME: Replace the placeholder hrefs below with Dermiva's real
-// profile URLs as they become available. The WhatsApp link uses the
-// support number already published on the contact page. Leave entries
-// here so the rest of the app stays in sync.
+// Note: replace the "#" hrefs below with Dermiva's official profile URLs
+// as they become available. The WhatsApp link uses the support number
+// published on the contact page. Keep all entries so the UI stays in sync.
 
 export interface SocialLink {
   /** Unique identifier, also used to resolve the icon path. */
