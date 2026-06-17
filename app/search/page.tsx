@@ -44,11 +44,11 @@ export default function SearchPage() {
             {catKeys.map((k) => {
               const catProduct = getCategoryProduct(k);
               return (
-              <Link key={k} href={`/category/${k}`} style={{ cursor: "pointer", background: "#fff", border: "1px solid #f0dde1", borderRadius: 16, padding: 14, textAlign: "center" }}>
-                <div style={{ height: 70, marginBottom: 6, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <ProductImage image={productImage(catProduct)} mode="cutout" name={CATS[k].label} kind={catProduct.kind} />
+              <Link key={k} href={`/category/${k}`} style={{ cursor: "pointer", background: "#fff", border: "1px solid #f0dde1", borderRadius: 16, overflow: "hidden", textAlign: "center", display: "block" }}>
+                <div style={{ aspectRatio: "1/1", overflow: "hidden" }}>
+                  <ProductImage image={productImage(catProduct)} mode="packshot" name={CATS[k].label} kind={catProduct.kind} style={{ objectFit: "cover" }} />
                 </div>
-                <div className="dm-serif" style={{ fontWeight: 600, fontSize: 16, color: "#4f3a3e" }}>{CATS[k].label}</div>
+                <div className="dm-serif" style={{ fontWeight: 600, fontSize: 16, color: "#4f3a3e", padding: "10px 12px 14px" }}>{CATS[k].label}</div>
               </Link>
               );
             })}

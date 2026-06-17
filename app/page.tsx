@@ -103,11 +103,9 @@ export default function HomePage() {
       {/* FEATURED PRODUCT */}
       <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(36px,5vw,56px) clamp(16px,4vw,40px)" }}>
         <div style={{ display: "flex", flexWrap: "wrap", borderRadius: 24, overflow: "hidden", boxShadow: "0 16px 40px rgba(184,134,146,.14)" }}>
-          <div style={{ flex: "1 1 300px", minWidth: 280, background: "radial-gradient(120% 120% at 30% 20%,#f7ecd6,#eed9b4 70%,#e3c894)", display: "flex", alignItems: "center", justifyContent: "center", padding: 36, position: "relative" }}>
-            <div style={{ width: "min(60%,220px)", height: "clamp(220px,30vw,320px)" }}>
-              <ProductImage image={productImage(superSerum)} mode="packshot" name="Super Serum" kind="serum" />
-            </div>
-            <div style={{ position: "absolute", top: 30, right: 30, display: "flex", flexDirection: "column", gap: 9 }}>
+          <div style={{ flex: "1 1 300px", minWidth: 280, position: "relative", overflow: "hidden", minHeight: "clamp(320px,40vw,440px)" }}>
+            <ProductImage image={productImage(superSerum)} mode="packshot" name="Super Serum" kind="serum" style={{ position: "absolute", inset: 0, objectFit: "cover" }} />
+            <div style={{ position: "absolute", top: 30, right: 30, display: "flex", flexDirection: "column", gap: 9, zIndex: 2 }}>
               {HERO_INGREDIENTS.map((ing) => (
                 <div key={ing} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 12.5, color: "#8a6a3a", background: "rgba(255,255,255,.6)", padding: "5px 11px", borderRadius: 999 }}>
                   <span style={{ color: "#c2974f" }}>✦</span>

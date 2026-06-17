@@ -31,8 +31,8 @@ export default function CartContent() {
       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         {lines.map((it) => (
           <div key={it.id} style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 18, padding: 14, display: "flex", gap: 14, alignItems: "center" }}>
-            <div onClick={() => router.push(`/product/${it.id}`)} style={{ cursor: "pointer", flex: "0 0 auto", width: 84, height: 84, background: "linear-gradient(160deg,#fbeef0,#f4dbe2)", borderRadius: 14, padding: 8, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <ProductImage image={productImage(it)} mode="cutout" name={it.name} kind={it.kind} />
+            <div onClick={() => router.push(`/product/${it.id}`)} style={{ cursor: "pointer", flex: "0 0 auto", width: 84, height: 84, borderRadius: 14, overflow: "hidden" }}>
+              <ProductImage image={productImage(it)} mode="packshot" name={it.name} kind={it.kind} style={{ objectFit: "cover" }} />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div onClick={() => router.push(`/product/${it.id}`)} className="dm-serif" style={{ cursor: "pointer", fontWeight: 600, fontSize: 19, color: "#4f3a3e", lineHeight: 1.1 }}>{it.name}</div>

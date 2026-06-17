@@ -75,8 +75,8 @@ export default function OrderDetailPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {resolvedItems.map((item) => (
                 <div key={item.id} style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                  <div style={{ flex: "0 0 auto", width: 56, height: 56, background: "linear-gradient(160deg,#fbeef0,#f4dbe2)", borderRadius: 10, padding: 5, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <ProductImage image={productImage(item)} mode="cutout" name={item.name} kind={item.kind} />
+                  <div style={{ flex: "0 0 auto", width: 56, height: 56, borderRadius: 10, overflow: "hidden" }}>
+                    <ProductImage image={productImage(item)} mode="packshot" name={item.name} kind={item.kind} style={{ objectFit: "cover" }} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 14, fontWeight: 600, color: "#4f3a3e", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</div>
