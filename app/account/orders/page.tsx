@@ -3,12 +3,12 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useStore } from "@/lib/store";
+import { useAuth } from "@/lib/store";
 import { ORDERS, money } from "@/lib/catalog";
 
 export default function OrdersPage() {
   const router = useRouter();
-  const { loggedIn, hydrated } = useStore();
+  const { loggedIn, hydrated } = useAuth();
 
   useEffect(() => {
     if (hydrated && !loggedIn) {

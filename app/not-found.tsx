@@ -1,22 +1,8 @@
-"use client";
-
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 import Link from "next/link";
 import Bottle from "@/components/Bottle";
 
 export default function NotFound() {
-  const router = useRouter();
-  const [query, setQuery] = useState("");
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (query.trim()) {
-      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
-    } else {
-      router.push("/search");
-    }
-  };
 
   return (
     <div className="dm-fade" style={{ minHeight: "75vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 16px" }}>
@@ -35,10 +21,9 @@ export default function NotFound() {
         </p>
 
         {/* Search Helper */}
-        <form onSubmit={handleSearchSubmit} style={{ position: "relative", maxWidth: 420, margin: "0 auto 28px" }}>
+        <form action="/search" method="GET" style={{ position: "relative", maxWidth: 420, margin: "0 auto 28px" }}>
           <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            name="q"
             placeholder="Search for serums, oils..."
             style={{ width: "100%", border: "1px solid #efd9df", background: "#fdf6f4", borderRadius: 999, padding: "13px 20px 13px 48px", fontSize: 13.5, fontFamily: "var(--font-jost),sans-serif", color: "#5a4145", boxSizing: "border-box" }}
           />

@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { useStore } from "@/lib/store";
+import { useToast } from "@/lib/store";
 
 export default function ToastHost() {
-  const { toast } = useStore();
+  const { toast } = useToast();
   if (!toast) return null;
   return (
     <div

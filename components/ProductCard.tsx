@@ -4,14 +4,15 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Bottle from "./Bottle";
 import { money, type Product } from "@/lib/catalog";
-import { useStore } from "@/lib/store";
+import { useWishlist, useCartActions } from "@/lib/store";
 
 // Ported from ProductCard.dc.html. Whole card opens the product; the heart and
 // the + button act without opening (stopPropagation), matching the prototype.
 
 export default function ProductCard({ product }: { product: Product }) {
   const router = useRouter();
-  const { wishlist, addToCart, toggleWishlist } = useStore();
+  const { wishlist, toggleWishlist } = useWishlist();
+  const { addToCart } = useCartActions();
   const wished = wishlist.includes(product.id);
 
   return (
@@ -21,7 +22,7 @@ export default function ProductCard({ product }: { product: Product }) {
       style={{ display: "flex", flexDirection: "column", cursor: "pointer", height: "100%" }}
     >
       <div style={{ position: "relative", background: "linear-gradient(160deg,#fbeef0,#f6dfe5)", aspectRatio: "1/1" }}>
-        <Bottle kind={product.kind} name={product.name} />
+        <Bottle kind={product.kind} name={product.name} light={true} />
         {product.tag ? (
           <div style={{ position: "absolute", top: 12, left: 12, background: "linear-gradient(135deg,#d9a24f,#c2974f)", color: "#fff", fontSize: 11, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", padding: "5px 11px", borderRadius: 999, boxShadow: "0 4px 10px rgba(194,151,79,.3)" }}>
             {product.tag}

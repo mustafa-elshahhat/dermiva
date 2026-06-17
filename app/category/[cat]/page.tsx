@@ -1,26 +1,31 @@
-"use client";
-
-import React, { useState } from "react";
-import { useParams, notFound } from "next/navigation";
+import React from "react";
+import { notFound } from "next/navigation";
 import Bottle from "@/components/Bottle";
-import ProductGrid from "@/components/ProductGrid";
-import FilterControls from "@/components/FilterControls";
-import { CATS, CAT_KIND, filteredList, type CategoryKey, type FilterState } from "@/lib/catalog";
+import { CATS, CAT_KIND, type CategoryKey } from "@/lib/catalog";
+import CategoryContent from "./CategoryContent";
 
-const DEFAULT_FILTER: FilterState = { sort: "featured", max: 700, query: "" };
+export function generateStaticParams() {
+  return [
+    { cat: "face" },
+    { cat: "hair" },
+    { cat: "body" },
+    { cat: "lip" },
+  ];
+}
 
-export default function CategoryPage() {
-  const params = useParams<{ cat: string }>();
-  const cat = params.cat as CategoryKey;
-  const [filter, setFilter] = useState<FilterState>(DEFAULT_FILTER);
+interface Props {
+  params: Promise<{ cat: string }>;
+}
+
+export default async function CategoryPage({ params }: Props) {
+  const resolvedParams = await params;
+  const cat = resolvedParams.cat as CategoryKey;
 
   if (!CATS[cat]) {
     notFound();
   }
 
-  const patch = (p: Partial<FilterState>) => setFilter((f) => ({ ...f, ...p }));
   const info = CATS[cat];
-  const list = filteredList(cat, filter);
 
   return (
     <div className="dm-fade">
@@ -38,21 +43,7 @@ export default function CategoryPage() {
       </section>
 
       <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(22px,3vw,32px) clamp(16px,4vw,40px) clamp(40px,5vw,64px)" }}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
-          <div style={{ fontSize: 13, color: "#a98e93" }}>{list.length} products</div>
-          <FilterControls filter={filter} onChange={patch} selectBg="#fff" />
-        </div>
-
-        {list.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "70px 20px", background: "#fff", borderRadius: 20, border: "1px solid #f0dde1" }}>
-            <div style={{ fontSize: 46, marginBottom: 12 }}>🌸</div>
-            <h3 className="dm-serif" style={{ fontSize: 26, color: "#5a4145", margin: "0 0 8px" }}>Nothing here yet</h3>
-            <p style={{ fontSize: 14, color: "#a98e93", margin: "0 0 20px" }}>No products match your filters in this category.</p>
-            <button onClick={() => setFilter(DEFAULT_FILTER)} className="dm-btn-primary" style={{ boxShadow: "none", fontSize: 13, letterSpacing: ".08em", textTransform: "uppercase", padding: "12px 28px" }}>Reset Filters</button>
-          </div>
-        ) : (
-          <ProductGrid products={list} />
-        )}
+        <CategoryContent cat={cat} />
       </section>
     </div>
   );

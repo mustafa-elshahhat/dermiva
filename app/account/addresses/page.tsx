@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useStore } from "@/lib/store";
+import { useAuth, useToast } from "@/lib/store";
 
 interface Address {
   id: string;
@@ -41,7 +41,8 @@ const DEFAULT_ADDRESSES: Address[] = [
 
 export default function AddressesPage() {
   const router = useRouter();
-  const { loggedIn, hydrated, showToast } = useStore();
+  const { loggedIn, hydrated } = useAuth();
+  const { showToast } = useToast();
   const [addresses, setAddresses] = useState<Address[]>(DEFAULT_ADDRESSES);
   
   // Form State

@@ -8,15 +8,14 @@ import ToastHost from "@/components/ToastHost";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["600", "700"],
   variable: "--font-cormorant",
   display: "swap",
 });
 
 const jost = Jost({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600"],
   variable: "--font-jost",
   display: "swap",
 });

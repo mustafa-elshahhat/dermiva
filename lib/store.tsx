@@ -63,6 +63,42 @@ const DEFAULTS: StoreState = {
 const STORAGE_KEY = "dermiva-store-v1";
 
 const StoreContext = createContext<StoreContextValue | null>(null);
+const CartStateContext = createContext<(CartTotals & { cart: CartItem[]; hydrated: boolean }) | null>(null);
+const CartActionsContext = createContext<{
+  addToCart: (id: string, qty?: number) => void;
+  setQty: (id: string, delta: number) => void;
+  removeFromCart: (id: string) => void;
+  clearCart: () => void;
+} | null>(null);
+const WishlistContext = createContext<{
+  wishlist: string[];
+  toggleWishlist: (id: string) => void;
+  moveToCart: (id: string) => void;
+  hydrated: boolean;
+} | null>(null);
+const AuthContext = createContext<{
+  loggedIn: boolean;
+  userName: string;
+  userEmail: string;
+  login: (email: string, name?: string) => void;
+  register: (email: string, name: string) => void;
+  logout: () => void;
+  hydrated: boolean;
+} | null>(null);
+const ToastContext = createContext<{
+  toast: string;
+  showToast: (msg: string) => void;
+} | null>(null);
+const SearchContext = createContext<{
+  recent: string[];
+  addRecent: (term: string) => void;
+} | null>(null);
+const PromoContext = createContext<{
+  promo: string;
+  promoApplied: boolean;
+  setPromo: (v: string) => void;
+  applyPromo: () => void;
+} | null>(null);
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<StoreState>(DEFAULTS);
@@ -209,7 +245,54 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     return { subtotal, shipping, discount, total, cartCount };
   }, [state.cart, state.promoApplied]);
 
-  const value: StoreContextValue = {
+  const cartStateValue = useMemo(() => ({
+    ...totals,
+    cart: state.cart,
+    hydrated,
+  }), [totals, state.cart, hydrated]);
+
+  const cartActionsValue = useMemo(() => ({
+    addToCart,
+    setQty,
+    removeFromCart,
+    clearCart,
+  }), [addToCart, setQty, removeFromCart, clearCart]);
+
+  const wishlistValue = useMemo(() => ({
+    wishlist: state.wishlist,
+    toggleWishlist,
+    moveToCart,
+    hydrated,
+  }), [state.wishlist, toggleWishlist, moveToCart, hydrated]);
+
+  const authValue = useMemo(() => ({
+    loggedIn: state.loggedIn,
+    userName: state.userName,
+    userEmail: state.userEmail,
+    login,
+    register,
+    logout,
+    hydrated,
+  }), [state.loggedIn, state.userName, state.userEmail, login, register, logout, hydrated]);
+
+  const toastValue = useMemo(() => ({
+    toast: state.toast,
+    showToast,
+  }), [state.toast, showToast]);
+
+  const searchValue = useMemo(() => ({
+    recent: state.recent,
+    addRecent,
+  }), [state.recent, addRecent]);
+
+  const promoValue = useMemo(() => ({
+    promo: state.promo,
+    promoApplied: state.promoApplied,
+    setPromo,
+    applyPromo,
+  }), [state.promo, state.promoApplied, setPromo, applyPromo]);
+
+  const legacyStoreValue = useMemo<StoreContextValue>(() => ({
     ...state,
     ...totals,
     hydrated,
@@ -226,9 +309,69 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     register,
     logout,
     addRecent,
-  };
+  }), [state, totals, hydrated, addToCart, setQty, removeFromCart, clearCart, toggleWishlist, moveToCart, setPromo, applyPromo, showToast, login, register, logout, addRecent]);
 
-  return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
+  return (
+    <CartStateContext.Provider value={cartStateValue}>
+      <CartActionsContext.Provider value={cartActionsValue}>
+        <WishlistContext.Provider value={wishlistValue}>
+          <AuthContext.Provider value={authValue}>
+            <ToastContext.Provider value={toastValue}>
+              <SearchContext.Provider value={searchValue}>
+                <PromoContext.Provider value={promoValue}>
+                  <StoreContext.Provider value={legacyStoreValue}>
+                    {children}
+                  </StoreContext.Provider>
+                </PromoContext.Provider>
+              </SearchContext.Provider>
+            </ToastContext.Provider>
+          </AuthContext.Provider>
+        </WishlistContext.Provider>
+      </CartActionsContext.Provider>
+    </CartStateContext.Provider>
+  );
+}
+
+export function useCartState() {
+  const ctx = useContext(CartStateContext);
+  if (!ctx) throw new Error("useCartState must be used within StoreProvider");
+  return ctx;
+}
+
+export function useCartActions() {
+  const ctx = useContext(CartActionsContext);
+  if (!ctx) throw new Error("useCartActions must be used within StoreProvider");
+  return ctx;
+}
+
+export function useWishlist() {
+  const ctx = useContext(WishlistContext);
+  if (!ctx) throw new Error("useWishlist must be used within StoreProvider");
+  return ctx;
+}
+
+export function useAuth() {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used within StoreProvider");
+  return ctx;
+}
+
+export function useToast() {
+  const ctx = useContext(ToastContext);
+  if (!ctx) throw new Error("useToast must be used within StoreProvider");
+  return ctx;
+}
+
+export function useSearch() {
+  const ctx = useContext(SearchContext);
+  if (!ctx) throw new Error("useSearch must be used within StoreProvider");
+  return ctx;
+}
+
+export function usePromo() {
+  const ctx = useContext(PromoContext);
+  if (!ctx) throw new Error("usePromo must be used within StoreProvider");
+  return ctx;
 }
 
 export function useStore(): StoreContextValue {

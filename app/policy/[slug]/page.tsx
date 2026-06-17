@@ -1,12 +1,23 @@
-"use client";
-
 import React from "react";
-import { useParams, notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import { POLICIES, type PolicyKey } from "@/lib/catalog";
 
-export default function PolicyPage() {
-  const params = useParams<{ slug: string }>();
-  const slug = params.slug as PolicyKey;
+export function generateStaticParams() {
+  return [
+    { slug: "shipping" },
+    { slug: "returns" },
+    { slug: "privacy" },
+    { slug: "terms" },
+  ];
+}
+
+interface Props {
+  params: Promise<{ slug: string }>;
+}
+
+export default async function PolicyPage({ params }: Props) {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug as PolicyKey;
 
   const policy = POLICIES[slug];
   if (!policy) {

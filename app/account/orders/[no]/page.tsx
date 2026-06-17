@@ -4,13 +4,13 @@ import React, { useEffect } from "react";
 import { useParams, useRouter, notFound } from "next/navigation";
 import Link from "next/link";
 import Bottle from "@/components/Bottle";
-import { useStore } from "@/lib/store";
+import { useAuth } from "@/lib/store";
 import { ORDERS, getProduct, money } from "@/lib/catalog";
 
 export default function OrderDetailPage() {
   const params = useParams<{ no: string }>();
   const router = useRouter();
-  const { loggedIn, hydrated } = useStore();
+  const { loggedIn, hydrated } = useAuth();
 
   useEffect(() => {
     if (hydrated && !loggedIn) {
@@ -76,7 +76,7 @@ export default function OrderDetailPage() {
               {resolvedItems.map((item) => (
                 <div key={item.id} style={{ display: "flex", gap: 12, alignItems: "center" }}>
                   <div style={{ flex: "0 0 auto", width: 56, height: 56, background: "linear-gradient(160deg,#fbeef0,#f4dbe2)", borderRadius: 10, padding: 5 }}>
-                    <Bottle kind={item.kind} name={item.name} />
+                    <Bottle kind={item.kind} name={item.name} light={true} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 14, fontWeight: 600, color: "#4f3a3e", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</div>

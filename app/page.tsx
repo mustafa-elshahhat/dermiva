@@ -1,13 +1,10 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Bottle from "@/components/Bottle";
 import ProductGrid from "@/components/ProductGrid";
 import { RawIcon, PROMISE_ICONS } from "@/components/icons";
 import { CATS, CAT_KIND, PRODUCTS, bestSellers, type CategoryKey } from "@/lib/catalog";
-import { useStore } from "@/lib/store";
+import SubscribeForm from "./SubscribeForm";
 
 const PROMISES = [
   { icon: PROMISE_ICONS.cruelty, title: "Cruelty Free", sub: "Kind to animals" },
@@ -19,15 +16,6 @@ const PROMISES = [
 const HERO_INGREDIENTS = ["Vitamin C", "Niacinamide", "Hyaluronic Acid", "Alpha Arbutin", "Collagen Peptide"];
 
 export default function HomePage() {
-  const router = useRouter();
-  const { showToast } = useStore();
-  const [email, setEmail] = useState("");
-
-  const onSubscribe = () => {
-    showToast("Subscribed! Welcome to Dermiva");
-    setEmail("");
-  };
-
   const catKeys = Object.keys(CATS) as CategoryKey[];
 
   return (
@@ -48,7 +36,7 @@ export default function HomePage() {
               <span className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(46px,8vw,72px)", color: "#b76e79", lineHeight: 0.9 }}>30%</span>
               <span className="dm-serif" style={{ fontSize: "clamp(22px,3vw,30px)", color: "#b76e79", fontWeight: 600 }}>OFF</span>
             </div>
-            <button onClick={() => router.push("/shop")} className="dm-btn-primary" style={{ fontSize: 15, fontWeight: 500, letterSpacing: ".12em", textTransform: "uppercase", padding: "15px 38px" }}>Shop Now</button>
+            <Link href="/shop" className="dm-btn-primary" style={{ display: "inline-block", fontSize: 15, fontWeight: 500, letterSpacing: ".12em", textTransform: "uppercase", padding: "15px 38px", textDecoration: "none", textAlign: "center" }}>Shop Now</Link>
           </div>
           <div className="dm-hero-child-right" style={{ position: "relative", height: "clamp(280px,38vw,420px)", display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "clamp(4px,1vw,14px)" }}>
             <div style={{ position: "absolute", bottom: "6%", left: "6%", right: "6%", height: "14%", background: "linear-gradient(180deg,#f6ece0,#e7d4c2)", borderRadius: "50%/40%", filter: "blur(2px)" }} />
@@ -130,14 +118,14 @@ export default function HomePage() {
               <span style={{ color: "#d9a24f", fontSize: 16 }}>★★★★★</span>
               <span style={{ fontSize: 14, color: "#7c6468" }}>(4.9)</span>
             </div>
-            <button onClick={() => router.push("/product/super-serum")} className="dm-btn-primary" style={{ alignSelf: "flex-start", fontSize: 14, fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", padding: "14px 34px" }}>Shop Now</button>
+            <Link href="/product/super-serum" className="dm-btn-primary" style={{ alignSelf: "flex-start", fontSize: 14, fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", padding: "14px 34px", textDecoration: "none", textAlign: "center" }}>Shop Now</Link>
           </div>
         </div>
       </section>
 
       {/* COLLECTION BANNER */}
       <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "0 clamp(16px,4vw,40px) clamp(36px,5vw,56px)" }}>
-        <div onClick={() => router.push("/category/hair")} className="dm-hero-container" style={{ cursor: "pointer", background: "radial-gradient(120% 120% at 85% 50%,#f3d3da,#ecbfc9 60%,#e3aeba)", borderRadius: 24, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 20, overflow: "hidden" }}>
+        <Link href="/category/hair" className="dm-hero-container" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 20, overflow: "hidden", background: "radial-gradient(120% 120% at 85% 50%,#f3d3da,#ecbfc9 60%,#e3aeba)", borderRadius: 24, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
           <div className="dm-hero-child-left">
             <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(30px,4.5vw,48px)", color: "#8f5360", margin: "0 0 10px", lineHeight: 1.02 }}>
               Hair Therapy
@@ -152,7 +140,7 @@ export default function HomePage() {
             <div style={{ width: "38%", height: "54%" }}><Bottle kind="jar" name="Hair Mask" /></div>
             <div style={{ width: "30%", height: "80%" }}><Bottle kind="pump" name="Shampoo" /></div>
           </div>
-        </div>
+        </Link>
       </section>
 
       {/* SUBSCRIBE */}
@@ -160,15 +148,7 @@ export default function HomePage() {
         <div style={{ maxWidth: 680, margin: "0 auto", width: "100%", padding: "clamp(44px,6vw,72px) clamp(16px,4vw,40px)", textAlign: "center" }}>
           <h2 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(28px,4vw,40px)", color: "#5a4145", margin: "0 0 8px" }}>Subscribe to our emails</h2>
           <p style={{ fontSize: 14.5, color: "#7c6065", margin: "0 0 24px" }}>Join our community for exclusive offers and skincare tips.</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, maxWidth: 460, margin: "0 auto" }}>
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              style={{ flex: "1 1 220px", minWidth: 180, border: "1px solid #e3c3cc", background: "#fff", borderRadius: 999, padding: "14px 22px", fontSize: 14, fontFamily: "var(--font-jost),sans-serif", color: "#5a4145" }}
-            />
-            <button onClick={onSubscribe} className="dm-btn-primary" style={{ boxShadow: "none", fontSize: 14, fontWeight: 500, letterSpacing: ".08em", textTransform: "uppercase", padding: "14px 30px" }}>Subscribe</button>
-          </div>
+          <SubscribeForm />
         </div>
       </section>
     </div>

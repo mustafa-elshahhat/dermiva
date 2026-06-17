@@ -13,8 +13,118 @@ const wrap: React.CSSProperties = {
   justifyContent: "center",
 };
 
-export default function Bottle({ kind = "serum", name = "DERMIVA" }: { kind?: BottleKind; name?: string }) {
+export default function Bottle({ kind = "serum", name = "DERMIVA", light = false }: { kind?: BottleKind; name?: string; light?: boolean }) {
   const label = name || "DERMIVA";
+
+  if (light) {
+    if (kind === "jar") {
+      return (
+        <div style={wrap}>
+          <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: "drop-shadow(0 8px 10px rgba(150,120,60,0.15))" }}>
+            <rect x="25" y="22" width="50" height="12" rx="3" fill="url(#jarCap)" />
+            <rect x="23" y="37" width="54" height="42" rx="6" fill="url(#jarBody)" stroke="#ecd5b5" strokeWidth="0.5" />
+            <text x="50" y="54" textAnchor="middle" fill="#b9863f" fontSize="7" fontWeight="bold" fontFamily="var(--font-cormorant)">DERMIVA</text>
+            <line x1="35" y1="58" x2="65" y2="58" stroke="#e6cfa3" strokeWidth="0.5" />
+            <text x="50" y="67" textAnchor="middle" fill="#8a7a6a" fontSize="5.5" fontFamily="var(--font-jost)">{label}</text>
+            <defs>
+              <linearGradient id="jarCap" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#e8c878" />
+                <stop offset="50%" stopColor="#f1d99a" />
+                <stop offset="100%" stopColor="#b8852f" />
+              </linearGradient>
+              <linearGradient id="jarBody" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#ffffff" />
+                <stop offset="100%" stopColor="#f3ead9" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      );
+    }
+
+    if (kind === "tube") {
+      return (
+        <div style={wrap}>
+          <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: "drop-shadow(0 8px 10px rgba(190,120,140,0.15))" }}>
+            <path d="M38 12 H62 L66 74 C66 74 66 78 62 78 H38 C34 78 34 74 34 74 Z" fill="url(#tubeBody)" />
+            <rect x="44" y="78" width="12" height="12" rx="1.5" fill="url(#tubeCap)" />
+            <text x="50" y="38" textAnchor="middle" fill="#c98aa0" fontSize="7.5" fontWeight="bold" fontFamily="var(--font-cormorant)">DERMIVA</text>
+            <line x1="40" y1="44" x2="60" y2="44" stroke="#eccdd8" strokeWidth="0.5" />
+            <text x="50" y="53" textAnchor="middle" fill="#a98090" fontSize="5.5" fontFamily="var(--font-jost)">{label}</text>
+            <defs>
+              <linearGradient id="tubeBody" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#ffffff" />
+                <stop offset="50%" stopColor="#f7dbe4" />
+                <stop offset="100%" stopColor="#f0c9d6" />
+              </linearGradient>
+              <linearGradient id="tubeCap" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#f3c4d2" />
+                <stop offset="100%" stopColor="#d886a0" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      );
+    }
+
+    if (kind === "pump") {
+      return (
+        <div style={wrap}>
+          <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: "drop-shadow(0 8px 10px rgba(120,70,40,0.15))" }}>
+            <rect x="36" y="14" width="28" height="6" fill="#2a2522" />
+            <rect x="46" y="20" width="8" height="14" fill="#46403c" />
+            <rect x="32" y="34" width="36" height="56" rx="8" fill="url(#pumpBody)" />
+            <rect x="37" y="44" width="26" height="40" rx="3" fill="url(#pumpLabel)" />
+            <text x="50" y="58" textAnchor="middle" fill="#b9863f" fontSize="7.5" fontWeight="bold" fontFamily="var(--font-cormorant)">DERMIVA</text>
+            <line x1="42" y1="63" x2="58" y2="63" stroke="#e6cfa3" strokeWidth="0.5" />
+            <text x="50" y="73" textAnchor="middle" fill="#8a7a6a" fontSize="5.5" fontFamily="var(--font-jost)">{label}</text>
+            <defs>
+              <linearGradient id="pumpBody" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#8a4524" />
+                <stop offset="50%" stopColor="#b9663a" />
+                <stop offset="100%" stopColor="#6e3519" />
+              </linearGradient>
+              <linearGradient id="pumpLabel" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#fffdfb" />
+                <stop offset="100%" stopColor="#f7ede2" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      );
+    }
+
+    // serum
+    return (
+      <div style={wrap}>
+        <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: "drop-shadow(0 8px 10px rgba(120,70,40,0.15))" }}>
+          <path d="M44 14 C44 11 56 11 56 14 Z" fill="url(#serumDropper)" />
+          <rect x="38" y="16" width="24" height="14" rx="2" fill="#2a2522" />
+          <rect x="42" y="30" width="16" height="6" fill="#a05a30" />
+          <rect x="32" y="36" width="36" height="54" rx="8" fill="url(#serumBody)" />
+          <rect x="37" y="46" width="26" height="38" rx="3" fill="url(#serumLabel)" />
+          <text x="50" y="60" textAnchor="middle" fill="#b9863f" fontSize="7.5" fontWeight="bold" fontFamily="var(--font-cormorant)">DERMIVA</text>
+          <line x1="42" y1="65" x2="58" y2="65" stroke="#e6cfa3" strokeWidth="0.5" />
+          <text x="50" y="74" textAnchor="middle" fill="#8a7a6a" fontSize="5.5" fontFamily="var(--font-jost)">{label}</text>
+          <defs>
+            <linearGradient id="serumDropper" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#f4d9b8" />
+              <stop offset="100%" stopColor="#d9a878" />
+            </linearGradient>
+            <linearGradient id="serumBody" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#8a4524" />
+              <stop offset="50%" stopColor="#b9663a" />
+              <stop offset="100%" stopColor="#6e3519" />
+            </linearGradient>
+            <linearGradient id="serumLabel" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#fffdfb" />
+              <stop offset="100%" stopColor="#f7ede2" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    );
+  }
 
   if (kind === "jar") {
     return (

@@ -470,4 +470,38 @@ textarea::placeholder {
   }
 }
 
+/* Sticky Opaque/Blurred Header styling */
+.dm-site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #fdf6f4;
+  border-bottom: 1px solid #f0dde1;
+}
+@media (min-width: 768px) {
+  .dm-site-header {
+    background: rgba(253, 246, 244, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+/* Prefers-reduced-motion handling globally */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Disable infinite/continuous animations on mobile viewport size */
+@media (max-width: 767px) {
+  *[style*="infinite"] {
+    animation: none !important;
+  }
+}
+
 

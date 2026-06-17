@@ -5,10 +5,10 @@ import Link from "next/link";
 import Bottle from "@/components/Bottle";
 import ProductGrid from "@/components/ProductGrid";
 import { CATS, CAT_KIND, PRODUCTS, searchProducts, type CategoryKey } from "@/lib/catalog";
-import { useStore } from "@/lib/store";
+import { useSearch } from "@/lib/store";
 
 export default function SearchPage() {
-  const { recent } = useStore();
+  const { recent } = useSearch();
   const [query, setQuery] = useState("");
   const q = query.trim();
   const results = searchProducts(query);

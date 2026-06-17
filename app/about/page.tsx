@@ -1,11 +1,8 @@
-"use client";
-
 import React from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Bottle from "@/components/Bottle";
 
 export default function AboutPage() {
-  const router = useRouter();
 
   return (
     <div className="dm-fade">
@@ -21,7 +18,7 @@ export default function AboutPage() {
           <p style={{ fontSize: "clamp(15px,1.6vw,18px)", color: "#7c6065", maxWidth: 540, margin: "0 auto 28px", lineHeight: 1.6 }}>
             At Dermiva, we merge clinical active ingredients with local production expertise to craft skincare that works safely and effectively.
           </p>
-          <button onClick={() => router.push("/shop")} className="dm-btn-primary" style={{ padding: "14px 38px", fontSize: 14, fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase" }}>Shop the Collection</button>
+          <Link href="/shop" className="dm-btn-primary" style={{ display: "inline-block", padding: "14px 38px", fontSize: 14, fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", textDecoration: "none", textAlign: "center" }}>Shop the Collection</Link>
         </div>
       </section>
 

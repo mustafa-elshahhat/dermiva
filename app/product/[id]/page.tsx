@@ -1,12 +1,10 @@
-"use client";
-
-import React, { useState } from "react";
-import { useParams, useRouter, notFound } from "next/navigation";
+import React from "react";
+import { notFound } from "next/navigation";
 import Bottle from "@/components/Bottle";
 import ProductGrid from "@/components/ProductGrid";
 import { RawIcon, TRUST_ICONS } from "@/components/icons";
 import { CONTENT, PRODUCTS, galleryKinds, getProduct, money } from "@/lib/catalog";
-import { useStore } from "@/lib/store";
+import ProductActions from "./ProductActions";
 
 const TRUST = [
   { icon: TRUST_ICONS.pay, title: "Secure Payment", sub: "SSL protected" },
@@ -14,19 +12,25 @@ const TRUST = [
   { icon: TRUST_ICONS.auth, title: "100% Authentic", sub: "Genuine products" },
 ];
 
-export default function ProductPage() {
-  const params = useParams<{ id: string }>();
-  const router = useRouter();
-  const { wishlist, addToCart, toggleWishlist } = useStore();
-  const [qty, setQty] = useState(1);
+export function generateStaticParams() {
+  return PRODUCTS.map((p) => ({
+    id: p.id,
+  }));
+}
 
-  const product = getProduct(params.id);
-  if (!product) {
+interface Props {
+  params: Promise<{ id: string }>;
+}
+
+export default async function ProductPage({ params }: Props) {
+  const resolvedParams = await params;
+  const p = getProduct(resolvedParams.id);
+
+  if (!p) {
     notFound();
   }
-  const p = product!;
+
   const content = CONTENT[p.cat];
-  const wished = wishlist.includes(p.id);
   const related = PRODUCTS.filter((x) => x.cat === p.cat && x.id !== p.id).slice(0, 4);
 
   return (
@@ -71,21 +75,7 @@ export default function ProductPage() {
             ))}
           </div>
 
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 14, marginBottom: 16 }}>
-            <div style={{ display: "flex", alignItems: "center", border: "1px solid #e3c3cc", borderRadius: 999, background: "#fff", overflow: "hidden" }}>
-              <button aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))} style={{ border: "none", background: "none", cursor: "pointer", width: 44, height: 46, fontSize: 20, color: "#b07c88" }}>−</button>
-              <span style={{ minWidth: 36, textAlign: "center", fontSize: 16, color: "#5a4145", fontWeight: 500 }}>{qty}</span>
-              <button aria-label="Increase quantity" onClick={() => setQty((q) => q + 1)} style={{ border: "none", background: "none", cursor: "pointer", width: 44, height: 46, fontSize: 20, color: "#b07c88" }}>+</button>
-            </div>
-            <button onClick={() => toggleWishlist(p.id)} style={{ display: "flex", alignItems: "center", gap: 8, border: `1px solid ${wished ? "#c07f8d" : "#e3c3cc"}`, background: wished ? "#faecef" : "#fff", cursor: "pointer", borderRadius: 999, height: 46, padding: "0 20px", fontSize: 14, color: "#8f5360", fontFamily: "var(--font-jost),sans-serif" }}>
-              <span style={{ color: "#c97f8d", fontSize: 16 }}>{wished ? "♥" : "♡"}</span> {wished ? "Saved" : "Save"}
-            </button>
-          </div>
-
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 30 }}>
-            <button onClick={() => addToCart(p.id, qty)} className="dm-btn-outline" style={{ flex: "1 1 180px", fontSize: 14, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", padding: "16px 24px" }}>Add to Cart</button>
-            <button onClick={() => { addToCart(p.id, qty); router.push("/checkout"); }} className="dm-btn-primary" style={{ flex: "1 1 180px", fontSize: 14, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", padding: "16px 24px" }}>Buy Now</button>
-          </div>
+          <ProductActions productId={p.id} />
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: 14, padding: "16px 0", borderTop: "1px solid #f0dde1", borderBottom: "1px solid #f0dde1", marginBottom: 24 }}>
             {TRUST.map((t) => (
