@@ -4,7 +4,7 @@ import React from "react";
 import { useLocale, useTranslations } from "next-intl";
 import ProductImage from "@/components/ProductImage";
 import { useRouter } from "@/i18n/navigation";
-import { getProduct, money, productImage } from "@/lib/catalog";
+import { buildProductVMs } from "@/lib/view-models/product.vm";
 import type { Locale } from "@/i18n/routing";
 import { useWishlist } from "@/lib/store";
 
@@ -14,9 +14,7 @@ export default function WishlistContent() {
   const router = useRouter();
   const { wishlist, toggleWishlist, moveToCart, hydrated } = useWishlist();
 
-  const items = wishlist
-    .map((id) => getProduct(id))
-    .filter((p): p is NonNullable<typeof p> => p !== undefined);
+  const items = buildProductVMs(wishlist, locale);
 
   // Hold the layout with skeletons until the saved wishlist hydrates so the
   // empty-state message never flashes for users who actually have saved items.
@@ -44,7 +42,7 @@ export default function WishlistContent() {
   return (
     <div className="dm-grid-products">
       {items.map((product) => {
-        const name = product.name[locale];
+        const name = product.name;
         const tagLabel = product.tag === "best-seller" ? t("common.tagBestSeller") : product.tag === "new" ? t("common.tagNew") : "";
         return (
         <div
@@ -56,7 +54,7 @@ export default function WishlistContent() {
             onClick={() => router.push(`/product/${product.id}`)}
             style={{ position: "relative", aspectRatio: "1/1", overflow: "hidden", cursor: "pointer" }}
           >
-            <ProductImage image={productImage(product)} mode="packshot" name={name} kind={product.kind} style={{ objectFit: "cover" }} />
+            <ProductImage image={product.image} mode="packshot" name={name} kind={product.kind} style={{ objectFit: "cover" }} />
             {tagLabel ? (
               <div style={{ position: "absolute", top: 12, insetInlineStart: 12, background: "linear-gradient(135deg,#d9a24f,#c2974f)", color: "#fff", fontSize: 11, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", padding: "5px 11px", borderRadius: 999 }}>
                 {tagLabel}
@@ -81,7 +79,7 @@ export default function WishlistContent() {
             >
               {name}
             </div>
-            <div style={{ fontSize: 12.5, color: "#a98e93" }}>{product.sub[locale]}</div>
+            <div style={{ fontSize: 12.5, color: "#a98e93" }}>{product.sub}</div>
             <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12.5, color: "#b08a4e", marginBottom: 12 }}>
               <span style={{ color: "#d9a24f" }}>{"★"}</span>
               <span style={{ color: "#7c6468", fontWeight: 500 }}>{product.rating}</span>
@@ -90,7 +88,7 @@ export default function WishlistContent() {
 
             <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
               <div style={{ fontSize: 15.5, fontWeight: 600, color: "#4f3a3e", letterSpacing: ".01em", marginBottom: 4 }}>
-                {money(product.price)}
+                {product.priceFormatted}
               </div>
               <button
                 onClick={() => moveToCart(product.id)}

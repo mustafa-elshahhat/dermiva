@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/store";
-import { ORDERS, money } from "@/lib/catalog";
+import { buildOrderVMs } from "@/lib/view-models/order.vm";
 import type { Locale } from "@/i18n/routing";
 
 export default function OrdersPage() {
@@ -12,6 +12,7 @@ export default function OrdersPage() {
   const locale = useLocale() as Locale;
   const router = useRouter();
   const { loggedIn, hydrated } = useAuth();
+  const orders = buildOrderVMs(locale);
 
   useEffect(() => {
     if (hydrated && !loggedIn) {
@@ -41,7 +42,7 @@ export default function OrdersPage() {
       </div>
       <h1 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(32px,4.5vw,46px)", color: "#5a4145", margin: "0 0 22px" }}>{t("account.ordersTitle")}</h1>
 
-      {ORDERS.length === 0 ? (
+      {orders.length === 0 ? (
         <div style={{ textAlign: "center", padding: "60px 20px", background: "#fff", borderRadius: 24, border: "1px solid #f0dde1" }}>
           <div style={{ fontSize: 48, marginBottom: 14 }}>📦</div>
           <h3 className="dm-serif" style={{ fontSize: 24, color: "#5a4145", margin: "0 0 8px" }}>{t("account.ordersEmptyTitle")}</h3>
@@ -50,7 +51,7 @@ export default function OrdersPage() {
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {ORDERS.map((order) => (
+          {orders.map((order) => (
             <div
               key={order.no}
               onClick={() => router.push(`/account/orders/${order.no}`)}
@@ -61,16 +62,16 @@ export default function OrdersPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <span style={{ fontSize: 16, fontWeight: 700, color: "#4f3a3e" }}>{order.no}</span>
                   <span style={{ fontSize: 12, background: order.status === "delivered" ? "#eef7f2" : "#fbf5ec", color: order.status === "delivered" ? "#388e3c" : "#b08a4e", padding: "3px 10px", borderRadius: 999, fontWeight: 600 }}>
-                    {statusLabel(order.status)}
+                    {statusLabel(order.statusKey)}
                   </span>
                 </div>
-                <div style={{ fontSize: 13, color: "#a98e93" }}>{t("account.ordersOrderedOn", { date: order.date[locale], count: order.items.reduce((sum, item) => sum + item.qty, 0) })}</div>
+                <div style={{ fontSize: 13, color: "#a98e93" }}>{t("account.ordersOrderedOn", { date: order.dateFormatted, count: order.itemCount })}</div>
               </div>
 
               <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
                 <div style={{ textAlign: "end" }}>
                   <div style={{ fontSize: 12, color: "#a98e93" }}>{t("account.ordersTotalAmount")}</div>
-                  <div className="dm-serif" style={{ fontSize: 20, fontWeight: 700, color: "#b76e79" }}>{money(order.total)}</div>
+                  <div className="dm-serif" style={{ fontSize: 20, fontWeight: 700, color: "#b76e79" }}>{order.totalFormatted}</div>
                 </div>
                 <svg className="dm-rtl-flip" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b07c88" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M9 18l6-6-6-6" />

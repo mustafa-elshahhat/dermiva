@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import BrandLogo from "./BrandLogo";
-import { PAYMENT_METHODS, getPaymentText } from "@/lib/payments";
+import { getPaymentMethodVMs } from "@/lib/view-models/checkout.vm";
 import { SOCIAL_LINKS } from "@/lib/social";
 import type { Locale } from "@/i18n/routing";
 
@@ -24,6 +24,7 @@ export default function SiteFooter() {
   const t = useTranslations("footer");
   const tNav = useTranslations("nav");
   const locale = useLocale() as Locale;
+  const paymentMethods = getPaymentMethodVMs(locale);
 
   return (
     <footer style={{ background: "#fdf6f4", borderTop: "1px solid #f0dde1" }}>
@@ -36,8 +37,8 @@ export default function SiteFooter() {
         <div style={{ textAlign: "center", marginBottom: 18 }}>
           <div style={{ fontSize: 13, color: "#a98e93", letterSpacing: ".1em", marginBottom: 12 }}>{t("weAccept")}</div>
           <div className="dm-footer-payments-row">
-            {PAYMENT_METHODS.map((pm) => {
-              const label = getPaymentText(pm, locale).label;
+            {paymentMethods.map((pm) => {
+              const label = pm.label;
               return (
                 <div
                   key={pm.id}

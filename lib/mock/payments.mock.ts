@@ -1,28 +1,8 @@
-// Dermiva – centralised payment methods data source.
-// All payment-related UI should import from here instead of
-// maintaining separate lists.
+// Dermiva accepted payment methods — the single source of truth for every
+// component that renders payment logos or options. Stand-in for a future API.
 
-import type { Locale } from "@/i18n/routing";
-import type { Localized } from "./catalog";
+import type { PaymentMethod } from "@/lib/types/checkout";
 
-export type PaymentMethodId = "cod" | "mobile-wallets" | "fawry" | "instapay";
-
-export interface PaymentMethod {
-  /** Unique identifier used in form state and order records. */
-  id: PaymentMethodId;
-  /** Human-readable label (brand names such as InstaPay stay English). */
-  label: Localized<string>;
-  /** Path to the optimised webp logo under /public. */
-  image: string;
-  /** Short description shown as subtitle. */
-  description: Localized<string>;
-}
-
-/**
- * The four payment methods accepted by Dermiva.
- * This single list is the source of truth for every component
- * that renders payment logos or options.
- */
 export const PAYMENT_METHODS: PaymentMethod[] = [
   {
     id: "cod",
@@ -50,6 +30,6 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   },
 ];
 
-export function getPaymentText(method: PaymentMethod, locale: Locale): { label: string; description: string } {
-  return { label: method.label[locale], description: method.description[locale] };
+export function getAllPaymentMethods(): PaymentMethod[] {
+  return PAYMENT_METHODS.slice();
 }

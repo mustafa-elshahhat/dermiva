@@ -4,9 +4,10 @@ import { Link } from "@/i18n/navigation";
 import ProductImage from "@/components/ProductImage";
 import ProductGrid from "@/components/ProductGrid";
 import { RawIcon, PROMISE_ICONS } from "@/components/icons";
-import { CATS, PRODUCTS, bestSellers, getProduct, productImage, getCategoryContentText, type CategoryKey } from "@/lib/catalog";
+import { getCategories, getCategoryByKey, getBestSellers, getProductById } from "@/lib/api/catalog.service";
 import { getHeroImageSet, HOME_HERO, HOME_HERO_RTL, HAIR_COLLECTION, HAIR_COLLECTION_RTL } from "@/lib/images";
 import type { Locale } from "@/i18n/routing";
+import type { ProductViewModel } from "@/lib/types/product";
 import SubscribeForm from "./SubscribeForm";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
@@ -15,11 +16,16 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const locale = localeParam as Locale;
   const t = await getTranslations();
 
-  const catKeys = Object.keys(CATS) as CategoryKey[];
-  const superSerum = getProduct("super-serum")!;
+  const categoriesResult = await getCategories(locale);
+  const categories = categoriesResult.ok ? categoriesResult.data : [];
+  const bestSellersResult = await getBestSellers(locale);
+  const bestSellerProducts = bestSellersResult.ok ? bestSellersResult.data : [];
+  const superSerumResult = await getProductById("super-serum", locale);
+  const superSerum: ProductViewModel | null = superSerumResult.ok ? superSerumResult.data : null;
+  const faceResult = await getCategoryByKey("face", locale);
+  const heroIngredients = faceResult.ok ? faceResult.data.content.ingredients : [];
   const hero = getHeroImageSet(HOME_HERO, locale, HOME_HERO_RTL);
   const collection = getHeroImageSet(HAIR_COLLECTION, locale, HAIR_COLLECTION_RTL);
-  const heroIngredients = getCategoryContentText("face", locale).ingredients;
 
   const PROMISES = [
     { icon: PROMISE_ICONS.cruelty, title: t("home.promiseCrueltyTitle"), sub: t("home.promiseCrueltySub") },
@@ -63,20 +69,17 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <span style={{ color: "#d9a24f" }}>✦</span> {t("home.shopByCategory")} <span style={{ color: "#d9a24f" }}>✦</span>
         </h2>
         <div className="dm-grid-cats">
-          {catKeys.map((k) => {
-            const label = CATS[k].label[locale];
-            return (
-              <Link key={k} href={`/category/${k}`} className="dm-cat-card">
-                <div className="dm-cat-card__media" style={{ aspectRatio: "1/1", background: "linear-gradient(160deg,#fbeef0,#f4dbe2)" }}>
-                  <img src={CATS[k].cardImage} alt={t("home.categoryCardAlt", { label })} loading="lazy" />
-                </div>
-                <div style={{ padding: "14px 12px 16px", textAlign: "center" }}>
-                  <div className="dm-serif" style={{ fontWeight: 600, fontSize: 19, color: "#4f3a3e" }}>{label}</div>
-                  <div style={{ fontSize: 11.5, color: "#a98e93", marginTop: 2 }}>{t("common.productsCount", { count: PRODUCTS.filter((p) => p.cat === k).length })}</div>
-                </div>
-              </Link>
-            );
-          })}
+          {categories.map((cat) => (
+            <Link key={cat.key} href={`/category/${cat.key}`} className="dm-cat-card">
+              <div className="dm-cat-card__media" style={{ aspectRatio: "1/1", background: "linear-gradient(160deg,#fbeef0,#f4dbe2)" }}>
+                <img src={cat.cardImage} alt={t("home.categoryCardAlt", { label: cat.label })} loading="lazy" />
+              </div>
+              <div style={{ padding: "14px 12px 16px", textAlign: "center" }}>
+                <div className="dm-serif" style={{ fontWeight: 600, fontSize: 19, color: "#4f3a3e" }}>{cat.label}</div>
+                <div style={{ fontSize: 11.5, color: "#a98e93", marginTop: 2 }}>{t("common.productsCount", { count: cat.productCount })}</div>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -88,7 +91,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </h2>
           <Link href="/shop" style={{ cursor: "pointer", fontSize: 14, color: "#b76e79", fontWeight: 600, borderBottom: "1px solid #e3b9c1", paddingBottom: 2, whiteSpace: "nowrap" }}>{t("common.viewAll")}</Link>
         </div>
-        <ProductGrid products={bestSellers()} />
+        <ProductGrid products={bestSellerProducts} />
       </section>
 
       {/* OUR PROMISE */}
@@ -110,10 +113,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       {/* FEATURED PRODUCT */}
+      {superSerum ? (
       <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(36px,5vw,56px) clamp(16px,4vw,40px)" }}>
         <div style={{ display: "flex", flexWrap: "wrap", borderRadius: 24, overflow: "hidden", boxShadow: "0 16px 40px rgba(184,134,146,.14)" }}>
           <div style={{ flex: "1 1 300px", minWidth: 280, position: "relative", overflow: "hidden", minHeight: "clamp(320px,40vw,440px)" }}>
-            <ProductImage image={productImage(superSerum)} mode="packshot" name={superSerum.name[locale]} kind="serum" style={{ position: "absolute", inset: 0, objectFit: "cover" }} />
+            <ProductImage image={superSerum.image} mode="packshot" name={superSerum.name} kind={superSerum.kind} style={{ position: "absolute", inset: 0, objectFit: "cover" }} />
             <div
               style={{
                 position: "absolute",
@@ -137,7 +141,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
           <div style={{ flex: "1 1 300px", minWidth: 280, background: "#fff", padding: "clamp(28px,4vw,48px)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <div style={{ fontSize: 12, letterSpacing: ".16em", textTransform: "uppercase", color: "#b07c88", fontWeight: 600, marginBottom: 8 }}>{t("home.featuredEyebrow")}</div>
-            <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(30px,4vw,44px)", color: "#5a4145", margin: "0 0 12px", lineHeight: 1 }}>{superSerum.name[locale]}</h3>
+            <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(30px,4vw,44px)", color: "#5a4145", margin: "0 0 12px", lineHeight: 1 }}>{superSerum.name}</h3>
             <p style={{ fontSize: 15, color: "#7c6065", lineHeight: 1.6, margin: "0 0 16px", maxWidth: 380 }}>{t("home.featuredDesc")}</p>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 22 }}>
               <span style={{ color: "#d9a24f", fontSize: 16 }}>★★★★★</span>
@@ -147,6 +151,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
         </div>
       </section>
+      ) : null}
 
       {/* COLLECTION BANNER */}
       <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "0 clamp(16px,4vw,40px) clamp(36px,5vw,56px)" }}>

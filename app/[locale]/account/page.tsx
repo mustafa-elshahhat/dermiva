@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/store";
-import { ORDERS, money } from "@/lib/catalog";
+import { buildOrderVMs } from "@/lib/view-models/order.vm";
 import type { Locale } from "@/i18n/routing";
 
 export default function AccountPage() {
@@ -12,6 +12,7 @@ export default function AccountPage() {
   const locale = useLocale() as Locale;
   const router = useRouter();
   const { loggedIn, userName, userEmail, logout, hydrated } = useAuth();
+  const orders = buildOrderVMs(locale);
 
   useEffect(() => {
     if (hydrated && !loggedIn) {
@@ -83,11 +84,11 @@ export default function AccountPage() {
             <Link href="/account/orders" style={{ fontSize: 13, color: "#b76e79", fontWeight: 600, textDecoration: "underline" }}>{t("common.viewAll")}</Link>
           </div>
 
-          {ORDERS.length === 0 ? (
+          {orders.length === 0 ? (
             <p style={{ fontSize: 14, color: "#a98e93", margin: "20px 0" }}>{t("account.noOrders")}</p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              {ORDERS.slice(0, 2).map((order) => (
+              {orders.slice(0, 2).map((order) => (
                 <div
                   key={order.no}
                   onClick={() => router.push(`/account/orders/${order.no}`)}
@@ -96,11 +97,11 @@ export default function AccountPage() {
                 >
                   <div>
                     <div style={{ fontSize: 14.5, fontWeight: 600, color: "#4f3a3e" }}>{order.no}</div>
-                    <div style={{ fontSize: 12, color: "#a98e93" }}>{order.date[locale]}</div>
+                    <div style={{ fontSize: 12, color: "#a98e93" }}>{order.dateFormatted}</div>
                   </div>
                   <div style={{ textAlign: "end" }}>
-                    <div style={{ fontSize: 14.5, fontWeight: 600, color: "#b76e79" }}>{money(order.total)}</div>
-                    <div style={{ fontSize: 11.5, color: order.status === "delivered" ? "#5b9e7a" : "#b08a4e", fontWeight: 600 }}>{statusLabel(order.status)}</div>
+                    <div style={{ fontSize: 14.5, fontWeight: 600, color: "#b76e79" }}>{order.totalFormatted}</div>
+                    <div style={{ fontSize: 11.5, color: order.status === "delivered" ? "#5b9e7a" : "#b08a4e", fontWeight: 600 }}>{statusLabel(order.statusKey)}</div>
                   </div>
                 </div>
               ))}

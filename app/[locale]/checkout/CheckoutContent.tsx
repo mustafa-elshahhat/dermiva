@@ -5,21 +5,15 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import ProductImage from "@/components/ProductImage";
 import { useRouter } from "@/i18n/navigation";
-import { getProduct, money, productImage } from "@/lib/catalog";
+import { money } from "@/lib/locale/format";
+import { buildCartLines } from "@/lib/view-models/cart.vm";
+import { getPaymentMethodVMs, toCheckoutRequest } from "@/lib/view-models/checkout.vm";
+import { createCheckout } from "@/lib/api/checkout.service";
 import type { Locale } from "@/i18n/routing";
+import type { CheckoutForm } from "@/lib/types/checkout";
 import { useCartState, useCartActions, useToast } from "@/lib/store";
-import { PAYMENT_METHODS, getPaymentText, type PaymentMethodId } from "@/lib/payments";
 
-interface Form {
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  gov: string;
-  payment: PaymentMethodId;
-}
-type Errors = Partial<Record<keyof Form, string>>;
+type Errors = Partial<Record<keyof CheckoutForm, string>>;
 
 const inputBase: React.CSSProperties = {
   width: "100%",
@@ -40,19 +34,20 @@ export default function CheckoutContent() {
   const { clearCart } = useCartActions();
   const { showToast } = useToast();
 
-  const [form, setForm] = useState<Form>({ name: "", email: "", phone: "", address: "", city: "", gov: "", payment: "cod" });
+  const [form, setForm] = useState<CheckoutForm>({ name: "", email: "", phone: "", address: "", city: "", gov: "", payment: "cod" });
   const [errors, setErrors] = useState<Errors>({});
   const [placed, setPlaced] = useState(false);
   const [orderNo, setOrderNo] = useState("");
 
-  const lines = cart.map((c) => ({ ...getProduct(c.id)!, qty: c.qty, id: c.id })).filter((l) => l.name);
+  const lines = buildCartLines(cart, locale);
+  const paymentMethods = getPaymentMethodVMs(locale);
 
-  const setField = (k: keyof Form, v: string) => {
+  const setField = (k: keyof CheckoutForm, v: string) => {
     setForm((f) => ({ ...f, [k]: v }));
     setErrors((e) => ({ ...e, [k]: "" }));
   };
 
-  const placeOrder = () => {
+  const placeOrder = async () => {
     const e: Errors = {};
     if (!form.name.trim()) e.name = t("checkout.required");
     if (!/^\S+@\S+\.\S+$/.test(form.email)) e.email = t("checkout.validEmail");
@@ -65,13 +60,16 @@ export default function CheckoutContent() {
       showToast("completeRequiredFields");
       return;
     }
-    setOrderNo("DRM-" + Math.floor(10000 + Math.random() * 89999));
+    // Frontend-only mock checkout: no real payment is taken.
+    const result = await createCheckout(toCheckoutRequest(form, cart), locale);
+    if (!result.ok) return;
+    setOrderNo(result.data.orderNumber);
     setPlaced(true);
     clearCart();
     window.scrollTo({ top: 0 });
   };
 
-  const border = (k: keyof Form) => `1px solid ${errors[k] ? "#e6a3a3" : "#e3c3cc"}`;
+  const border = (k: keyof CheckoutForm) => `1px solid ${errors[k] ? "#e6a3a3" : "#e3c3cc"}`;
 
   // Don't render the order summary from un-hydrated cart state — wait for the
   // persisted cart so totals/line items don't flicker after a refresh.
@@ -162,9 +160,8 @@ export default function CheckoutContent() {
         <div style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 24 }}>
           <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: 22, color: "#5a4145", margin: "0 0 18px" }}>{t("checkout.paymentMethod")}</h3>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {PAYMENT_METHODS.map((pm) => {
+            {paymentMethods.map((pm) => {
               const active = form.payment === pm.id;
-              const text = getPaymentText(pm, locale);
               return (
                 <div
                   key={pm.id}
@@ -188,15 +185,15 @@ export default function CheckoutContent() {
                   <div style={{ width: 40, height: 40, borderRadius: 10, background: "#fdf6f4", border: "1px solid #f0dde1", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden", padding: 4 }}>
                     <Image
                       src={pm.image}
-                      alt={text.label}
+                      alt={pm.label}
                       width={32}
                       height={32}
                       style={{ objectFit: "contain" }}
                     />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 14, fontWeight: 600, color: "#5a4145" }}>{text.label}</div>
-                    <div style={{ fontSize: 12, color: "#a98e93" }}>{text.description}</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: "#5a4145" }}>{pm.label}</div>
+                    <div style={{ fontSize: 12, color: "#a98e93" }}>{pm.description}</div>
                   </div>
                 </div>
               );
@@ -213,12 +210,12 @@ export default function CheckoutContent() {
             <div key={it.id} style={{ display: "flex", alignItems: "center", gap: 11 }}>
               <div style={{ flex: "0 0 auto", width: 48, height: 48, borderRadius: 10, position: "relative" }}>
                 <div style={{ width: "100%", height: "100%", borderRadius: 10, overflow: "hidden" }}>
-                  <ProductImage image={productImage(it)} mode="packshot" name={it.name[locale]} kind={it.kind} style={{ objectFit: "cover" }} />
+                  <ProductImage image={it.image} mode="packshot" name={it.name} kind={it.kind} style={{ objectFit: "cover" }} />
                 </div>
                 <span style={{ position: "absolute", top: -6, insetInlineEnd: -6, background: "#c07f8d", color: "#fff", fontSize: 10, minWidth: 18, height: 18, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 600 }}>{it.qty}</span>
               </div>
-              <div style={{ flex: 1, minWidth: 0, fontSize: 13, color: "#5a4145" }}>{it.name[locale]}</div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: "#4f3a3e", whiteSpace: "nowrap" }}>{money(it.price * it.qty)}</div>
+              <div style={{ flex: 1, minWidth: 0, fontSize: 13, color: "#5a4145" }}>{it.name}</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "#4f3a3e", whiteSpace: "nowrap" }}>{it.lineTotalFormatted}</div>
             </div>
           ))}
         </div>

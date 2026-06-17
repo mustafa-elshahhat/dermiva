@@ -2,7 +2,8 @@ import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { POLICIES, getPolicyText, type PolicyKey } from "@/lib/catalog";
+import type { PolicyKey } from "@/lib/types/policy";
+import { getPolicyBySlug } from "@/lib/api/policies.service";
 import type { Locale } from "@/i18n/routing";
 
 export function generateStaticParams() {
@@ -11,10 +12,10 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const policy = POLICIES[slug as PolicyKey];
-  if (!policy) return {};
-  const text = getPolicyText(policy, locale as Locale);
-  return { title: text.title, description: text.intro, alternates: { canonical: `/${locale}/policy/${slug}` } };
+  const result = await getPolicyBySlug(slug as PolicyKey, locale as Locale);
+  if (!result.ok) return {};
+  const policy = result.data;
+  return { title: policy.title, description: policy.intro, alternates: { canonical: `/${locale}/policy/${slug}` } };
 }
 
 interface Props {
@@ -26,13 +27,13 @@ export default async function PolicyPage({ params }: Props) {
   setRequestLocale(localeParam);
   const locale = localeParam as Locale;
 
-  const policyData = POLICIES[slug as PolicyKey];
-  if (!policyData) {
+  const result = await getPolicyBySlug(slug as PolicyKey, locale);
+  if (!result.ok) {
     notFound();
   }
 
   const t = await getTranslations();
-  const policy = getPolicyText(policyData, locale);
+  const policy = result.data;
 
   return (
     <div className="dm-fade" style={{ maxWidth: 800, margin: "0 auto", width: "100%", padding: "clamp(24px,4vw,40px) clamp(16px,4vw,40px) clamp(40px,5vw,64px)" }}>

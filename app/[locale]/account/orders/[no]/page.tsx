@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import ProductImage from "@/components/ProductImage";
 import { useAuth } from "@/lib/store";
-import { ORDERS, getProduct, money, productImage } from "@/lib/catalog";
+import { buildOrderVM } from "@/lib/view-models/order.vm";
 import type { Locale } from "@/i18n/routing";
 
 export default function OrderDetailPage() {
@@ -37,21 +37,10 @@ export default function OrderDetailPage() {
     return null;
   }
 
-  const order = ORDERS.find((o) => o.no === params.no);
+  const order = buildOrderVM(params.no, locale);
   if (!order) {
     notFound();
   }
-
-  const resolvedItems = order.items
-    .map((item) => {
-      const prod = getProduct(item.id);
-      return prod ? { ...prod, qty: item.qty } : null;
-    })
-    .filter((it): it is NonNullable<typeof it> => it !== null);
-
-  const subtotal = resolvedItems.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const shipping = subtotal >= 500 ? 0 : 40;
-  const discount = subtotal + shipping - order.total > 0 ? subtotal + shipping - order.total : 0;
 
   return (
     <div className="dm-fade" style={{ maxWidth: 800, margin: "0 auto", width: "100%", padding: "clamp(20px,3vw,32px) clamp(16px,4vw,40px) clamp(40px,5vw,64px)" }}>
@@ -64,12 +53,12 @@ export default function OrderDetailPage() {
       <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "baseline", gap: 12, marginBottom: 22 }}>
         <div>
           <h1 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(28px,4vw,38px)", color: "#5a4145", margin: 0 }}>{t("account.detailTitle")}</h1>
-          <div style={{ fontSize: 13.5, color: "#a98e93", marginTop: 4 }}>{t("account.detailPlacedOn", { date: order.date[locale] })}</div>
+          <div style={{ fontSize: 13.5, color: "#a98e93", marginTop: 4 }}>{t("account.detailPlacedOn", { date: order.dateFormatted })}</div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span style={{ fontSize: 13, fontWeight: 600, color: "#a98e93" }}>{t("account.detailStatusLabel")}</span>
           <span style={{ fontSize: 13, background: order.status === "delivered" ? "#eef7f2" : "#fbf5ec", color: order.status === "delivered" ? "#388e3c" : "#b08a4e", padding: "4px 12px", borderRadius: 999, fontWeight: 600 }}>
-            {statusLabel(order.status)}
+            {statusLabel(order.statusKey)}
           </span>
         </div>
       </div>
@@ -80,16 +69,16 @@ export default function OrderDetailPage() {
           <div style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 20, padding: 20 }}>
             <h3 className="dm-serif" style={{ fontWeight: 600, fontSize: 20, color: "#5a4145", margin: "0 0 16px" }}>{t("account.detailOrderItems")}</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              {resolvedItems.map((item) => (
+              {order.items.map((item) => (
                 <div key={item.id} style={{ display: "flex", gap: 12, alignItems: "center" }}>
                   <div style={{ flex: "0 0 auto", width: 56, height: 56, borderRadius: 10, overflow: "hidden" }}>
-                    <ProductImage image={productImage(item)} mode="packshot" name={item.name[locale]} kind={item.kind} style={{ objectFit: "cover" }} />
+                    <ProductImage image={item.image} mode="packshot" name={item.name} kind={item.kind} style={{ objectFit: "cover" }} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 14, fontWeight: 600, color: "#4f3a3e", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name[locale]}</div>
-                    <div style={{ fontSize: 12, color: "#a98e93" }}>{item.sub[locale]} · {t("account.detailQty", { qty: item.qty })}</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: "#4f3a3e", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</div>
+                    <div style={{ fontSize: 12, color: "#a98e93" }}>{item.sub} · {t("account.detailQty", { qty: item.qty })}</div>
                   </div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: "#4f3a3e", whiteSpace: "nowrap" }}>{money(item.price * item.qty)}</div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: "#4f3a3e", whiteSpace: "nowrap" }}>{item.lineTotalFormatted}</div>
                 </div>
               ))}
             </div>
@@ -103,21 +92,21 @@ export default function OrderDetailPage() {
             <h3 className="dm-serif" style={{ fontWeight: 600, fontSize: 20, color: "#5a4145", margin: "0 0 14px" }}>{t("account.detailSummary")}</h3>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5, color: "#7c6065", marginBottom: 8 }}>
               <span>{t("common.subtotal")}</span>
-              <span>{money(subtotal)}</span>
+              <span>{order.subtotalFormatted}</span>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5, color: "#7c6065", marginBottom: 8 }}>
               <span>{t("common.shipping")}</span>
-              <span>{shipping === 0 ? t("common.free") : money(shipping)}</span>
+              <span>{order.shippingFree ? t("common.free") : order.shippingFormatted}</span>
             </div>
-            {discount > 0 ? (
+            {order.discount > 0 ? (
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5, color: "#5b9e7a", marginBottom: 8 }}>
                 <span>{t("common.discount")}</span>
-                <span>- {money(discount)}</span>
+                <span>- {order.discountFormatted}</span>
               </div>
             ) : null}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", fontSize: 16, fontWeight: 600, color: "#4f3a3e", paddingTop: 12, borderTop: "1px solid #f0dde1", marginTop: 8 }}>
               <span>{t("common.total")}</span>
-              <span className="dm-serif" style={{ fontSize: 22, color: "#b76e79" }}>{money(order.total)}</span>
+              <span className="dm-serif" style={{ fontSize: 22, color: "#b76e79" }}>{order.totalFormatted}</span>
             </div>
           </div>
 

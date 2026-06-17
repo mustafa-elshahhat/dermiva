@@ -1,5 +1,5 @@
 import React from "react";
-import type { BottleKind } from "@/lib/catalog";
+import type { BottleKind } from "@/lib/types/product";
 
 // Pure CSS-drawn product bottle, ported from Bottle.dc.html. Four variants:
 // serum, jar, tube, pump. Label text scales with viewport (vw units) exactly

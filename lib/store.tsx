@@ -1,22 +1,13 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { getProduct } from "./catalog";
+import { findProductById } from "./mock/catalog.mock";
+import type { CartItem } from "./types/cart";
+import type { Address } from "./types/customer";
 
-export interface CartItem {
-  id: string;
-  qty: number;
-}
-
-export interface Address {
-  id: string;
-  name: string;
-  phone: string;
-  address: string;
-  city: string;
-  gov: string;
-  isDefault: boolean;
-}
+// Re-exported for existing consumers (e.g. the addresses page) that import these
+// types from the store.
+export type { CartItem, Address };
 
 interface StoreState {
   cart: CartItem[];
@@ -262,7 +253,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const totals = useMemo<CartTotals>(() => {
     const subtotal = state.cart.reduce((sum, c) => {
-      const p = getProduct(c.id);
+      const p = findProductById(c.id);
       return sum + (p ? p.price * c.qty : 0);
     }, 0);
     const shipping = subtotal === 0 ? 0 : subtotal >= 500 ? 0 : 40;

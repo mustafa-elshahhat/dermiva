@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import { SORT_VALUES, type FilterState, type SortValue } from "@/lib/catalog";
+import { SORT_VALUES, type FilterState, type SortValue } from "@/lib/types/product";
 
 const selectStyle: React.CSSProperties = {
   border: "1px solid #efd9df",

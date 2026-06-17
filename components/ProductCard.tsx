@@ -1,25 +1,24 @@
 "use client";
 
 import React from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import ProductImage from "./ProductImage";
 import { useRouter } from "@/i18n/navigation";
-import { money, productImage, type Product } from "@/lib/catalog";
-import type { Locale } from "@/i18n/routing";
+import type { ProductViewModel } from "@/lib/types/product";
 import { useWishlist, useCartActions } from "@/lib/store";
 
 // Ported from ProductCard.dc.html. Whole card opens the product; the heart and
 // the + button act without opening (stopPropagation), matching the prototype.
+// Receives a locale-resolved view model — badge/aria labels remain UI strings
+// resolved via next-intl off the stable `tag`.
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({ product }: { product: ProductViewModel }) {
   const router = useRouter();
-  const locale = useLocale() as Locale;
   const t = useTranslations();
   const { wishlist, toggleWishlist } = useWishlist();
   const { addToCart } = useCartActions();
   const wished = wishlist.includes(product.id);
 
-  const name = product.name[locale];
   const tagLabel = product.tag === "best-seller" ? t("common.tagBestSeller") : product.tag === "new" ? t("common.tagNew") : "";
 
   return (
@@ -30,9 +29,9 @@ export default function ProductCard({ product }: { product: Product }) {
     >
       <div style={{ position: "relative", aspectRatio: "1/1", overflow: "hidden" }}>
         <ProductImage
-          image={productImage(product)}
+          image={product.image}
           mode="packshot"
-          name={name}
+          name={product.name}
           kind={product.kind}
           style={{ objectFit: "cover" }}
         />
@@ -53,15 +52,15 @@ export default function ProductCard({ product }: { product: Product }) {
         </button>
       </div>
       <div style={{ padding: "14px 16px 16px", display: "flex", flexDirection: "column", gap: 5, flex: 1 }}>
-        <div className="dm-serif" style={{ fontSize: 20, fontWeight: 600, color: "#4f3a3e", lineHeight: 1.1 }}>{name}</div>
-        <div style={{ fontSize: 12.5, color: "#a98e93" }}>{product.sub[locale]}</div>
+        <div className="dm-serif" style={{ fontSize: 20, fontWeight: 600, color: "#4f3a3e", lineHeight: 1.1 }}>{product.name}</div>
+        <div style={{ fontSize: 12.5, color: "#a98e93" }}>{product.sub}</div>
         <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12.5, color: "#b08a4e" }}>
           <span style={{ color: "#d9a24f" }}>{"★"}</span>
           <span style={{ color: "#7c6468", fontWeight: 500 }}>{product.rating}</span>
           <span style={{ color: "#bfa6ab" }}>({product.reviews})</span>
         </div>
         <div style={{ marginTop: "auto", paddingTop: 8, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
-          <div style={{ fontSize: 15.5, fontWeight: 600, color: "#4f3a3e", letterSpacing: ".01em" }}>{money(product.price)}</div>
+          <div style={{ fontSize: 15.5, fontWeight: 600, color: "#4f3a3e", letterSpacing: ".01em" }}>{product.priceFormatted}</div>
           <button
             aria-label={t("product.addToCartAria")}
             className="dm-add-btn"

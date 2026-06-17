@@ -4,18 +4,19 @@ import React, { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import ProductGrid from "@/components/ProductGrid";
 import FilterControls from "@/components/FilterControls";
-import { filteredList, type CategoryKey, type FilterState } from "@/lib/catalog";
 import type { Locale } from "@/i18n/routing";
+import type { FilterState, ProductViewModel } from "@/lib/types/product";
+import { filterProductVMs } from "@/lib/view-models/product.vm";
 
 const DEFAULT_FILTER: FilterState = { sort: "featured", max: 700, query: "" };
 
-export default function CategoryContent({ cat }: { cat: CategoryKey }) {
+export default function CategoryContent({ products }: { products: ProductViewModel[] }) {
   const t = useTranslations();
   const locale = useLocale() as Locale;
   const [filter, setFilter] = useState<FilterState>(DEFAULT_FILTER);
   const patch = (p: Partial<FilterState>) => setFilter((f) => ({ ...f, ...p }));
 
-  const list = filteredList(cat, filter, locale);
+  const list = filterProductVMs(products, filter, locale);
 
   return (
     <>

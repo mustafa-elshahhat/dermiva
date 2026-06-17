@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Bottle from "./Bottle";
-import type { BottleKind } from "@/lib/catalog";
+import type { BottleKind } from "@/lib/types/product";
 
 // Renders the canonical product image with graceful fallback to the CSS Bottle.
 // `image` should come from the catalog resolver (productImage) so every surface

@@ -4,7 +4,8 @@ import React from "react";
 import { useLocale, useTranslations } from "next-intl";
 import ProductImage from "@/components/ProductImage";
 import { useRouter } from "@/i18n/navigation";
-import { getProduct, money, productImage } from "@/lib/catalog";
+import { money } from "@/lib/locale/format";
+import { buildCartLines } from "@/lib/view-models/cart.vm";
 import type { Locale } from "@/i18n/routing";
 import { useCartState, useCartActions, usePromo } from "@/lib/store";
 
@@ -16,7 +17,7 @@ export default function CartContent() {
   const { setQty, removeFromCart } = useCartActions();
   const { promo, promoApplied, setPromo, applyPromo } = usePromo();
 
-  const lines = cart.map((c) => ({ ...getProduct(c.id)!, qty: c.qty, id: c.id })).filter((l) => l.name);
+  const lines = buildCartLines(cart, locale);
   const freeShipNote = subtotal > 0 && subtotal < 500 ? t("cart.freeShippingHint", { amount: money(500 - subtotal) }) : "";
 
   // Wait for persisted cart to load before deciding between items / empty state,
@@ -51,11 +52,11 @@ export default function CartContent() {
         {lines.map((it) => (
           <div key={it.id} style={{ background: "#fff", border: "1px solid #f0dde1", borderRadius: 18, padding: 14, display: "flex", gap: 14, alignItems: "center" }}>
             <div onClick={() => router.push(`/product/${it.id}`)} style={{ cursor: "pointer", flex: "0 0 auto", width: 84, height: 84, borderRadius: 14, overflow: "hidden" }}>
-              <ProductImage image={productImage(it)} mode="packshot" name={it.name[locale]} kind={it.kind} style={{ objectFit: "cover" }} />
+              <ProductImage image={it.image} mode="packshot" name={it.name} kind={it.kind} style={{ objectFit: "cover" }} />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div onClick={() => router.push(`/product/${it.id}`)} className="dm-serif" style={{ cursor: "pointer", fontWeight: 600, fontSize: 19, color: "#4f3a3e", lineHeight: 1.1 }}>{it.name[locale]}</div>
-              <div style={{ fontSize: 12, color: "#a98e93", marginBottom: 8 }}>{it.sub[locale]}</div>
+              <div onClick={() => router.push(`/product/${it.id}`)} className="dm-serif" style={{ cursor: "pointer", fontWeight: 600, fontSize: 19, color: "#4f3a3e", lineHeight: 1.1 }}>{it.name}</div>
+              <div style={{ fontSize: 12, color: "#a98e93", marginBottom: 8 }}>{it.sub}</div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                 <div style={{ display: "flex", alignItems: "center", border: "1px solid #e3c3cc", borderRadius: 999, overflow: "hidden", height: 44 }}>
                   <button aria-label={t("common.decrease")} onClick={() => setQty(it.id, -1)} style={{ border: "none", background: "none", cursor: "pointer", width: 44, height: 44, fontSize: 17, color: "#b07c88" }}>−</button>
@@ -65,7 +66,7 @@ export default function CartContent() {
                 <button onClick={() => removeFromCart(it.id)} style={{ border: "none", background: "none", cursor: "pointer", fontSize: 12.5, color: "#bd8a93", textDecoration: "underline", padding: "10px 14px" }}>{t("common.remove")}</button>
               </div>
             </div>
-            <div style={{ flex: "0 0 auto", fontSize: 16, fontWeight: 600, color: "#4f3a3e", whiteSpace: "nowrap" }}>{money(it.price * it.qty)}</div>
+            <div style={{ flex: "0 0 auto", fontSize: 16, fontWeight: 600, color: "#4f3a3e", whiteSpace: "nowrap" }}>{it.lineTotalFormatted}</div>
           </div>
         ))}
         {freeShipNote ? (
