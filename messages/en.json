@@ -380,6 +380,12 @@
     "loginDescription": "Sign in to your Dermiva account.",
     "registerTitle": "Create Account",
     "registerDescription": "Create your Dermiva account.",
+    "ordersTitle": "My Orders",
+    "ordersDescription": "Track and review your Dermiva orders.",
+    "orderDetailTitle": "Order {no}",
+    "addressesTitle": "My Addresses",
+    "addressesDescription": "Manage your saved Dermiva delivery addresses.",
+    "productDescription": "Discover {name} by Dermiva — a science-driven skincare formula for healthier, smoother, more radiant skin.",
     "productTitleSuffix": "{name} — Dermiva",
     "categoryTitleSuffix": "{label} — Dermiva",
     "policyTitleSuffix": "{title} — Dermiva"

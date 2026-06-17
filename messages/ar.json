@@ -380,6 +380,12 @@
     "loginDescription": "سجّلي الدخول إلى حساب Dermiva.",
     "registerTitle": "إنشاء حساب",
     "registerDescription": "أنشئي حساب Dermiva.",
+    "ordersTitle": "طلباتي",
+    "ordersDescription": "تتبّعي وراجعي طلبات Dermiva الخاصة بكِ.",
+    "orderDetailTitle": "الطلب {no}",
+    "addressesTitle": "عناويني",
+    "addressesDescription": "إدارة عناوين التوصيل المحفوظة من Dermiva.",
+    "productDescription": "اكتشفي {name} من Dermiva، تركيبة عناية بالبشرة قائمة على العلم لبشرة أكثر إشراقًا ونعومة.",
     "productTitleSuffix": "{name} — Dermiva",
     "categoryTitleSuffix": "{label} — Dermiva",
     "policyTitleSuffix": "{title} — Dermiva"

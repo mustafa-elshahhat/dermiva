@@ -1,12 +1,23 @@
 import React from "react";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+import { routes } from "@/lib/seo/routes";
 import WishlistContent from "./WishlistContent";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale } = await params;
+  const { locale: localeParam } = await params;
+  const locale = localeParam as Locale;
   const t = await getTranslations({ locale, namespace: "seo" });
-  return { title: t("wishlistTitle"), description: t("wishlistDescription") };
+  return buildPageMetadata({
+    locale,
+    path: routes.wishlist(),
+    title: t("wishlistTitle"),
+    description: t("wishlistDescription"),
+    index: false,
+    ogAlt: t("ogAlt"),
+  });
 }
 
 export default async function WishlistPage({ params }: { params: Promise<{ locale: string }> }) {

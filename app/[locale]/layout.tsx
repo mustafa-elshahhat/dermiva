@@ -4,8 +4,13 @@ import localFont from "next/font/local";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import "../globals.css";
-import { routing } from "@/i18n/routing";
+import { routing, type Locale } from "@/i18n/routing";
 import { getDirection } from "@/i18n/direction";
+import { getSiteUrl } from "@/lib/seo/url";
+import { routes } from "@/lib/seo/routes";
+import { buildLocalizedAlternates } from "@/lib/seo/metadata";
+import { buildOpenGraph, buildTwitter } from "@/lib/seo/open-graph";
+import { buildIndexRobots } from "@/lib/seo/robots";
 import { StoreProvider } from "@/lib/store";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -87,24 +92,23 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const { locale: localeParam } = await params;
+  const locale = localeParam as Locale;
   const t = await getTranslations({ locale, namespace: "seo" });
 
+  const defaultTitle = t("defaultTitle");
+  const defaultDescription = t("defaultDescription");
+
   return {
-    metadataBase: new URL("https://dermiva.vercel.app"),
+    metadataBase: new URL(getSiteUrl()),
     title: {
-      default: t("defaultTitle"),
+      default: defaultTitle,
       template: `%s — ${t("siteName")}`,
     },
-    description: t("defaultDescription"),
-    alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        en: "/en",
-        ar: "/ar",
-        "x-default": "/en",
-      },
-    },
+    description: defaultDescription,
+    // Site-wide defaults; inner pages override per route. The home page is
+    // covered entirely by these defaults (no separate home generateMetadata).
+    alternates: buildLocalizedAlternates(locale, routes.home()),
     icons: {
       icon: [
         { url: "/favicon.ico", sizes: "any" },
@@ -117,19 +121,20 @@ export async function generateMetadata({
       ],
       apple: { url: "/brand/icon-180.png", sizes: "180x180" },
     },
-    openGraph: {
-      title: t("defaultTitle"),
-      description: t("defaultDescription"),
-      locale: locale === "ar" ? "ar_EG" : "en_US",
-      images: [
-        {
-          url: "/brand/og-image.png",
-          width: 1200,
-          height: 630,
-          alt: t("ogAlt"),
-        },
-      ],
-    },
+    // defaultTitle already contains the brand name, so it is used as-is (no
+    // extra " — Dermiva" suffix) for the social title.
+    openGraph: buildOpenGraph({
+      locale,
+      title: defaultTitle,
+      description: defaultDescription,
+      path: routes.home(),
+      ogAlt: t("ogAlt"),
+    }),
+    twitter: buildTwitter({
+      title: defaultTitle,
+      description: defaultDescription,
+    }),
+    robots: buildIndexRobots(),
   };
 }
 

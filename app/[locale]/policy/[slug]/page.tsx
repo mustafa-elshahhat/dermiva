@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { PolicyKey } from "@/lib/types/policy";
 import { getPolicyBySlug } from "@/lib/api/policies.service";
+import { buildPolicyMetadata } from "@/lib/seo/metadata";
+import { buildNoIndexRobots } from "@/lib/seo/robots";
 import type { Locale } from "@/i18n/routing";
 
 export function generateStaticParams() {
@@ -11,11 +13,13 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
-  const { locale, slug } = await params;
-  const result = await getPolicyBySlug(slug as PolicyKey, locale as Locale);
-  if (!result.ok) return {};
-  const policy = result.data;
-  return { title: policy.title, description: policy.intro, alternates: { canonical: `/${locale}/policy/${slug}` } };
+  const { locale: localeParam, slug } = await params;
+  const locale = localeParam as Locale;
+  const result = await getPolicyBySlug(slug as PolicyKey, locale);
+  // Unknown policy: safe noindex; the page itself calls notFound().
+  if (!result.ok) return { robots: buildNoIndexRobots() };
+  const t = await getTranslations({ locale, namespace: "seo" });
+  return buildPolicyMetadata({ locale, policy: result.data, ogAlt: t("ogAlt") });
 }
 
 interface Props {

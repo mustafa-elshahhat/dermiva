@@ -7,6 +7,8 @@ import ProductGrid from "@/components/ProductGrid";
 import { RawIcon, TRUST_ICONS } from "@/components/icons";
 import { getAllProducts } from "@/lib/mock/catalog.mock";
 import { getProductById, getCategoryByKey, getRelatedProducts } from "@/lib/api/catalog.service";
+import { buildProductMetadata } from "@/lib/seo/metadata";
+import { buildNoIndexRobots } from "@/lib/seo/robots";
 import { formatList } from "@/lib/locale/format";
 import type { Locale } from "@/i18n/routing";
 import ProductActions from "./ProductActions";
@@ -16,13 +18,20 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; id: string }> }): Promise<Metadata> {
-  const { locale, id } = await params;
-  const result = await getProductById(id, locale as Locale);
-  if (!result.ok) return {};
+  const { locale: localeParam, id } = await params;
+  const locale = localeParam as Locale;
+  const result = await getProductById(id, locale);
+  // Missing product: safe noindex; the page itself calls notFound().
+  if (!result.ok) return { robots: buildNoIndexRobots() };
   const p = result.data;
-  const categoryResult = await getCategoryByKey(p.categoryKey, locale as Locale);
-  const desc = categoryResult.ok ? categoryResult.data.content.desc : "";
-  return { title: p.name, description: desc, alternates: { canonical: `/${locale}/product/${id}` } };
+  const t = await getTranslations({ locale, namespace: "seo" });
+  // Product name stays English in both locales; the description is localized.
+  return buildProductMetadata({
+    locale,
+    product: p,
+    description: t("productDescription", { name: p.name }),
+    ogAlt: t("ogAlt"),
+  });
 }
 
 interface Props {

@@ -5,6 +5,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import type { CategoryKey } from "@/lib/types/category";
 import { getCategoryByKey, getProductsByCategory } from "@/lib/api/catalog.service";
+import { buildCategoryMetadata } from "@/lib/seo/metadata";
+import { buildNoIndexRobots } from "@/lib/seo/robots";
 import CategoryContent from "./CategoryContent";
 
 export function generateStaticParams() {
@@ -12,11 +14,13 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; cat: string }> }): Promise<Metadata> {
-  const { locale, cat } = await params;
-  const result = await getCategoryByKey(cat as CategoryKey, locale as Locale);
-  if (!result.ok) return {};
-  const category = result.data;
-  return { title: category.label, description: category.tagline, alternates: { canonical: `/${locale}/category/${cat}` } };
+  const { locale: localeParam, cat } = await params;
+  const locale = localeParam as Locale;
+  const result = await getCategoryByKey(cat as CategoryKey, locale);
+  // Unknown category: safe noindex so no broken canonical/alternates are emitted.
+  if (!result.ok) return { robots: buildNoIndexRobots() };
+  const t = await getTranslations({ locale, namespace: "seo" });
+  return buildCategoryMetadata({ locale, category: result.data, ogAlt: t("ogAlt") });
 }
 
 interface Props {
