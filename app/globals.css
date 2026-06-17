@@ -275,6 +275,20 @@ a {
   border-color: #ecd2d9;
   transform: translateY(-4px);
 }
+.dm-cat-card__media {
+  overflow: hidden;
+}
+.dm-cat-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+.dm-cat-card:hover .dm-cat-card__media img,
+.dm-cat-card:focus-visible .dm-cat-card__media img {
+  transform: scale(1.05);
+}
 
 .dm-tile {
   background: #fff;
@@ -425,15 +439,6 @@ textarea::placeholder {
   }
 }
 
-.dm-logo-text {
-  display: inline;
-}
-@media (max-width: 420px) {
-  .dm-logo-text {
-    display: none;
-  }
-}
-
 .dm-hero-container {
   padding: clamp(28px, 4vw, 56px);
 }
@@ -456,6 +461,179 @@ textarea::placeholder {
   .dm-hero-child-right {
     flex-basis: 100% !important;
     min-width: 0 !important;
+  }
+}
+
+/* ===== Home hero: responsive full-card image (art-directed) ===== */
+.dm-hero {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start; /* mobile: text sits in the upper part */
+  aspect-ratio: 1024 / 1536; /* Mobile.webp 2:3 portrait */
+  box-shadow: 0 16px 40px rgba(184, 134, 146, 0.16);
+}
+.dm-hero__media,
+.dm-hero__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.dm-hero__media img {
+  /* fill the whole card without distortion */
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.dm-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Mobile: soft blush wash behind the text area (top), fading before the
+     product cluster lower down. Two stacked gradients give a richer,
+     brand-matching pearl/blush tone without darkening the whole image. */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 248, 248, 0.92) 0%,
+      rgba(255, 238, 242, 0.78) 28%,
+      rgba(255, 238, 242, 0.32) 46%,
+      rgba(255, 238, 242, 0) 62%
+    );
+}
+.dm-hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 600px;
+  padding: clamp(24px, 6vw, 40px);
+}
+
+/* ----- hero typography ----- */
+.dm-hero__eyebrow {
+  font-size: clamp(0.74rem, 1vw, 0.95rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #a76878;
+  font-weight: 700;
+  margin-bottom: 14px;
+  text-shadow: 0 1px 2px rgba(255, 250, 250, 0.6);
+}
+.dm-hero__title {
+  font-weight: 700;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.04;
+  color: #7f4654;
+  margin: 0 0 18px;
+  text-shadow: 0 1px 3px rgba(255, 248, 248, 0.55);
+}
+.dm-hero__text {
+  font-size: clamp(0.95rem, 1.2vw, 1.18rem);
+  color: #6f4d55;
+  max-width: 30ch;
+  line-height: 1.55;
+  margin: 0 0 24px;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(255, 250, 250, 0.55);
+}
+.dm-hero__discount {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.dm-hero__discount-label {
+  font-size: clamp(0.72rem, 1vw, 0.9rem);
+  letter-spacing: 0.14em;
+  color: #a76878;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.dm-hero__discount-num {
+  font-weight: 700;
+  font-size: clamp(3rem, 8vw, 4.6rem);
+  color: #b76e79;
+  line-height: 0.9;
+  text-shadow: 0 2px 6px rgba(183, 110, 121, 0.22);
+}
+.dm-hero__discount-off {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: #b76e79;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ----- hero CTA: stronger, touch-friendly pill ----- */
+.dm-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 clamp(32px, 4vw, 44px);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  background: linear-gradient(135deg, #c98295, #b76e82);
+  box-shadow: 0 14px 30px rgba(183, 110, 121, 0.42);
+}
+.dm-hero__cta:hover {
+  background: linear-gradient(135deg, #c1788c, #ab6276);
+  box-shadow: 0 18px 36px rgba(183, 110, 121, 0.52);
+  transform: translateY(-2px);
+}
+.dm-hero__cta:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(183, 110, 121, 0.55);
+}
+
+@media (min-width: 768px) {
+  .dm-hero {
+    aspect-ratio: 1448 / 1086; /* Tablet.webp 4:3 */
+    align-items: center; /* text vertically centered, on the left */
+  }
+  .dm-hero__overlay {
+    /* pearl/blush wash over the left text column, fading well before the
+       product cluster on the right */
+    background: linear-gradient(
+      90deg,
+      rgba(255, 248, 248, 0.9) 0%,
+      rgba(255, 238, 242, 0.74) 34%,
+      rgba(255, 238, 242, 0.2) 56%,
+      rgba(255, 238, 242, 0) 74%
+    );
+  }
+  .dm-hero__content {
+    max-width: 54%;
+    padding-left: clamp(34px, 5vw, 60px);
+  }
+  .dm-hero__cta {
+    min-height: 52px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dm-hero {
+    aspect-ratio: 1672 / 941; /* Desktop.webp ~16:9 */
+    min-height: 540px;
+  }
+  .dm-hero__overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 248, 248, 0.88) 0%,
+      rgba(255, 238, 242, 0.72) 36%,
+      rgba(255, 238, 242, 0.18) 58%,
+      rgba(255, 238, 242, 0) 78%
+    );
+  }
+  .dm-hero__content {
+    max-width: 48%;
   }
 }
 

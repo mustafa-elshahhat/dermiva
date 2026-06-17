@@ -3,7 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import ProductImage from "@/components/ProductImage";
-import { getProduct, money } from "@/lib/catalog";
+import { getProduct, money, productImage } from "@/lib/catalog";
 import { useWishlist, useCartActions } from "@/lib/store";
 
 export default function WishlistContent() {
@@ -37,7 +37,7 @@ export default function WishlistContent() {
             onClick={() => router.push(`/product/${product.id}`)}
             style={{ position: "relative", background: "linear-gradient(160deg,#fbeef0,#f6dfe5)", aspectRatio: "1/1", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", padding: "10%" }}
           >
-            <ProductImage cutoutImage={product.cutoutImage} packshotImage={product.packshotImage} mode="cutout" name={product.name} kind={product.kind} />
+            <ProductImage image={productImage(product)} mode="cutout" name={product.name} kind={product.kind} />
             {product.tag ? (
               <div style={{ position: "absolute", top: 12, left: 12, background: "linear-gradient(135deg,#d9a24f,#c2974f)", color: "#fff", fontSize: 11, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", padding: "5px 11px", borderRadius: 999 }}>
                 {product.tag}

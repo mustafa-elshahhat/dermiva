@@ -1,7 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import ProductImage from "@/components/ProductImage";
-import { CATS, getCategoryProduct, type CategoryKey } from "@/lib/catalog";
+import { CATS, getCategoryProduct, productImage, type CategoryKey } from "@/lib/catalog";
 import CategoryContent from "./CategoryContent";
 
 export function generateStaticParams() {
@@ -38,7 +38,7 @@ export default async function CategoryPage({ params }: Props) {
             <p style={{ fontSize: 15, color: "#7c6065", maxWidth: 380, margin: 0, lineHeight: 1.55 }}>{info.tagline}</p>
           </div>
           <div style={{ flex: "0 0 auto", width: "clamp(120px,20vw,180px)", height: "clamp(150px,24vw,210px)" }}>
-            <ProductImage cutoutImage={catProduct.cutoutImage} packshotImage={catProduct.packshotImage} mode="cutout" name={info.label} kind={catProduct.kind} />
+            <ProductImage image={productImage(catProduct)} mode="cutout" name={info.label} kind={catProduct.kind} />
           </div>
         </div>
       </section>

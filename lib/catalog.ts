@@ -14,35 +14,38 @@ export interface Product {
   tag: string;
   rating: string;
   reviews: number;
-  cutoutImage: string;
+  /** Canonical main product image (packshot). Single source of truth used by
+   *  the product detail page, cards, cart, wishlist and checkout. */
   packshotImage: string;
 }
 
 export const PRODUCTS: Product[] = [
-  { id: "super-serum", cat: "face", name: "Super Serum", sub: "30 ml", price: 550, kind: "serum", tag: "Best Seller", rating: "4.9", reviews: 128, cutoutImage: "/products/cutouts/Super%20Serum.svg", packshotImage: "/products/packshots/Super%20Serum.png" },
-  { id: "glow-peel-pads", cat: "face", name: "Glow Peel Pads", sub: "30 Pads", price: 480, kind: "jar", tag: "Best Seller", rating: "4.8", reviews: 96, cutoutImage: "/products/cutouts/Glow%20Peel%20Pads.svg", packshotImage: "/products/packshots/Glow%20Peel%20Pads.png" },
-  { id: "vitamin-c-serum", cat: "face", name: "Vitamin C Serum", sub: "30 ml", price: 580, kind: "serum", tag: "", rating: "4.7", reviews: 41, cutoutImage: "/products/cutouts/Vitamin%20C%20Serum.svg", packshotImage: "/products/packshots/Vitamin%20C%20Serum.png" },
-  { id: "niacinamide", cat: "face", name: "Niacinamide 10%", sub: "30 ml", price: 520, kind: "serum", tag: "", rating: "4.8", reviews: 87, cutoutImage: "/products/cutouts/Niacinamide%2010%25.svg", packshotImage: "/products/packshots/Niacinamide%2010%25.png" },
-  { id: "hair-therapy-oil", cat: "hair", name: "Hair Therapy Oil", sub: "100 ml", price: 600, kind: "pump", tag: "Best Seller", rating: "4.9", reviews: 74, cutoutImage: "/products/cutouts/Hair%20Therapy%20Oil.svg", packshotImage: "/products/packshots/Hair%20Therapy%20Oil.png" },
-  { id: "hair-mask", cat: "hair", name: "Hair Mask", sub: "200 g", price: 520, kind: "jar", tag: "", rating: "4.8", reviews: 53, cutoutImage: "/products/cutouts/Hair%20Mask.svg", packshotImage: "/products/packshots/Hair%20Mask.png" },
-  { id: "repair-shampoo", cat: "hair", name: "Repair Shampoo", sub: "300 ml", price: 320, kind: "pump", tag: "", rating: "4.5", reviews: 44, cutoutImage: "/products/cutouts/Repair%20Shampoo.svg", packshotImage: "/products/packshots/Repair%20Shampoo.png" },
-  { id: "body-lotion", cat: "body", name: "Nourish Body Lotion", sub: "250 ml", price: 390, kind: "pump", tag: "", rating: "4.6", reviews: 38, cutoutImage: "/products/cutouts/Nourish%20Body%20Lotion.svg", packshotImage: "/products/packshots/Nourish%20Body%20Lotion.png" },
-  { id: "body-scrub", cat: "body", name: "Glow Body Scrub", sub: "200 g", price: 350, kind: "jar", tag: "", rating: "4.7", reviews: 29, cutoutImage: "/products/cutouts/Glow%20Body%20Scrub.svg", packshotImage: "/products/packshots/Glow%20Body%20Scrub.png" },
-  { id: "shea-butter", cat: "body", name: "Shea Body Butter", sub: "150 g", price: 410, kind: "jar", tag: "New", rating: "4.9", reviews: 33, cutoutImage: "/products/cutouts/Shea%20Body%20Butter.svg", packshotImage: "/products/packshots/Shea%20Body%20Butter.png" },
-  { id: "lip-balm", cat: "lip", name: "Lip Balm", sub: "Strawberry", price: 120, kind: "tube", tag: "New", rating: "4.7", reviews: 210, cutoutImage: "/products/cutouts/Lip%20Balm.svg", packshotImage: "/products/packshots/Lip%20Balm.png" },
-  { id: "lip-oil", cat: "lip", name: "Plumping Lip Oil", sub: "10 ml", price: 180, kind: "tube", tag: "New", rating: "4.8", reviews: 62, cutoutImage: "/products/cutouts/Plumping%20Lip%20Oil.svg", packshotImage: "/products/packshots/Plumping%20Lip%20Oil.png" },
+  { id: "super-serum", cat: "face", name: "Super Serum", sub: "30 ml", price: 550, kind: "serum", tag: "Best Seller", rating: "4.9", reviews: 128, packshotImage: "/products/packshots/Super%20Serum.png" },
+  { id: "glow-peel-pads", cat: "face", name: "Glow Peel Pads", sub: "30 Pads", price: 480, kind: "jar", tag: "Best Seller", rating: "4.8", reviews: 96, packshotImage: "/products/packshots/Glow%20Peel%20Pads.png" },
+  { id: "vitamin-c-serum", cat: "face", name: "Vitamin C Serum", sub: "30 ml", price: 580, kind: "serum", tag: "", rating: "4.7", reviews: 41, packshotImage: "/products/packshots/Vitamin%20C%20Serum.png" },
+  { id: "niacinamide", cat: "face", name: "Niacinamide 10%", sub: "30 ml", price: 520, kind: "serum", tag: "", rating: "4.8", reviews: 87, packshotImage: "/products/packshots/Niacinamide%2010%25.png" },
+  { id: "hair-therapy-oil", cat: "hair", name: "Hair Therapy Oil", sub: "100 ml", price: 600, kind: "pump", tag: "Best Seller", rating: "4.9", reviews: 74, packshotImage: "/products/packshots/Hair%20Therapy%20Oil.png" },
+  { id: "hair-mask", cat: "hair", name: "Hair Mask", sub: "200 g", price: 520, kind: "jar", tag: "", rating: "4.8", reviews: 53, packshotImage: "/products/packshots/Hair%20Mask.png" },
+  { id: "repair-shampoo", cat: "hair", name: "Repair Shampoo", sub: "300 ml", price: 320, kind: "pump", tag: "", rating: "4.5", reviews: 44, packshotImage: "/products/packshots/Repair%20Shampoo.png" },
+  { id: "body-lotion", cat: "body", name: "Nourish Body Lotion", sub: "250 ml", price: 390, kind: "pump", tag: "", rating: "4.6", reviews: 38, packshotImage: "/products/packshots/Nourish%20Body%20Lotion.png" },
+  { id: "body-scrub", cat: "body", name: "Glow Body Scrub", sub: "200 g", price: 350, kind: "jar", tag: "", rating: "4.7", reviews: 29, packshotImage: "/products/packshots/Glow%20Body%20Scrub.png" },
+  { id: "shea-butter", cat: "body", name: "Shea Body Butter", sub: "150 g", price: 410, kind: "jar", tag: "New", rating: "4.9", reviews: 33, packshotImage: "/products/packshots/Shea%20Body%20Butter.png" },
+  { id: "lip-balm", cat: "lip", name: "Lip Balm", sub: "Strawberry", price: 120, kind: "tube", tag: "New", rating: "4.7", reviews: 210, packshotImage: "/products/packshots/Lip%20Balm.png" },
+  { id: "lip-oil", cat: "lip", name: "Plumping Lip Oil", sub: "10 ml", price: 180, kind: "tube", tag: "New", rating: "4.8", reviews: 62, packshotImage: "/products/packshots/Plumping%20Lip%20Oil.png" },
 ];
 
 export interface CategoryInfo {
   label: string;
   tagline: string;
+  /** Final category card visual used in the "Shop by Category" cards. */
+  cardImage: string;
 }
 
 export const CATS: Record<CategoryKey, CategoryInfo> = {
-  face: { label: "Face Care", tagline: "Serums, treatments & glow essentials for radiant skin." },
-  hair: { label: "Hair Care", tagline: "Oils, masks & repair for stronger, shinier hair." },
-  body: { label: "Body Care", tagline: "Lotions, scrubs & butters for soft, nourished skin." },
-  lip: { label: "Lip Care", tagline: "Balms & oils for soft, smooth, plump lips." },
+  face: { label: "Face Care", tagline: "Serums, treatments & glow essentials for radiant skin.", cardImage: "/category/category-card/Face%20Care%20Card.webp" },
+  hair: { label: "Hair Care", tagline: "Oils, masks & repair for stronger, shinier hair.", cardImage: "/category/category-card/Hair%20Care%20Card.webp" },
+  body: { label: "Body Care", tagline: "Lotions, scrubs & butters for soft, nourished skin.", cardImage: "/category/category-card/Body%20Care%20Card.webp" },
+  lip: { label: "Lip Care", tagline: "Balms & oils for soft, smooth, plump lips.", cardImage: "/category/category-card/Lip%20Care%20Card.webp" },
 };
 
 export const CAT_KIND: Record<CategoryKey, BottleKind> = {
@@ -169,6 +172,14 @@ export function money(n: number): string {
 
 export function getProduct(id: string): Product | undefined {
   return PRODUCTS.find((p) => p.id === id);
+}
+
+// Canonical product image resolver — the single source of truth for the main
+// image shown wherever a product appears (detail page, cards, cart, wishlist,
+// checkout). Always derive the image from current catalog data, never from
+// values persisted in cart/wishlist storage (which only hold product ids).
+export function productImage(product: Pick<Product, "packshotImage">): string {
+  return product.packshotImage;
 }
 
 export function bestSellers(): Product[] {

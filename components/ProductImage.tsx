@@ -4,13 +4,16 @@ import React, { useState } from "react";
 import Bottle from "./Bottle";
 import type { BottleKind } from "@/lib/catalog";
 
-// Renders a product image with graceful fallback to the CSS Bottle.
-// mode: "cutout" for transparent product cutouts (cards, grids, thumbnails)
-//        "packshot" for rich packshot images (product detail, hero, marketing)
+// Renders the canonical product image with graceful fallback to the CSS Bottle.
+// `image` should come from the catalog resolver (productImage) so every surface
+// — detail page, cards, cart, wishlist, checkout — shows the same picture.
+// `mode` only tunes the fallback Bottle styling:
+//   "cutout"  → light bottle (thumbnails, category/marketing tiles)
+//   "packshot" → rich drawn bottle (product detail, hero)
 
 interface ProductImageProps {
-  cutoutImage?: string;
-  packshotImage?: string;
+  /** Canonical image path from `productImage(product)`. */
+  image?: string;
   mode?: "cutout" | "packshot";
   name: string;
   kind: BottleKind;
@@ -19,8 +22,7 @@ interface ProductImageProps {
 }
 
 export default function ProductImage({
-  cutoutImage,
-  packshotImage,
+  image,
   mode = "cutout",
   name,
   kind,
@@ -28,15 +30,13 @@ export default function ProductImage({
 }: ProductImageProps) {
   const [imgError, setImgError] = useState(false);
 
-  const src = mode === "packshot" ? (packshotImage || cutoutImage) : (cutoutImage || packshotImage);
-
-  if (!src || imgError) {
+  if (!image || imgError) {
     return <Bottle kind={kind} name={name} light={mode === "cutout"} />;
   }
 
   return (
     <img
-      src={src}
+      src={image}
       alt={name}
       onError={() => setImgError(true)}
       style={{

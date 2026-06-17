@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { LogoMark } from "./icons";
+import BrandLogo from "./BrandLogo";
 
 const DRAWER_LINKS = [
   { label: "Home", href: "/" },
@@ -86,10 +86,9 @@ export default function MobileMenu() {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <LogoMark width={36} height={36} />
-                <span className="dm-serif" style={{ fontWeight: 700, fontSize: 22, letterSpacing: ".2em", color: "#c0934a" }}>DERMIVA</span>
-              </div>
+              <Link href="/" onClick={() => setMenuOpen(false)} aria-label="Dermiva home" style={{ display: "flex", alignItems: "center" }}>
+                <BrandLogo height={44} />
+              </Link>
               <button
                 ref={closeButtonRef}
                 aria-label="Close menu"

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import ProductImage from "@/components/ProductImage";
-import { getProduct, money } from "@/lib/catalog";
+import { getProduct, money, productImage } from "@/lib/catalog";
 import { useCartState, useCartActions, useToast } from "@/lib/store";
 import { PAYMENT_METHODS, PaymentMethodId } from "@/lib/payments";
 
@@ -192,7 +192,7 @@ export default function CheckoutContent() {
           {lines.map((it) => (
             <div key={it.id} style={{ display: "flex", alignItems: "center", gap: 11 }}>
               <div style={{ flex: "0 0 auto", width: 48, height: 48, background: "linear-gradient(160deg,#fbeef0,#f4dbe2)", borderRadius: 10, padding: 5, position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <ProductImage cutoutImage={it.cutoutImage} packshotImage={it.packshotImage} mode="cutout" name={it.name} kind={it.kind} />
+                <ProductImage image={productImage(it)} mode="cutout" name={it.name} kind={it.kind} />
                 <span style={{ position: "absolute", top: -6, right: -6, background: "#c07f8d", color: "#fff", fontSize: 10, minWidth: 18, height: 18, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 600 }}>{it.qty}</span>
               </div>
               <div style={{ flex: 1, minWidth: 0, fontSize: 13, color: "#5a4145" }}>{it.name}</div>

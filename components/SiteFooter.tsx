@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import BrandLogo from "./BrandLogo";
 import { PAYMENT_METHODS } from "@/lib/payments";
 
 const LINKS = [
@@ -22,6 +23,11 @@ export default function SiteFooter() {
   return (
     <footer style={{ background: "#fdf6f4", borderTop: "1px solid #f0dde1" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(32px,4vw,48px) clamp(16px,4vw,40px) 20px" }}>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
+          <Link href="/" aria-label="Dermiva home" style={{ display: "inline-flex" }}>
+            <BrandLogo height={64} />
+          </Link>
+        </div>
         <div style={{ textAlign: "center", marginBottom: 18 }}>
           <div style={{ fontSize: 13, color: "#a98e93", letterSpacing: ".1em", marginBottom: 12 }}>WE ACCEPT</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center" }}>

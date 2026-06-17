@@ -3,7 +3,7 @@ import Link from "next/link";
 import ProductImage from "@/components/ProductImage";
 import ProductGrid from "@/components/ProductGrid";
 import { RawIcon, PROMISE_ICONS } from "@/components/icons";
-import { CATS, PRODUCTS, bestSellers, getProduct, getCategoryProduct, type CategoryKey } from "@/lib/catalog";
+import { CATS, PRODUCTS, bestSellers, getProduct, productImage, type CategoryKey } from "@/lib/catalog";
 import SubscribeForm from "./SubscribeForm";
 
 const PROMISES = [
@@ -17,11 +17,6 @@ const HERO_INGREDIENTS = ["Vitamin C", "Niacinamide", "Hyaluronic Acid", "Alpha 
 
 export default function HomePage() {
   const catKeys = Object.keys(CATS) as CategoryKey[];
-  const heroProducts = [
-    getProduct("lip-balm")!,
-    getProduct("super-serum")!,
-    getProduct("glow-peel-pads")!,
-  ];
   const superSerum = getProduct("super-serum")!;
   const hairOil = getProduct("hair-therapy-oil")!;
   const hairMask = getProduct("hair-mask")!;
@@ -31,33 +26,27 @@ export default function HomePage() {
     <div className="dm-fade">
       {/* HERO */}
       <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(18px,3vw,32px) clamp(16px,4vw,40px)" }}>
-        <div className="dm-hero-container" style={{ background: "radial-gradient(120% 120% at 80% 10%,#fbe2e7,#f4cdd6 55%,#eec1cd)", borderRadius: 28, overflow: "hidden", display: "flex", flexWrap: "wrap", alignItems: "center", gap: 20, position: "relative" }}>
-          <div className="dm-hero-child-left" style={{ position: "relative", zIndex: 2 }}>
-            <div style={{ fontSize: 13, letterSpacing: ".18em", textTransform: "uppercase", color: "#b07c88", fontWeight: 600, marginBottom: 14 }}>Science-Driven Skincare</div>
-            <h1 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(40px,6.5vw,66px)", lineHeight: 1.02, color: "#9a5d6a", margin: "0 0 16px" }}>
+        <div className="dm-hero">
+          <picture className="dm-hero__media">
+            <source media="(min-width: 1024px)" srcSet="/hero/Desktop.webp" />
+            <source media="(min-width: 768px)" srcSet="/hero/Tablet.webp" />
+            <img src="/hero/Mobile.webp" alt="Dermiva Super Serum, Glow Peel Pads and Lip Balm collection" fetchPriority="high" />
+          </picture>
+          <div className="dm-hero__overlay" aria-hidden="true" />
+          <div className="dm-hero__content">
+            <div className="dm-hero__eyebrow">Science-Driven Skincare</div>
+            <h1 className="dm-serif dm-hero__title">
               Reveal Your
               <br />
               Natural Glow
             </h1>
-            <p style={{ fontSize: "clamp(15px,1.6vw,17px)", color: "#7c6065", maxWidth: 420, lineHeight: 1.55, margin: "0 0 22px" }}>A blend of clean, effective skincare for healthy, radiant skin — made with care in Egypt.</p>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 26 }}>
-              <span style={{ fontSize: 13, letterSpacing: ".12em", color: "#b07c88", textTransform: "uppercase" }}>Up to</span>
-              <span className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(46px,8vw,72px)", color: "#b76e79", lineHeight: 0.9 }}>30%</span>
-              <span className="dm-serif" style={{ fontSize: "clamp(22px,3vw,30px)", color: "#b76e79", fontWeight: 600 }}>OFF</span>
+            <p className="dm-hero__text">A blend of clean, effective skincare for healthy, radiant skin — made with care in Egypt.</p>
+            <div className="dm-hero__discount">
+              <span className="dm-hero__discount-label">Up to</span>
+              <span className="dm-serif dm-hero__discount-num">30%</span>
+              <span className="dm-serif dm-hero__discount-off">OFF</span>
             </div>
-            <Link href="/shop" className="dm-btn-primary" style={{ display: "inline-block", fontSize: 15, fontWeight: 500, letterSpacing: ".12em", textTransform: "uppercase", padding: "15px 38px", textDecoration: "none", textAlign: "center" }}>Shop Now</Link>
-          </div>
-          <div className="dm-hero-child-right" style={{ position: "relative", height: "clamp(280px,38vw,420px)", display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "clamp(4px,1vw,14px)" }}>
-            <div style={{ position: "absolute", bottom: "6%", left: "6%", right: "6%", height: "14%", background: "linear-gradient(180deg,#f6ece0,#e7d4c2)", borderRadius: "50%/40%", filter: "blur(2px)" }} />
-            <div style={{ width: "26%", height: "62%", animation: "dmFloat 6s ease-in-out infinite" }}>
-              <ProductImage cutoutImage={heroProducts[0].cutoutImage} packshotImage={heroProducts[0].packshotImage} mode="cutout" name={heroProducts[0].name} kind={heroProducts[0].kind} />
-            </div>
-            <div style={{ width: "34%", height: "88%", zIndex: 2, animation: "dmFloat 5s ease-in-out infinite .4s" }}>
-              <ProductImage cutoutImage={heroProducts[1].cutoutImage} packshotImage={heroProducts[1].packshotImage} mode="cutout" name={heroProducts[1].name} kind={heroProducts[1].kind} />
-            </div>
-            <div style={{ width: "32%", height: "54%", animation: "dmFloat 6.5s ease-in-out infinite .8s" }}>
-              <ProductImage cutoutImage={heroProducts[2].cutoutImage} packshotImage={heroProducts[2].packshotImage} mode="cutout" name={heroProducts[2].name} kind={heroProducts[2].kind} />
-            </div>
+            <Link href="/shop" className="dm-btn-primary dm-hero__cta">Shop Now</Link>
           </div>
         </div>
       </section>
@@ -68,20 +57,17 @@ export default function HomePage() {
           <span style={{ color: "#d9a24f" }}>✦</span> Shop by Category <span style={{ color: "#d9a24f" }}>✦</span>
         </h2>
         <div className="dm-grid-cats">
-          {catKeys.map((k) => {
-            const catProduct = getCategoryProduct(k);
-            return (
-              <Link key={k} href={`/category/${k}`} className="dm-cat-card">
-                <div style={{ aspectRatio: "1/1", background: "linear-gradient(160deg,#fbeef0,#f4dbe2)", padding: "8%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <ProductImage cutoutImage={catProduct.cutoutImage} packshotImage={catProduct.packshotImage} mode="cutout" name={CATS[k].label} kind={catProduct.kind} />
-                </div>
-                <div style={{ padding: "14px 12px 16px", textAlign: "center" }}>
-                  <div className="dm-serif" style={{ fontWeight: 600, fontSize: 19, color: "#4f3a3e" }}>{CATS[k].label}</div>
-                  <div style={{ fontSize: 11.5, color: "#a98e93", marginTop: 2 }}>{PRODUCTS.filter((p) => p.cat === k).length} products</div>
-                </div>
-              </Link>
-            );
-          })}
+          {catKeys.map((k) => (
+            <Link key={k} href={`/category/${k}`} className="dm-cat-card">
+              <div className="dm-cat-card__media" style={{ aspectRatio: "1/1", background: "linear-gradient(160deg,#fbeef0,#f4dbe2)" }}>
+                <img src={CATS[k].cardImage} alt={`${CATS[k].label} category`} loading="lazy" />
+              </div>
+              <div style={{ padding: "14px 12px 16px", textAlign: "center" }}>
+                <div className="dm-serif" style={{ fontWeight: 600, fontSize: 19, color: "#4f3a3e" }}>{CATS[k].label}</div>
+                <div style={{ fontSize: 11.5, color: "#a98e93", marginTop: 2 }}>{PRODUCTS.filter((p) => p.cat === k).length} products</div>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -119,7 +105,7 @@ export default function HomePage() {
         <div style={{ display: "flex", flexWrap: "wrap", borderRadius: 24, overflow: "hidden", boxShadow: "0 16px 40px rgba(184,134,146,.14)" }}>
           <div style={{ flex: "1 1 300px", minWidth: 280, background: "radial-gradient(120% 120% at 30% 20%,#f7ecd6,#eed9b4 70%,#e3c894)", display: "flex", alignItems: "center", justifyContent: "center", padding: 36, position: "relative" }}>
             <div style={{ width: "min(60%,220px)", height: "clamp(220px,30vw,320px)" }}>
-              <ProductImage cutoutImage={superSerum.cutoutImage} packshotImage={superSerum.packshotImage} mode="packshot" name="Super Serum" kind="serum" />
+              <ProductImage image={productImage(superSerum)} mode="packshot" name="Super Serum" kind="serum" />
             </div>
             <div style={{ position: "absolute", top: 30, right: 30, display: "flex", flexDirection: "column", gap: 9 }}>
               {HERO_INGREDIENTS.map((ing) => (
@@ -157,13 +143,13 @@ export default function HomePage() {
           </div>
           <div className="dm-hero-child-right" style={{ height: "clamp(180px,24vw,240px)", display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 10 }}>
             <div style={{ width: "34%", height: "70%" }}>
-              <ProductImage cutoutImage={hairOil.cutoutImage} packshotImage={hairOil.packshotImage} mode="cutout" name="Hair Therapy Oil" kind="pump" />
+              <ProductImage image={productImage(hairOil)} mode="cutout" name="Hair Therapy Oil" kind="pump" />
             </div>
             <div style={{ width: "38%", height: "54%" }}>
-              <ProductImage cutoutImage={hairMask.cutoutImage} packshotImage={hairMask.packshotImage} mode="cutout" name="Hair Mask" kind="jar" />
+              <ProductImage image={productImage(hairMask)} mode="cutout" name="Hair Mask" kind="jar" />
             </div>
             <div style={{ width: "30%", height: "80%" }}>
-              <ProductImage cutoutImage={shampoo.cutoutImage} packshotImage={shampoo.packshotImage} mode="cutout" name="Repair Shampoo" kind="pump" />
+              <ProductImage image={productImage(shampoo)} mode="cutout" name="Repair Shampoo" kind="pump" />
             </div>
           </div>
         </Link>

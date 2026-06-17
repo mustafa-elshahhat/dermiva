@@ -32,24 +32,6 @@ export const CartIcon = ({ size = 20 }: IconProps) => (
   </svg>
 );
 
-export const LogoMark = ({ width = 26, height = 30 }: { width?: number; height?: number }) => (
-  <svg width={width} height={height} viewBox="0 0 24 28" fill="none">
-    <path d="M12 1 C12 1 3 13 3 19 a9 9 0 0 0 18 0 C21 13 12 1 12 1 Z" fill="url(#dg)" />
-    <defs>
-      <linearGradient id="dg" x1="3" y1="1" x2="21" y2="28" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#f3d28a" />
-        <stop offset="1" stopColor="#c2974f" />
-      </linearGradient>
-    </defs>
-  </svg>
-);
-
-export const LogoMarkFlat = ({ width = 22, height = 26 }: { width?: number; height?: number }) => (
-  <svg width={width} height={height} viewBox="0 0 24 28" fill="none">
-    <path d="M12 1 C12 1 3 13 3 19 a9 9 0 0 0 18 0 C21 13 12 1 12 1 Z" fill="#c2974f" />
-  </svg>
-);
-
 // Raw SVG strings rendered where a small inline glyph is needed inside content
 // tiles (promise / trust / value / account icons).
 export const RawIcon = ({ svg }: { svg: string }) => (

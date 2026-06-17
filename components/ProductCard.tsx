@@ -3,7 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import ProductImage from "./ProductImage";
-import { money, type Product } from "@/lib/catalog";
+import { money, productImage, type Product } from "@/lib/catalog";
 import { useWishlist, useCartActions } from "@/lib/store";
 
 // Ported from ProductCard.dc.html. Whole card opens the product; the heart and
@@ -21,13 +21,13 @@ export default function ProductCard({ product }: { product: Product }) {
       onClick={() => router.push(`/product/${product.id}`)}
       style={{ display: "flex", flexDirection: "column", cursor: "pointer", height: "100%" }}
     >
-      <div style={{ position: "relative", background: "linear-gradient(160deg,#fbeef0,#f6dfe5)", aspectRatio: "1/1", display: "flex", alignItems: "center", justifyContent: "center", padding: "10%" }}>
+      <div style={{ position: "relative", aspectRatio: "1/1", overflow: "hidden" }}>
         <ProductImage
-          cutoutImage={product.cutoutImage}
-          packshotImage={product.packshotImage}
-          mode="cutout"
+          image={productImage(product)}
+          mode="packshot"
           name={product.name}
           kind={product.kind}
+          style={{ objectFit: "cover" }}
         />
         {product.tag ? (
           <div style={{ position: "absolute", top: 12, left: 12, background: "linear-gradient(135deg,#d9a24f,#c2974f)", color: "#fff", fontSize: 11, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", padding: "5px 11px", borderRadius: 999, boxShadow: "0 4px 10px rgba(194,151,79,.3)" }}>

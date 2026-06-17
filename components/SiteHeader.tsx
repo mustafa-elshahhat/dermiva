@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { LogoMark } from "./icons";
+import BrandLogo from "./BrandLogo";
 import MobileMenu from "./MobileMenu";
 import HeaderActions from "./HeaderActions";
 
@@ -27,9 +27,8 @@ export default function SiteHeader() {
         <div style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "0 clamp(16px,4vw,40px)", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
           <MobileMenu />
 
-          <Link href="/" style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer" }}>
-            <LogoMark width={42} height={42} />
-            <span className="dm-serif dm-logo-text" style={{ fontWeight: 700, fontSize: 25, letterSpacing: ".22em", color: "#c0934a" }}>DERMIVA</span>
+          <Link href="/" aria-label="Dermiva home" style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+            <BrandLogo height={52} priority />
           </Link>
 
           <nav className="dm-nav">
