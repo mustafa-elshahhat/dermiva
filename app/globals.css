@@ -423,7 +423,7 @@ textarea::placeholder {
 .dm-card-wishlist-btn {
   position: absolute;
   top: 10px;
-  right: 10px;
+  inset-inline-end: 10px;
   width: 44px;
   height: 44px;
   border: none;
@@ -639,7 +639,7 @@ textarea::placeholder {
   }
   .dm-hero__content {
     max-width: 54%;
-    padding-left: clamp(34px, 5vw, 60px);
+    padding-inline-start: clamp(34px, 5vw, 60px);
   }
   .dm-hero__cta {
     min-height: 52px;
@@ -922,6 +922,92 @@ textarea::placeholder {
 @media (max-width: 767px) {
   *[style*="infinite"] {
     animation: none !important;
+  }
+}
+
+/* ===================== Arabic typography (only under /ar) ===================== */
+/* English keeps Cormorant Garamond + Jost unchanged. Arabic swaps the body and
+   serif/display families to the Arabic-capable IBM Plex Sans Arabic. */
+html[lang="ar"] body,
+html[lang="ar"] input,
+html[lang="ar"] textarea,
+html[lang="ar"] select,
+html[lang="ar"] button {
+  font-family: var(--font-arabic), var(--font-jost), sans-serif;
+}
+html[lang="ar"] .dm-serif {
+  font-family: var(--font-arabic), var(--font-cormorant), serif;
+}
+/* Inline font-family declarations (set on inputs in components) need an explicit
+   override so Arabic inputs/textarea/promo fields use the Arabic font too. */
+html[lang="ar"] [style*="--font-jost"] {
+  font-family: var(--font-arabic), var(--font-jost), sans-serif;
+}
+
+/* ===================== RTL layout adjustments ===================== */
+/* Mobile drawer: positioning + shadow side via logical properties. */
+.dm-drawer {
+  inset-inline-start: 0;
+  box-shadow: 6px 0 30px rgba(120, 80, 90, 0.2);
+}
+html[dir="rtl"] .dm-drawer {
+  box-shadow: -6px 0 30px rgba(120, 80, 90, 0.2);
+}
+
+/* Icons that point in a reading direction (e.g. order chevron) mirror in RTL. */
+html[dir="rtl"] .dm-rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* Art-directed blush overlays sit behind the text column, which moves to the
+   right in RTL — mirror the horizontal gradient direction accordingly. */
+@media (min-width: 768px) {
+  html[dir="rtl"] .dm-hero__overlay {
+    background: linear-gradient(
+      270deg,
+      rgba(255, 248, 248, 0.9) 0%,
+      rgba(255, 238, 242, 0.74) 34%,
+      rgba(255, 238, 242, 0.2) 56%,
+      rgba(255, 238, 242, 0) 74%
+    );
+  }
+  html[dir="rtl"] .dm-collection__overlay {
+    background: linear-gradient(
+      270deg,
+      rgba(255, 248, 248, 0.84) 0%,
+      rgba(255, 238, 244, 0.62) 42%,
+      rgba(255, 238, 244, 0.12) 68%,
+      transparent 100%
+    );
+  }
+  html[dir="rtl"] .dm-cat-hero__overlay {
+    background: linear-gradient(
+      270deg,
+      rgba(255, 248, 248, 0.82) 0%,
+      rgba(255, 239, 244, 0.62) 38%,
+      rgba(255, 239, 244, 0.15) 62%,
+      transparent 82%
+    );
+  }
+}
+@media (min-width: 1024px) {
+  html[dir="rtl"] .dm-hero__overlay {
+    background: linear-gradient(
+      270deg,
+      rgba(255, 248, 248, 0.88) 0%,
+      rgba(255, 238, 242, 0.72) 36%,
+      rgba(255, 238, 242, 0.18) 58%,
+      rgba(255, 238, 242, 0) 78%
+    );
+  }
+  html[dir="rtl"] .dm-cat-hero__overlay {
+    background: linear-gradient(
+      270deg,
+      rgba(255, 248, 248, 0.82) 0%,
+      rgba(255, 239, 244, 0.6) 36%,
+      rgba(255, 239, 244, 0.12) 60%,
+      transparent 80%
+    );
   }
 }
 

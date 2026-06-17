@@ -2,17 +2,20 @@
 // All payment-related UI should import from here instead of
 // maintaining separate lists.
 
+import type { Locale } from "@/i18n/routing";
+import type { Localized } from "./catalog";
+
 export type PaymentMethodId = "cod" | "mobile-wallets" | "fawry" | "instapay";
 
 export interface PaymentMethod {
   /** Unique identifier used in form state and order records. */
   id: PaymentMethodId;
-  /** Human-readable label. */
-  label: string;
+  /** Human-readable label (brand names such as InstaPay stay English). */
+  label: Localized<string>;
   /** Path to the optimised webp logo under /public. */
   image: string;
   /** Short description shown as subtitle. */
-  description: string;
+  description: Localized<string>;
 }
 
 /**
@@ -23,26 +26,30 @@ export interface PaymentMethod {
 export const PAYMENT_METHODS: PaymentMethod[] = [
   {
     id: "cod",
-    label: "Cash on Delivery",
+    label: { en: "Cash on Delivery", ar: "الدفع عند الاستلام" },
     image: "/payments/cash-on-delivery.webp",
-    description: "Pay when your order arrives",
+    description: { en: "Pay when your order arrives", ar: "ادفعي عند وصول طلبك" },
   },
   {
     id: "mobile-wallets",
-    label: "Mobile Wallets",
+    label: { en: "Mobile Wallets", ar: "المحافظ الإلكترونية" },
     image: "/payments/mobile-wallets.webp",
-    description: "Vodafone Cash, Orange Cash, Etisalat Cash & more",
+    description: { en: "Vodafone Cash, Orange Cash, Etisalat Cash & more", ar: "فودافون كاش، أورنج كاش، اتصالات كاش والمزيد" },
   },
   {
     id: "fawry",
-    label: "Fawry Pay",
+    label: { en: "Fawry Pay", ar: "فوري" },
     image: "/payments/fawry-pay.webp",
-    description: "Pay at any Fawry outlet or via the app",
+    description: { en: "Pay at any Fawry outlet or via the app", ar: "ادفعي في أي منفذ فوري أو عبر التطبيق" },
   },
   {
     id: "instapay",
-    label: "InstaPay",
+    label: { en: "InstaPay", ar: "InstaPay" },
     image: "/payments/instapay.webp",
-    description: "Instant bank transfer via InstaPay",
+    description: { en: "Instant bank transfer via InstaPay", ar: "تحويل بنكي فوري عبر InstaPay" },
   },
 ];
+
+export function getPaymentText(method: PaymentMethod, locale: Locale): { label: string; description: string } {
+  return { label: method.label[locale], description: method.description[locale] };
+}

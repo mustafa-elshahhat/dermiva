@@ -2,23 +2,26 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import BrandLogo from "./BrandLogo";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const DRAWER_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Shop All", href: "/shop" },
-  { label: "Face Care", href: "/category/face" },
-  { label: "Hair Care", href: "/category/hair" },
-  { label: "Body Care", href: "/category/body" },
-  { label: "Lip Care", href: "/category/lip" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-  { label: "My Wishlist", href: "/wishlist" },
-  { label: "My Account", href: "/account" },
-];
+  { key: "home", href: "/" },
+  { key: "shopAll", href: "/shop" },
+  { key: "faceCare", href: "/category/face" },
+  { key: "hairCare", href: "/category/hair" },
+  { key: "bodyCare", href: "/category/body" },
+  { key: "lipCare", href: "/category/lip" },
+  { key: "about", href: "/about" },
+  { key: "contact", href: "/contact" },
+  { key: "myWishlist", href: "/wishlist" },
+  { key: "myAccount", href: "/account" },
+] as const;
 
 export default function MobileMenu() {
+  const t = useTranslations("nav");
   const [menuOpen, setMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -55,7 +58,7 @@ export default function MobileMenu() {
   return (
     <>
       <button
-        aria-label="Open menu"
+        aria-label={t("openMenu")}
         ref={menuButtonRef}
         onClick={() => setMenuOpen(true)}
         className="dm-burger"
@@ -75,16 +78,15 @@ export default function MobileMenu() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
+            className="dm-drawer"
             style={{
               position: "absolute",
               top: 0,
-              left: 0,
               bottom: 0,
               width: "min(80vw,320px)",
               height: "100dvh",
               maxHeight: "100dvh",
               background: "#fdf6f4",
-              boxShadow: "6px 0 30px rgba(120,80,90,.2)",
               padding: 24,
               display: "flex",
               flexDirection: "column",
@@ -94,12 +96,12 @@ export default function MobileMenu() {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18 }}>
-              <Link href="/" onClick={() => setMenuOpen(false)} aria-label="Dermiva home" style={{ display: "flex", alignItems: "center" }}>
+              <Link href="/" onClick={() => setMenuOpen(false)} aria-label={t("homeAria")} style={{ display: "flex", alignItems: "center" }}>
                 <BrandLogo height={44} />
               </Link>
               <button
                 ref={closeButtonRef}
-                aria-label="Close menu"
+                aria-label={t("closeMenu")}
                 onClick={() => setMenuOpen(false)}
                 className="dm-icon-btn"
                 style={{ width: 44, height: 44, fontSize: 24, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", background: "none", border: "none", color: "#7c5f64" }}
@@ -114,9 +116,12 @@ export default function MobileMenu() {
                 onClick={() => setMenuOpen(false)}
                 style={{ cursor: "pointer", padding: "13px 8px", borderBottom: i < DRAWER_LINKS.length - 1 ? "1px solid #f0dde1" : "none", fontSize: 15, color: "#5a4145" }}
               >
-                {l.label}
+                {t(l.key)}
               </Link>
             ))}
+            <div style={{ marginTop: 16 }}>
+              <LanguageSwitcher compact />
+            </div>
           </div>
         </div>,
         document.body

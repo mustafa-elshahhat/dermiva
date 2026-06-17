@@ -175,7 +175,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         else cart.push({ id, qty });
         return { ...s, cart };
       });
-      showToast("Added to cart");
+      showToast("addedToCart");
     },
     [showToast]
   );
@@ -199,7 +199,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     (id: string) => {
       setState((s) => {
         const has = s.wishlist.includes(id);
-        showToast(has ? "Removed from wishlist" : "Added to wishlist");
+        showToast(has ? "removedFromWishlist" : "addedToWishlist");
         return { ...s, wishlist: has ? s.wishlist.filter((x) => x !== id) : s.wishlist.concat(id) };
       });
     },
@@ -225,10 +225,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const applyPromo = useCallback(() => {
     setState((s) => {
       if (s.promo.trim().toUpperCase() === "GLOW10") {
-        showToast("Promo applied: 10% off");
+        showToast("promoApplied");
         return { ...s, promoApplied: true };
       }
-      showToast("Invalid promo code");
+      showToast("promoInvalid");
       return { ...s, promoApplied: false };
     });
   }, [showToast]);
@@ -236,7 +236,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const login = useCallback(
     (email: string, name?: string) => {
       setState((s) => ({ ...s, loggedIn: true, userEmail: email, userName: name ?? s.userName }));
-      showToast("Welcome back!");
+      showToast("welcomeBack");
     },
     [showToast]
   );
@@ -244,14 +244,14 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const register = useCallback(
     (email: string, name: string) => {
       setState((s) => ({ ...s, loggedIn: true, userEmail: email, userName: name }));
-      showToast("Account created!");
+      showToast("accountCreated");
     },
     [showToast]
   );
 
   const logout = useCallback(() => {
     setState((s) => ({ ...s, loggedIn: false }));
-    showToast("Signed out");
+    showToast("signedOut");
   }, [showToast]);
 
   const addRecent = useCallback((term: string) => {
