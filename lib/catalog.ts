@@ -33,18 +33,18 @@ export interface Product {
 }
 
 export const PRODUCTS: Product[] = [
-  { id: "super-serum", cat: "face", name: { en: "Super Serum", ar: "سوبر سيروم" }, sub: { en: "30 ml", ar: "30 مل" }, price: 550, kind: "serum", tag: "best-seller", rating: "4.9", reviews: 128, packshotImage: "/products/super-serum.webp" },
-  { id: "glow-peel-pads", cat: "face", name: { en: "Glow Peel Pads", ar: "باندات التقشير المضيئة" }, sub: { en: "30 Pads", ar: "30 باندة" }, price: 480, kind: "jar", tag: "best-seller", rating: "4.8", reviews: 96, packshotImage: "/products/glow-peel-pads.webp" },
-  { id: "vitamin-c-serum", cat: "face", name: { en: "Vitamin C Serum", ar: "سيروم فيتامين C" }, sub: { en: "30 ml", ar: "30 مل" }, price: 580, kind: "serum", tag: "", rating: "4.7", reviews: 41, packshotImage: "/products/vitamin-c-serum.webp" },
-  { id: "niacinamide", cat: "face", name: { en: "Niacinamide 10%", ar: "نياسيناميد 10%" }, sub: { en: "30 ml", ar: "30 مل" }, price: 520, kind: "serum", tag: "", rating: "4.8", reviews: 87, packshotImage: "/products/niacinamide-10.webp" },
-  { id: "hair-therapy-oil", cat: "hair", name: { en: "Hair Therapy Oil", ar: "زيت علاج الشعر" }, sub: { en: "100 ml", ar: "100 مل" }, price: 600, kind: "pump", tag: "best-seller", rating: "4.9", reviews: 74, packshotImage: "/products/hair-therapy-oil.webp" },
-  { id: "hair-mask", cat: "hair", name: { en: "Hair Mask", ar: "ماسك الشعر" }, sub: { en: "200 g", ar: "200 جم" }, price: 520, kind: "jar", tag: "", rating: "4.8", reviews: 53, packshotImage: "/products/hair-mask.webp" },
-  { id: "repair-shampoo", cat: "hair", name: { en: "Repair Shampoo", ar: "شامبو الإصلاح" }, sub: { en: "300 ml", ar: "300 مل" }, price: 320, kind: "pump", tag: "", rating: "4.5", reviews: 44, packshotImage: "/products/repair-shampoo.webp" },
-  { id: "body-lotion", cat: "body", name: { en: "Nourish Body Lotion", ar: "لوشن الجسم المغذّي" }, sub: { en: "250 ml", ar: "250 مل" }, price: 390, kind: "pump", tag: "", rating: "4.6", reviews: 38, packshotImage: "/products/nourish-body-lotion.webp" },
-  { id: "body-scrub", cat: "body", name: { en: "Glow Body Scrub", ar: "مقشّر الجسم المضيء" }, sub: { en: "200 g", ar: "200 جم" }, price: 350, kind: "jar", tag: "", rating: "4.7", reviews: 29, packshotImage: "/products/glow-body-scrub.webp" },
-  { id: "shea-butter", cat: "body", name: { en: "Shea Body Butter", ar: "زبدة الشيا للجسم" }, sub: { en: "150 g", ar: "150 جم" }, price: 410, kind: "jar", tag: "new", rating: "4.9", reviews: 33, packshotImage: "/products/shea-body-butter.webp" },
-  { id: "lip-balm", cat: "lip", name: { en: "Lip Balm", ar: "بلسم الشفاه" }, sub: { en: "Strawberry", ar: "فراولة" }, price: 120, kind: "tube", tag: "new", rating: "4.7", reviews: 210, packshotImage: "/products/lip-balm.webp" },
-  { id: "lip-oil", cat: "lip", name: { en: "Plumping Lip Oil", ar: "زيت الشفاه الممتلئ" }, sub: { en: "10 ml", ar: "10 مل" }, price: 180, kind: "tube", tag: "new", rating: "4.8", reviews: 62, packshotImage: "/products/plumping-lip-oil.webp" },
+  { id: "super-serum", cat: "face", name: { en: "Super Serum", ar: "Super Serum" }, sub: { en: "30 ml", ar: "30 مل" }, price: 550, kind: "serum", tag: "best-seller", rating: "4.9", reviews: 128, packshotImage: "/products/super-serum.webp" },
+  { id: "glow-peel-pads", cat: "face", name: { en: "Glow Peel Pads", ar: "Glow Peel Pads" }, sub: { en: "30 Pads", ar: "30 باندة" }, price: 480, kind: "jar", tag: "best-seller", rating: "4.8", reviews: 96, packshotImage: "/products/glow-peel-pads.webp" },
+  { id: "vitamin-c-serum", cat: "face", name: { en: "Vitamin C Serum", ar: "Vitamin C Serum" }, sub: { en: "30 ml", ar: "30 مل" }, price: 580, kind: "serum", tag: "", rating: "4.7", reviews: 41, packshotImage: "/products/vitamin-c-serum.webp" },
+  { id: "niacinamide", cat: "face", name: { en: "Niacinamide 10%", ar: "Niacinamide 10%" }, sub: { en: "30 ml", ar: "30 مل" }, price: 520, kind: "serum", tag: "", rating: "4.8", reviews: 87, packshotImage: "/products/niacinamide-10.webp" },
+  { id: "hair-therapy-oil", cat: "hair", name: { en: "Hair Therapy Oil", ar: "Hair Therapy Oil" }, sub: { en: "100 ml", ar: "100 مل" }, price: 600, kind: "pump", tag: "best-seller", rating: "4.9", reviews: 74, packshotImage: "/products/hair-therapy-oil.webp" },
+  { id: "hair-mask", cat: "hair", name: { en: "Hair Mask", ar: "Hair Mask" }, sub: { en: "200 g", ar: "200 جم" }, price: 520, kind: "jar", tag: "", rating: "4.8", reviews: 53, packshotImage: "/products/hair-mask.webp" },
+  { id: "repair-shampoo", cat: "hair", name: { en: "Repair Shampoo", ar: "Repair Shampoo" }, sub: { en: "300 ml", ar: "300 مل" }, price: 320, kind: "pump", tag: "", rating: "4.5", reviews: 44, packshotImage: "/products/repair-shampoo.webp" },
+  { id: "body-lotion", cat: "body", name: { en: "Nourish Body Lotion", ar: "Nourish Body Lotion" }, sub: { en: "250 ml", ar: "250 مل" }, price: 390, kind: "pump", tag: "", rating: "4.6", reviews: 38, packshotImage: "/products/nourish-body-lotion.webp" },
+  { id: "body-scrub", cat: "body", name: { en: "Glow Body Scrub", ar: "Glow Body Scrub" }, sub: { en: "200 g", ar: "200 جم" }, price: 350, kind: "jar", tag: "", rating: "4.7", reviews: 29, packshotImage: "/products/glow-body-scrub.webp" },
+  { id: "shea-butter", cat: "body", name: { en: "Shea Body Butter", ar: "Shea Body Butter" }, sub: { en: "150 g", ar: "150 جم" }, price: 410, kind: "jar", tag: "new", rating: "4.9", reviews: 33, packshotImage: "/products/shea-body-butter.webp" },
+  { id: "lip-balm", cat: "lip", name: { en: "Lip Balm", ar: "Lip Balm" }, sub: { en: "Strawberry", ar: "فراولة" }, price: 120, kind: "tube", tag: "new", rating: "4.7", reviews: 210, packshotImage: "/products/lip-balm.webp" },
+  { id: "lip-oil", cat: "lip", name: { en: "Plumping Lip Oil", ar: "Plumping Lip Oil" }, sub: { en: "10 ml", ar: "10 مل" }, price: 180, kind: "tube", tag: "new", rating: "4.8", reviews: 62, packshotImage: "/products/plumping-lip-oil.webp" },
 ];
 
 export interface CategoryHeroImages {
@@ -271,11 +271,11 @@ export const POLICIES: Record<PolicyKey, Policy> = {
   },
   terms: {
     title: { en: "Terms & Conditions", ar: "الشروط والأحكام" },
-    intro: { en: "The terms governing your use of Dermiva.", ar: "الشروط التي تحكم استخدامك لِديرميفا." },
+    intro: { en: "The terms governing your use of Dermiva.", ar: "الشروط التي تحكم استخدامك لـ Dermiva." },
     sections: [
       { h: { en: "Use of Site", ar: "استخدام الموقع" }, b: { en: "By using this website you agree to provide accurate information and to use the site for lawful purposes only.", ar: "باستخدامك لهذا الموقع فإنك توافقين على تقديم معلومات دقيقة واستخدام الموقع لأغراض مشروعة فقط." } },
       { h: { en: "Pricing", ar: "الأسعار" }, b: { en: "All prices are in Egyptian Pounds (EGP) and include applicable taxes. Prices may change without prior notice.", ar: "جميع الأسعار بالجنيه المصري (EGP) وتشمل الضرائب المطبّقة. قد تتغيّر الأسعار دون إشعار مسبق." } },
-      { h: { en: "Products", ar: "المنتجات" }, b: { en: "Dermiva products are cosmetic. Always patch-test and discontinue use if irritation occurs.", ar: "منتجات ديرميفا تجميلية. أجري دائمًا اختبار البقعة وأوقفي الاستخدام عند حدوث تهيّج." } },
+      { h: { en: "Products", ar: "المنتجات" }, b: { en: "Dermiva products are cosmetic. Always patch-test and discontinue use if irritation occurs.", ar: "منتجات Dermiva تجميلية. أجري دائمًا اختبار البقعة وأوقفي الاستخدام عند حدوث تهيّج." } },
     ],
   },
 };
@@ -291,7 +291,7 @@ export interface Faq {
 
 export const FAQS: Faq[] = [
   { q: { en: "How long does delivery take?", ar: "كم يستغرق التوصيل؟" }, a: { en: "2-4 business days within Cairo & Giza, 3-6 days elsewhere in Egypt.", ar: "2-4 أيام عمل داخل القاهرة والجيزة، و3-6 أيام في باقي أنحاء مصر." } },
-  { q: { en: "Are products authentic?", ar: "هل المنتجات أصلية؟" }, a: { en: "Yes, 100% genuine Dermiva products, formulated and sealed in Egypt.", ar: "نعم، منتجات ديرميفا أصلية 100%، مُصنّعة ومختومة في مصر." } },
+  { q: { en: "Are products authentic?", ar: "هل المنتجات أصلية؟" }, a: { en: "Yes, 100% genuine Dermiva products, formulated and sealed in Egypt.", ar: "نعم، منتجات Dermiva أصلية 100%، مُصنّعة ومختومة في مصر." } },
   { q: { en: "What is your return policy?", ar: "ما هي سياسة الإرجاع؟" }, a: { en: "Unopened items can be returned within 14 days for a full refund.", ar: "يمكن إرجاع العناصر غير المفتوحة خلال 14 يومًا لاسترداد كامل." } },
 ];
 
