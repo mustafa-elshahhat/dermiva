@@ -1,0 +1,65 @@
+"use client";
+
+import React from "react";
+import { useRouter } from "next/navigation";
+import Bottle from "./Bottle";
+import { money, type Product } from "@/lib/catalog";
+import { useStore } from "@/lib/store";
+
+// Ported from ProductCard.dc.html. Whole card opens the product; the heart and
+// the + button act without opening (stopPropagation), matching the prototype.
+
+export default function ProductCard({ product }: { product: Product }) {
+  const router = useRouter();
+  const { wishlist, addToCart, toggleWishlist } = useStore();
+  const wished = wishlist.includes(product.id);
+
+  return (
+    <div
+      className="dm-card"
+      onClick={() => router.push(`/product/${product.id}`)}
+      style={{ display: "flex", flexDirection: "column", cursor: "pointer", height: "100%" }}
+    >
+      <div style={{ position: "relative", background: "linear-gradient(160deg,#fbeef0,#f6dfe5)", aspectRatio: "1/1" }}>
+        <Bottle kind={product.kind} name={product.name} />
+        {product.tag ? (
+          <div style={{ position: "absolute", top: 12, left: 12, background: "linear-gradient(135deg,#d9a24f,#c2974f)", color: "#fff", fontSize: 11, fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", padding: "5px 11px", borderRadius: 999, boxShadow: "0 4px 10px rgba(194,151,79,.3)" }}>
+            {product.tag}
+          </div>
+        ) : null}
+        <button
+          aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleWishlist(product.id);
+          }}
+          style={{ position: "absolute", top: 10, right: 10, width: 36, height: 36, border: "none", borderRadius: "50%", background: "rgba(255,255,255,.85)", backdropFilter: "blur(4px)", boxShadow: "0 4px 10px rgba(184,134,146,.18)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17, lineHeight: 1 }}
+        >
+          <span style={{ color: wished ? "#c97f8d" : "#c9a7ad" }}>{wished ? "♥" : "♡"}</span>
+        </button>
+      </div>
+      <div style={{ padding: "14px 16px 16px", display: "flex", flexDirection: "column", gap: 5, flex: 1 }}>
+        <div className="dm-serif" style={{ fontSize: 20, fontWeight: 600, color: "#4f3a3e", lineHeight: 1.1 }}>{product.name}</div>
+        <div style={{ fontSize: 12.5, color: "#a98e93" }}>{product.sub}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12.5, color: "#b08a4e" }}>
+          <span style={{ color: "#d9a24f" }}>{"★"}</span>
+          <span style={{ color: "#7c6468", fontWeight: 500 }}>{product.rating}</span>
+          <span style={{ color: "#bfa6ab" }}>({product.reviews})</span>
+        </div>
+        <div style={{ marginTop: "auto", paddingTop: 8, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+          <div style={{ fontSize: 15.5, fontWeight: 600, color: "#4f3a3e", letterSpacing: ".01em" }}>{money(product.price)}</div>
+          <button
+            aria-label="Add to cart"
+            className="dm-add-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart(product.id);
+            }}
+          >
+            {"+"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

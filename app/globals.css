@@ -1,0 +1,317 @@
+/* Dermiva global styles. Ported from the design handoff <helmet> block, plus
+   reusable hover/responsive classes (inline styles can't express :hover or
+   media queries). Color tokens kept identical to the prototype. */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-jost), sans-serif;
+  color: #5a4145;
+  background: #fdf6f4;
+  min-height: 100vh;
+}
+
+::selection {
+  background: #f0cdd5;
+  color: #5a4145;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+@keyframes dmFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes dmToast {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 16px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes dmFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dm-fade {
+  animation: dmFade 0.4s ease;
+}
+
+.dm-page-shell {
+  font-family: var(--font-jost), sans-serif;
+  color: #5a4145;
+  background: #fdf6f4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dm-serif {
+  font-family: var(--font-cormorant), serif;
+}
+
+/* ---------- responsive: header nav vs burger (breakpoint 920px) ---------- */
+.dm-nav {
+  display: none;
+  align-items: center;
+  gap: 26px;
+}
+.dm-burger {
+  display: flex;
+}
+@media (min-width: 920px) {
+  .dm-nav {
+    display: flex;
+  }
+  .dm-burger {
+    display: none;
+  }
+}
+
+/* ---------- responsive product / category grids ---------- */
+.dm-grid-products {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+}
+@media (min-width: 768px) {
+  .dm-grid-products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1100px) {
+  .dm-grid-products {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.dm-grid-cats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+}
+@media (min-width: 560px) {
+  .dm-grid-cats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ---------- buttons ---------- */
+.dm-btn-primary {
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #d79aa6, #bd7382);
+  color: #fff;
+  font-family: var(--font-jost), sans-serif;
+  border-radius: 999px;
+  box-shadow: 0 12px 24px rgba(189, 115, 130, 0.36);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.dm-btn-primary:hover {
+  background: linear-gradient(135deg, #cf8d9a, #b16778);
+  box-shadow: 0 16px 32px rgba(189, 115, 130, 0.5);
+  transform: translateY(-2px);
+}
+
+.dm-btn-outline {
+  border: 1.5px solid #c07f8d;
+  cursor: pointer;
+  background: #fff;
+  color: #b5707f;
+  font-family: var(--font-jost), sans-serif;
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+.dm-btn-outline:hover {
+  background: #faecef;
+}
+
+.dm-btn-dark {
+  border: none;
+  cursor: pointer;
+  background: #5a4145;
+  color: #fff;
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+.dm-btn-dark:hover {
+  background: #6f5054;
+}
+
+.dm-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7c5f64;
+  position: relative;
+  transition: background 0.2s ease;
+}
+.dm-icon-btn:hover {
+  background: #f7e6ea;
+}
+
+.dm-add-btn {
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #d79aa6, #c07f8d);
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(192, 127, 141, 0.34);
+  font-size: 17px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.dm-add-btn:hover {
+  background: linear-gradient(135deg, #cf8d9a, #b5707f);
+  box-shadow: 0 8px 18px rgba(192, 127, 141, 0.46);
+}
+
+/* ---------- cards with hover lift ---------- */
+.dm-card {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(184, 134, 146, 0.12);
+  border: 1px solid #f3e3e7;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.dm-card:hover {
+  box-shadow: 0 18px 38px rgba(184, 134, 146, 0.22);
+  border-color: #ecd2d9;
+  transform: translateY(-4px);
+}
+
+.dm-cat-card {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(184, 134, 146, 0.1);
+  border: 1px solid #f3e3e7;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.dm-cat-card:hover {
+  box-shadow: 0 16px 32px rgba(184, 134, 146, 0.2);
+  border-color: #ecd2d9;
+  transform: translateY(-4px);
+}
+
+.dm-tile {
+  background: #fff;
+  border: 1px solid #f0dde1;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.dm-tile:hover {
+  border-color: #ecd2d9;
+  box-shadow: 0 12px 28px rgba(184, 134, 146, 0.16);
+  transform: translateY(-3px);
+}
+
+.dm-order-row {
+  background: #fff;
+  border: 1px solid #f0dde1;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.dm-order-row:hover {
+  border-color: #ecd2d9;
+  box-shadow: 0 12px 26px rgba(184, 134, 146, 0.14);
+}
+
+.dm-navlink {
+  cursor: pointer;
+  font-size: 14px;
+  color: #6f5458;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+.dm-navlink:hover {
+  color: #b76e79;
+}
+
+.dm-footlink {
+  cursor: pointer;
+  font-size: 13.5px;
+  color: #7c6065;
+  transition: color 0.2s ease;
+}
+.dm-footlink:hover {
+  color: #b76e79;
+}
+
+.dm-chip {
+  border: 1px solid #e3c3cc;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-size: 13px;
+  color: #7c6065;
+  font-family: var(--font-jost), sans-serif;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.dm-chip:hover {
+  background: #faecef;
+  border-color: #d8b1bb;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #b89ca1;
+}
+
+.dm-payment-badge {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.dm-payment-badge:hover {
+  border-color: #ecd2d9;
+  box-shadow: 0 4px 14px rgba(184, 134, 146, 0.15);
+  transform: translateY(-2px);
+}
