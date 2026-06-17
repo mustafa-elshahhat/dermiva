@@ -34,18 +34,63 @@ export const PRODUCTS: Product[] = [
   { id: "lip-oil", cat: "lip", name: "Plumping Lip Oil", sub: "10 ml", price: 180, kind: "tube", tag: "New", rating: "4.8", reviews: 62, packshotImage: "/products/packshots/Plumping%20Lip%20Oil.png" },
 ];
 
+export interface CategoryHeroImages {
+  desktop: string;
+  tablet: string;
+  mobile: string;
+}
+
 export interface CategoryInfo {
   label: string;
   tagline: string;
   /** Final category card visual used in the "Shop by Category" cards. */
   cardImage: string;
+  /** Final responsive hero banner imagery used as the full background of the
+   *  category hero card (art-directed per breakpoint). */
+  heroImages: CategoryHeroImages;
 }
 
 export const CATS: Record<CategoryKey, CategoryInfo> = {
-  face: { label: "Face Care", tagline: "Serums, treatments & glow essentials for radiant skin.", cardImage: "/category/category-card/Face%20Care%20Card.webp" },
-  hair: { label: "Hair Care", tagline: "Oils, masks & repair for stronger, shinier hair.", cardImage: "/category/category-card/Hair%20Care%20Card.webp" },
-  body: { label: "Body Care", tagline: "Lotions, scrubs & butters for soft, nourished skin.", cardImage: "/category/category-card/Body%20Care%20Card.webp" },
-  lip: { label: "Lip Care", tagline: "Balms & oils for soft, smooth, plump lips.", cardImage: "/category/category-card/Lip%20Care%20Card.webp" },
+  face: {
+    label: "Face Care",
+    tagline: "Serums, treatments & glow essentials for radiant skin.",
+    cardImage: "/category/category-card/Face%20Care%20Card.webp",
+    heroImages: {
+      desktop: "/category/category-hero/face-care-desktop.webp",
+      tablet: "/category/category-hero/face-care-tablet.webp",
+      mobile: "/category/category-hero/face-care-mobile.webp",
+    },
+  },
+  hair: {
+    label: "Hair Care",
+    tagline: "Oils, masks & repair for stronger, shinier hair.",
+    cardImage: "/category/category-card/Hair%20Care%20Card.webp",
+    heroImages: {
+      desktop: "/category/category-hero/hair-care-desktop.webp",
+      tablet: "/category/category-hero/hair-care-tablet.webp",
+      mobile: "/category/category-hero/hair-care-mobile.webp",
+    },
+  },
+  body: {
+    label: "Body Care",
+    tagline: "Lotions, scrubs & butters for soft, nourished skin.",
+    cardImage: "/category/category-card/Body%20Care%20Card.webp",
+    heroImages: {
+      desktop: "/category/category-hero/body-care-desktop.webp",
+      tablet: "/category/category-hero/body-care-tablet.webp",
+      mobile: "/category/category-hero/body-care-mobile.webp",
+    },
+  },
+  lip: {
+    label: "Lip Care",
+    tagline: "Balms & oils for soft, smooth, plump lips.",
+    cardImage: "/category/category-card/Lip%20Care%20Card.webp",
+    heroImages: {
+      desktop: "/category/category-hero/lip-care-desktop.webp",
+      tablet: "/category/category-hero/lip-care-tablet.webp",
+      mobile: "/category/category-hero/lip-care-mobile.webp",
+    },
+  },
 };
 
 export const CAT_KIND: Record<CategoryKey, BottleKind> = {
