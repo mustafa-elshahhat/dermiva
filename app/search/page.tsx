@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Bottle from "@/components/Bottle";
+import ProductImage from "@/components/ProductImage";
 import ProductGrid from "@/components/ProductGrid";
-import { CATS, CAT_KIND, PRODUCTS, searchProducts, type CategoryKey } from "@/lib/catalog";
+import { CATS, PRODUCTS, searchProducts, getCategoryProduct, type CategoryKey } from "@/lib/catalog";
 import { useSearch } from "@/lib/store";
 
 export default function SearchPage() {
@@ -41,12 +41,17 @@ export default function SearchPage() {
           </div>
           <div style={{ fontSize: 12.5, color: "#a98e93", letterSpacing: ".06em", textTransform: "uppercase", margin: "26px 0 14px" }}>Browse Categories</div>
           <div className="dm-grid-cats">
-            {catKeys.map((k) => (
+            {catKeys.map((k) => {
+              const catProduct = getCategoryProduct(k);
+              return (
               <Link key={k} href={`/category/${k}`} style={{ cursor: "pointer", background: "#fff", border: "1px solid #f0dde1", borderRadius: 16, padding: 14, textAlign: "center" }}>
-                <div style={{ height: 70, marginBottom: 6 }}><Bottle kind={CAT_KIND[k]} name={CATS[k].label} /></div>
+                <div style={{ height: 70, marginBottom: 6, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <ProductImage cutoutImage={catProduct.cutoutImage} packshotImage={catProduct.packshotImage} mode="cutout" name={CATS[k].label} kind={catProduct.kind} />
+                </div>
                 <div className="dm-serif" style={{ fontWeight: 600, fontSize: 16, color: "#4f3a3e" }}>{CATS[k].label}</div>
               </Link>
-            ))}
+              );
+            })}
           </div>
         </div>
       ) : results.length === 0 ? (

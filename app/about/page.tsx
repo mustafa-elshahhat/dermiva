@@ -1,8 +1,11 @@
 import React from "react";
 import Link from "next/link";
-import Bottle from "@/components/Bottle";
+import ProductImage from "@/components/ProductImage";
+import { getProduct } from "@/lib/catalog";
 
 export default function AboutPage() {
+  const superSerum = getProduct("super-serum")!;
+  const lipBalm = getProduct("lip-balm")!;
 
   return (
     <div className="dm-fade">
@@ -26,8 +29,12 @@ export default function AboutPage() {
       <section style={{ maxWidth: 1000, margin: "0 auto", width: "100%", padding: "clamp(40px,5vw,64px) clamp(16px,4vw,40px)" }}>
         <div className="dm-grid-responsive-two-col" style={{ gap: 36, alignItems: "center" }}>
           <div style={{ height: "clamp(280px,36vw,400px)", background: "linear-gradient(160deg,#faecef,#f6dfe5)", borderRadius: 24, padding: "12%", display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
-            <div style={{ width: "45%", height: "92%", animation: "dmFloat 6s ease-in-out infinite" }}><Bottle kind="serum" name="Super Serum" /></div>
-            <div style={{ width: "38%", height: "64%", animation: "dmFloat 6s ease-in-out infinite .5s" }}><Bottle kind="tube" name="Lip Balm" /></div>
+            <div style={{ width: "45%", height: "92%", animation: "dmFloat 6s ease-in-out infinite" }}>
+              <ProductImage cutoutImage={superSerum.cutoutImage} packshotImage={superSerum.packshotImage} mode="cutout" name="Super Serum" kind="serum" />
+            </div>
+            <div style={{ width: "38%", height: "64%", animation: "dmFloat 6s ease-in-out infinite .5s" }}>
+              <ProductImage cutoutImage={lipBalm.cutoutImage} packshotImage={lipBalm.packshotImage} mode="cutout" name="Lip Balm" kind="tube" />
+            </div>
           </div>
           <div>
             <h2 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(28px,3.5vw,38px)", color: "#5a4145", margin: "0 0 16px" }}>Our Story</h2>

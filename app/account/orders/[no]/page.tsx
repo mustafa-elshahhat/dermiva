@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useParams, useRouter, notFound } from "next/navigation";
 import Link from "next/link";
-import Bottle from "@/components/Bottle";
+import ProductImage from "@/components/ProductImage";
 import { useAuth } from "@/lib/store";
 import { ORDERS, getProduct, money } from "@/lib/catalog";
 
@@ -75,8 +75,8 @@ export default function OrderDetailPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {resolvedItems.map((item) => (
                 <div key={item.id} style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                  <div style={{ flex: "0 0 auto", width: 56, height: 56, background: "linear-gradient(160deg,#fbeef0,#f4dbe2)", borderRadius: 10, padding: 5 }}>
-                    <Bottle kind={item.kind} name={item.name} light={true} />
+                  <div style={{ flex: "0 0 auto", width: 56, height: 56, background: "linear-gradient(160deg,#fbeef0,#f4dbe2)", borderRadius: 10, padding: 5, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <ProductImage cutoutImage={item.cutoutImage} packshotImage={item.packshotImage} mode="cutout" name={item.name} kind={item.kind} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 14, fontWeight: 600, color: "#4f3a3e", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</div>

@@ -14,21 +14,23 @@ export interface Product {
   tag: string;
   rating: string;
   reviews: number;
+  cutoutImage: string;
+  packshotImage: string;
 }
 
 export const PRODUCTS: Product[] = [
-  { id: "super-serum", cat: "face", name: "Super Serum", sub: "30 ml", price: 550, kind: "serum", tag: "Best Seller", rating: "4.9", reviews: 128 },
-  { id: "glow-peel-pads", cat: "face", name: "Glow Peel Pads", sub: "30 Pads", price: 480, kind: "jar", tag: "Best Seller", rating: "4.8", reviews: 96 },
-  { id: "vitamin-c-serum", cat: "face", name: "Vitamin C Serum", sub: "30 ml", price: 580, kind: "serum", tag: "", rating: "4.7", reviews: 41 },
-  { id: "niacinamide", cat: "face", name: "Niacinamide 10%", sub: "30 ml", price: 520, kind: "serum", tag: "", rating: "4.8", reviews: 87 },
-  { id: "hair-therapy-oil", cat: "hair", name: "Hair Therapy Oil", sub: "100 ml", price: 600, kind: "pump", tag: "Best Seller", rating: "4.9", reviews: 74 },
-  { id: "hair-mask", cat: "hair", name: "Hair Mask", sub: "200 g", price: 520, kind: "jar", tag: "", rating: "4.8", reviews: 53 },
-  { id: "repair-shampoo", cat: "hair", name: "Repair Shampoo", sub: "300 ml", price: 320, kind: "pump", tag: "", rating: "4.5", reviews: 44 },
-  { id: "body-lotion", cat: "body", name: "Nourish Body Lotion", sub: "250 ml", price: 390, kind: "pump", tag: "", rating: "4.6", reviews: 38 },
-  { id: "body-scrub", cat: "body", name: "Glow Body Scrub", sub: "200 g", price: 350, kind: "jar", tag: "", rating: "4.7", reviews: 29 },
-  { id: "shea-butter", cat: "body", name: "Shea Body Butter", sub: "150 g", price: 410, kind: "jar", tag: "New", rating: "4.9", reviews: 33 },
-  { id: "lip-balm", cat: "lip", name: "Lip Balm", sub: "Strawberry", price: 120, kind: "tube", tag: "New", rating: "4.7", reviews: 210 },
-  { id: "lip-oil", cat: "lip", name: "Plumping Lip Oil", sub: "10 ml", price: 180, kind: "tube", tag: "New", rating: "4.8", reviews: 62 },
+  { id: "super-serum", cat: "face", name: "Super Serum", sub: "30 ml", price: 550, kind: "serum", tag: "Best Seller", rating: "4.9", reviews: 128, cutoutImage: "/products/cutouts/Super%20Serum.svg", packshotImage: "/products/packshots/Super%20Serum.png" },
+  { id: "glow-peel-pads", cat: "face", name: "Glow Peel Pads", sub: "30 Pads", price: 480, kind: "jar", tag: "Best Seller", rating: "4.8", reviews: 96, cutoutImage: "/products/cutouts/Glow%20Peel%20Pads.svg", packshotImage: "/products/packshots/Glow%20Peel%20Pads.png" },
+  { id: "vitamin-c-serum", cat: "face", name: "Vitamin C Serum", sub: "30 ml", price: 580, kind: "serum", tag: "", rating: "4.7", reviews: 41, cutoutImage: "/products/cutouts/Vitamin%20C%20Serum.svg", packshotImage: "/products/packshots/Vitamin%20C%20Serum.png" },
+  { id: "niacinamide", cat: "face", name: "Niacinamide 10%", sub: "30 ml", price: 520, kind: "serum", tag: "", rating: "4.8", reviews: 87, cutoutImage: "/products/cutouts/Niacinamide%2010%25.svg", packshotImage: "/products/packshots/Niacinamide%2010%25.png" },
+  { id: "hair-therapy-oil", cat: "hair", name: "Hair Therapy Oil", sub: "100 ml", price: 600, kind: "pump", tag: "Best Seller", rating: "4.9", reviews: 74, cutoutImage: "/products/cutouts/Hair%20Therapy%20Oil.svg", packshotImage: "/products/packshots/Hair%20Therapy%20Oil.png" },
+  { id: "hair-mask", cat: "hair", name: "Hair Mask", sub: "200 g", price: 520, kind: "jar", tag: "", rating: "4.8", reviews: 53, cutoutImage: "/products/cutouts/Hair%20Mask.svg", packshotImage: "/products/packshots/Hair%20Mask.png" },
+  { id: "repair-shampoo", cat: "hair", name: "Repair Shampoo", sub: "300 ml", price: 320, kind: "pump", tag: "", rating: "4.5", reviews: 44, cutoutImage: "/products/cutouts/Repair%20Shampoo.svg", packshotImage: "/products/packshots/Repair%20Shampoo.png" },
+  { id: "body-lotion", cat: "body", name: "Nourish Body Lotion", sub: "250 ml", price: 390, kind: "pump", tag: "", rating: "4.6", reviews: 38, cutoutImage: "/products/cutouts/Nourish%20Body%20Lotion.svg", packshotImage: "/products/packshots/Nourish%20Body%20Lotion.png" },
+  { id: "body-scrub", cat: "body", name: "Glow Body Scrub", sub: "200 g", price: 350, kind: "jar", tag: "", rating: "4.7", reviews: 29, cutoutImage: "/products/cutouts/Glow%20Body%20Scrub.svg", packshotImage: "/products/packshots/Glow%20Body%20Scrub.png" },
+  { id: "shea-butter", cat: "body", name: "Shea Body Butter", sub: "150 g", price: 410, kind: "jar", tag: "New", rating: "4.9", reviews: 33, cutoutImage: "/products/cutouts/Shea%20Body%20Butter.svg", packshotImage: "/products/packshots/Shea%20Body%20Butter.png" },
+  { id: "lip-balm", cat: "lip", name: "Lip Balm", sub: "Strawberry", price: 120, kind: "tube", tag: "New", rating: "4.7", reviews: 210, cutoutImage: "/products/cutouts/Lip%20Balm.svg", packshotImage: "/products/packshots/Lip%20Balm.png" },
+  { id: "lip-oil", cat: "lip", name: "Plumping Lip Oil", sub: "10 ml", price: 180, kind: "tube", tag: "New", rating: "4.8", reviews: 62, cutoutImage: "/products/cutouts/Plumping%20Lip%20Oil.svg", packshotImage: "/products/packshots/Plumping%20Lip%20Oil.png" },
 ];
 
 export interface CategoryInfo {
@@ -200,6 +202,10 @@ export function searchProducts(query: string): Product[] {
   const q = query.trim().toLowerCase();
   if (!q) return [];
   return PRODUCTS.filter((p) => (p.name + " " + p.cat + " " + p.sub).toLowerCase().includes(q));
+}
+
+export function getCategoryProduct(cat: CategoryKey): Product {
+  return PRODUCTS.find((p) => p.cat === cat) ?? PRODUCTS[0];
 }
 
 export function galleryKinds(kind: BottleKind): BottleKind[] {

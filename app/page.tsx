@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import Bottle from "@/components/Bottle";
+import ProductImage from "@/components/ProductImage";
 import ProductGrid from "@/components/ProductGrid";
 import { RawIcon, PROMISE_ICONS } from "@/components/icons";
-import { CATS, CAT_KIND, PRODUCTS, bestSellers, type CategoryKey } from "@/lib/catalog";
+import { CATS, PRODUCTS, bestSellers, getProduct, getCategoryProduct, type CategoryKey } from "@/lib/catalog";
 import SubscribeForm from "./SubscribeForm";
 
 const PROMISES = [
@@ -17,6 +17,15 @@ const HERO_INGREDIENTS = ["Vitamin C", "Niacinamide", "Hyaluronic Acid", "Alpha 
 
 export default function HomePage() {
   const catKeys = Object.keys(CATS) as CategoryKey[];
+  const heroProducts = [
+    getProduct("lip-balm")!,
+    getProduct("super-serum")!,
+    getProduct("glow-peel-pads")!,
+  ];
+  const superSerum = getProduct("super-serum")!;
+  const hairOil = getProduct("hair-therapy-oil")!;
+  const hairMask = getProduct("hair-mask")!;
+  const shampoo = getProduct("repair-shampoo")!;
 
   return (
     <div className="dm-fade">
@@ -40,9 +49,15 @@ export default function HomePage() {
           </div>
           <div className="dm-hero-child-right" style={{ position: "relative", height: "clamp(280px,38vw,420px)", display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "clamp(4px,1vw,14px)" }}>
             <div style={{ position: "absolute", bottom: "6%", left: "6%", right: "6%", height: "14%", background: "linear-gradient(180deg,#f6ece0,#e7d4c2)", borderRadius: "50%/40%", filter: "blur(2px)" }} />
-            <div style={{ width: "26%", height: "62%", animation: "dmFloat 6s ease-in-out infinite" }}><Bottle kind="tube" name="Lip Balm" /></div>
-            <div style={{ width: "34%", height: "88%", zIndex: 2, animation: "dmFloat 5s ease-in-out infinite .4s" }}><Bottle kind="serum" name="Super Serum" /></div>
-            <div style={{ width: "32%", height: "54%", animation: "dmFloat 6.5s ease-in-out infinite .8s" }}><Bottle kind="jar" name="Glow Peel Pads" /></div>
+            <div style={{ width: "26%", height: "62%", animation: "dmFloat 6s ease-in-out infinite" }}>
+              <ProductImage cutoutImage={heroProducts[0].cutoutImage} packshotImage={heroProducts[0].packshotImage} mode="cutout" name={heroProducts[0].name} kind={heroProducts[0].kind} />
+            </div>
+            <div style={{ width: "34%", height: "88%", zIndex: 2, animation: "dmFloat 5s ease-in-out infinite .4s" }}>
+              <ProductImage cutoutImage={heroProducts[1].cutoutImage} packshotImage={heroProducts[1].packshotImage} mode="cutout" name={heroProducts[1].name} kind={heroProducts[1].kind} />
+            </div>
+            <div style={{ width: "32%", height: "54%", animation: "dmFloat 6.5s ease-in-out infinite .8s" }}>
+              <ProductImage cutoutImage={heroProducts[2].cutoutImage} packshotImage={heroProducts[2].packshotImage} mode="cutout" name={heroProducts[2].name} kind={heroProducts[2].kind} />
+            </div>
           </div>
         </div>
       </section>
@@ -53,17 +68,20 @@ export default function HomePage() {
           <span style={{ color: "#d9a24f" }}>✦</span> Shop by Category <span style={{ color: "#d9a24f" }}>✦</span>
         </h2>
         <div className="dm-grid-cats">
-          {catKeys.map((k) => (
-            <Link key={k} href={`/category/${k}`} className="dm-cat-card">
-              <div style={{ aspectRatio: "1/1", background: "linear-gradient(160deg,#fbeef0,#f4dbe2)", padding: "8%" }}>
-                <Bottle kind={CAT_KIND[k]} name={CATS[k].label} />
-              </div>
-              <div style={{ padding: "14px 12px 16px", textAlign: "center" }}>
-                <div className="dm-serif" style={{ fontWeight: 600, fontSize: 19, color: "#4f3a3e" }}>{CATS[k].label}</div>
-                <div style={{ fontSize: 11.5, color: "#a98e93", marginTop: 2 }}>{PRODUCTS.filter((p) => p.cat === k).length} products</div>
-              </div>
-            </Link>
-          ))}
+          {catKeys.map((k) => {
+            const catProduct = getCategoryProduct(k);
+            return (
+              <Link key={k} href={`/category/${k}`} className="dm-cat-card">
+                <div style={{ aspectRatio: "1/1", background: "linear-gradient(160deg,#fbeef0,#f4dbe2)", padding: "8%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <ProductImage cutoutImage={catProduct.cutoutImage} packshotImage={catProduct.packshotImage} mode="cutout" name={CATS[k].label} kind={catProduct.kind} />
+                </div>
+                <div style={{ padding: "14px 12px 16px", textAlign: "center" }}>
+                  <div className="dm-serif" style={{ fontWeight: 600, fontSize: 19, color: "#4f3a3e" }}>{CATS[k].label}</div>
+                  <div style={{ fontSize: 11.5, color: "#a98e93", marginTop: 2 }}>{PRODUCTS.filter((p) => p.cat === k).length} products</div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
@@ -100,7 +118,9 @@ export default function HomePage() {
       <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(36px,5vw,56px) clamp(16px,4vw,40px)" }}>
         <div style={{ display: "flex", flexWrap: "wrap", borderRadius: 24, overflow: "hidden", boxShadow: "0 16px 40px rgba(184,134,146,.14)" }}>
           <div style={{ flex: "1 1 300px", minWidth: 280, background: "radial-gradient(120% 120% at 30% 20%,#f7ecd6,#eed9b4 70%,#e3c894)", display: "flex", alignItems: "center", justifyContent: "center", padding: 36, position: "relative" }}>
-            <div style={{ width: "min(60%,220px)", height: "clamp(220px,30vw,320px)" }}><Bottle kind="serum" name="Super Serum" /></div>
+            <div style={{ width: "min(60%,220px)", height: "clamp(220px,30vw,320px)" }}>
+              <ProductImage cutoutImage={superSerum.cutoutImage} packshotImage={superSerum.packshotImage} mode="packshot" name="Super Serum" kind="serum" />
+            </div>
             <div style={{ position: "absolute", top: 30, right: 30, display: "flex", flexDirection: "column", gap: 9 }}>
               {HERO_INGREDIENTS.map((ing) => (
                 <div key={ing} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 12.5, color: "#8a6a3a", background: "rgba(255,255,255,.6)", padding: "5px 11px", borderRadius: 999 }}>
@@ -136,9 +156,15 @@ export default function HomePage() {
             <span className="dm-btn-primary" style={{ display: "inline-block", fontSize: 13, fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", padding: "13px 30px" }}>Explore Collection</span>
           </div>
           <div className="dm-hero-child-right" style={{ height: "clamp(180px,24vw,240px)", display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 10 }}>
-            <div style={{ width: "34%", height: "70%" }}><Bottle kind="pump" name="Hair Oil" /></div>
-            <div style={{ width: "38%", height: "54%" }}><Bottle kind="jar" name="Hair Mask" /></div>
-            <div style={{ width: "30%", height: "80%" }}><Bottle kind="pump" name="Shampoo" /></div>
+            <div style={{ width: "34%", height: "70%" }}>
+              <ProductImage cutoutImage={hairOil.cutoutImage} packshotImage={hairOil.packshotImage} mode="cutout" name="Hair Therapy Oil" kind="pump" />
+            </div>
+            <div style={{ width: "38%", height: "54%" }}>
+              <ProductImage cutoutImage={hairMask.cutoutImage} packshotImage={hairMask.packshotImage} mode="cutout" name="Hair Mask" kind="jar" />
+            </div>
+            <div style={{ width: "30%", height: "80%" }}>
+              <ProductImage cutoutImage={shampoo.cutoutImage} packshotImage={shampoo.packshotImage} mode="cutout" name="Repair Shampoo" kind="pump" />
+            </div>
           </div>
         </Link>
       </section>
