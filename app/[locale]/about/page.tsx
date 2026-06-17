@@ -5,6 +5,8 @@ import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { routes } from "@/lib/seo/routes";
+import { JsonLdScript } from "@/lib/seo/structured-data-script";
+import { buildAboutPageJsonLd, buildBreadcrumbListJsonLd } from "@/lib/seo/structured-data";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: localeParam } = await params;
@@ -21,12 +23,29 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  setRequestLocale(locale);
+  const { locale: localeParam } = await params;
+  setRequestLocale(localeParam);
+  const locale = localeParam as Locale;
   const t = await getTranslations("about");
+  const tCommon = await getTranslations("common");
+  const tNav = await getTranslations("nav");
+  const pageName = `${t("titleLine1")} ${t("titleLine2")}`;
+  const pageJsonLd = [
+    buildBreadcrumbListJsonLd(locale, [
+      { name: tCommon("home"), path: routes.home() },
+      { name: tNav("about"), path: routes.about() },
+    ]),
+    buildAboutPageJsonLd({
+      locale,
+      name: pageName,
+      description: t("intro"),
+    }),
+  ];
 
   return (
-    <div className="dm-fade">
+    <>
+      <JsonLdScript data={pageJsonLd} />
+      <div className="dm-fade">
       {/* Hero Header */}
       <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(24px,4vw,40px) clamp(16px,4vw,40px) 0" }}>
         <div style={{ background: "radial-gradient(120% 120% at 50% 20%,#fbe2e7,#f2c9d2 60%,#eec1cd)", borderRadius: 28, padding: "clamp(36px,6vw,72px) clamp(20px,5vw,56px)", textAlign: "center" }}>
@@ -89,6 +108,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

@@ -7,6 +7,9 @@ import type { CategoryKey } from "@/lib/types/category";
 import { getCategoryByKey, getProductsByCategory } from "@/lib/api/catalog.service";
 import { buildCategoryMetadata } from "@/lib/seo/metadata";
 import { buildNoIndexRobots } from "@/lib/seo/robots";
+import { routes } from "@/lib/seo/routes";
+import { JsonLdScript } from "@/lib/seo/structured-data-script";
+import { buildBreadcrumbListJsonLd, buildCategoryCollectionPageJsonLd } from "@/lib/seo/structured-data";
 import CategoryContent from "./CategoryContent";
 
 export function generateStaticParams() {
@@ -43,28 +46,38 @@ export default async function CategoryPage({ params }: Props) {
   const products = productsResult.ok ? productsResult.data : [];
   const t = await getTranslations();
   const hero = category.hero;
+  const pageJsonLd = [
+    buildBreadcrumbListJsonLd(locale, [
+      { name: t("common.home"), path: routes.home() },
+      { name: category.label, path: routes.category(category.key) },
+    ]),
+    buildCategoryCollectionPageJsonLd({ locale, category, products }),
+  ];
 
   return (
-    <div className="dm-fade">
-      <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(18px,3vw,28px) clamp(16px,4vw,40px) 0" }}>
-        <div className="dm-cat-hero">
-          <picture className="dm-cat-hero__media">
-            <source media="(min-width: 1024px)" srcSet={hero.desktop} />
-            <source media="(min-width: 768px)" srcSet={hero.tablet} />
-            <img src={hero.mobile} alt={t("category.heroAlt", { label: category.label })} fetchPriority="high" />
-          </picture>
-          <div className="dm-cat-hero__overlay" aria-hidden="true" />
-          <div className="dm-cat-hero__content">
-            <div className="dm-cat-hero__crumb">{t("common.home")} / <span>{category.label}</span></div>
-            <h1 className="dm-serif dm-cat-hero__title">{category.label}</h1>
-            <p className="dm-cat-hero__text">{category.tagline}</p>
+    <>
+      <JsonLdScript data={pageJsonLd} />
+      <div className="dm-fade">
+        <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(18px,3vw,28px) clamp(16px,4vw,40px) 0" }}>
+          <div className="dm-cat-hero">
+            <picture className="dm-cat-hero__media">
+              <source media="(min-width: 1024px)" srcSet={hero.desktop} />
+              <source media="(min-width: 768px)" srcSet={hero.tablet} />
+              <img src={hero.mobile} alt={t("category.heroAlt", { label: category.label })} fetchPriority="high" />
+            </picture>
+            <div className="dm-cat-hero__overlay" aria-hidden="true" />
+            <div className="dm-cat-hero__content">
+              <div className="dm-cat-hero__crumb">{t("common.home")} / <span>{category.label}</span></div>
+              <h1 className="dm-serif dm-cat-hero__title">{category.label}</h1>
+              <p className="dm-cat-hero__text">{category.tagline}</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(22px,3vw,32px) clamp(16px,4vw,40px) clamp(40px,5vw,64px)" }}>
-        <CategoryContent products={products} />
-      </section>
-    </div>
+        <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "clamp(22px,3vw,32px) clamp(16px,4vw,40px) clamp(40px,5vw,64px)" }}>
+          <CategoryContent products={products} />
+        </section>
+      </div>
+    </>
   );
 }

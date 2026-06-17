@@ -11,6 +11,8 @@ import { routes } from "@/lib/seo/routes";
 import { buildLocalizedAlternates } from "@/lib/seo/metadata";
 import { buildOpenGraph, buildTwitter } from "@/lib/seo/open-graph";
 import { buildIndexRobots } from "@/lib/seo/robots";
+import { JsonLdScript } from "@/lib/seo/structured-data-script";
+import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo/structured-data";
 import { StoreProvider } from "@/lib/store";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -145,15 +147,20 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  if (!hasLocale(routing.locales, locale)) {
+  const { locale: localeParam } = await params;
+  if (!hasLocale(routing.locales, localeParam)) {
     notFound();
   }
+  const locale = localeParam as Locale;
 
   // Enable static rendering for this locale.
   setRequestLocale(locale);
 
   const messages = await getMessages();
+  const globalJsonLd = [
+    buildOrganizationJsonLd(locale),
+    buildWebSiteJsonLd(locale),
+  ];
 
   return (
     <html
@@ -162,6 +169,7 @@ export default async function LocaleLayout({
       className={`${cormorant.variable} ${jost.variable} ${ibmArabic.variable}`}
     >
       <body>
+        <JsonLdScript data={globalJsonLd} />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <StoreProvider>
             <div className="dm-page-shell">
