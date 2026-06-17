@@ -114,9 +114,21 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div style={{ display: "flex", flexWrap: "wrap", borderRadius: 24, overflow: "hidden", boxShadow: "0 16px 40px rgba(184,134,146,.14)" }}>
           <div style={{ flex: "1 1 300px", minWidth: 280, position: "relative", overflow: "hidden", minHeight: "clamp(320px,40vw,440px)" }}>
             <ProductImage image={productImage(superSerum)} mode="packshot" name={superSerum.name[locale]} kind="serum" style={{ position: "absolute", inset: 0, objectFit: "cover" }} />
-            <div style={{ position: "absolute", top: 30, insetInlineEnd: 30, display: "flex", flexDirection: "column", gap: 9, zIndex: 2 }}>
+            <div
+              style={{
+                position: "absolute",
+                top: "clamp(16px, 4vw, 30px)",
+                left: locale === "ar" ? "auto" : "clamp(16px, 4vw, 30px)",
+                right: locale === "ar" ? "clamp(16px, 4vw, 30px)" : "auto",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: locale === "ar" ? "flex-end" : "flex-start",
+                gap: "clamp(6px, 1.2vw, 9px)",
+                zIndex: 2,
+              }}
+            >
               {heroIngredients.map((ing) => (
-                <div key={ing} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 12.5, color: "#8a6a3a", background: "rgba(255,255,255,.6)", padding: "5px 11px", borderRadius: 999 }}>
+                <div key={ing} className="dm-promo-pill">
                   <span style={{ color: "#c2974f" }}>✦</span>
                   {ing}
                 </div>

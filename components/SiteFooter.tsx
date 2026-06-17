@@ -35,32 +35,22 @@ export default function SiteFooter() {
         </div>
         <div style={{ textAlign: "center", marginBottom: 18 }}>
           <div style={{ fontSize: 13, color: "#a98e93", letterSpacing: ".1em", marginBottom: 12 }}>{t("weAccept")}</div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center" }}>
+          <div className="dm-footer-payments-row">
             {PAYMENT_METHODS.map((pm) => {
               const label = getPaymentText(pm, locale).label;
               return (
                 <div
                   key={pm.id}
-                  style={{
-                    background: "#fff",
-                    border: "1px solid #f0dde1",
-                    borderRadius: 12,
-                    padding: "10px 16px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 9,
-                    transition: "box-shadow .2s, border-color .2s",
-                  }}
-                  className="dm-payment-badge"
+                  className="dm-footer-payment-badge"
                 >
                   <Image
                     src={pm.image}
                     alt={label}
                     width={32}
                     height={32}
-                    style={{ objectFit: "contain", flexShrink: 0 }}
+                    className="dm-footer-payment-icon"
                   />
-                  <span style={{ fontSize: 12, fontWeight: 600, color: "#8a7378", letterSpacing: ".04em", whiteSpace: "nowrap" }}>
+                  <span className="dm-footer-payment-label" style={{ fontWeight: 600, color: "#8a7378", letterSpacing: ".04em", whiteSpace: "nowrap" }}>
                     {label}
                   </span>
                 </div>
@@ -86,14 +76,14 @@ export default function SiteFooter() {
                 rel="noopener noreferrer"
                 aria-label={t("socialAria", { network: s.label })}
                 className="dm-social-icon"
-                style={{ width: 34, height: 34, borderRadius: "50%", background: "#f3dde2", display: "flex", alignItems: "center", justifyContent: "center" }}
+                style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={s.icon}
                   alt={s.label}
-                  width={20}
-                  height={20}
+                  width={24}
+                  height={24}
                   style={{ objectFit: "contain", display: "block" }}
                 />
               </a>

@@ -384,6 +384,169 @@ textarea::placeholder {
   transform: translateY(-2px);
 }
 
+/* ---------- footer accepted payment methods single-row layout ---------- */
+.dm-footer-payments-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.dm-footer-payment-badge {
+  background: #fff;
+  border: 1px solid #f0dde1;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+  min-width: 0;
+}
+
+.dm-footer-payment-badge:hover {
+  border-color: #ecd2d9;
+  box-shadow: 0 4px 14px rgba(184, 134, 146, 0.15);
+  transform: translateY(-2px);
+}
+
+.dm-footer-payment-icon {
+  object-fit: contain;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  transition: width 0.2s, height 0.2s;
+}
+
+.dm-footer-payment-label {
+  font-size: 12px;
+  transition: font-size 0.2s;
+}
+
+/* Responsive: smaller screens */
+@media (max-width: 768px) {
+  .dm-footer-payments-row {
+    gap: 8px;
+    max-width: 480px;
+  }
+  .dm-footer-payment-badge {
+    padding: 8px 10px;
+    gap: 6px;
+    border-radius: 10px;
+  }
+  .dm-footer-payment-label {
+    font-size: 11px !important;
+  }
+  .dm-footer-payment-icon {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 500px) {
+  .dm-footer-payments-row {
+    max-width: 240px;
+    gap: 8px;
+  }
+  .dm-footer-payment-badge {
+    padding: 8px;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  .dm-footer-payment-label {
+    display: none !important;
+  }
+  .dm-footer-payment-icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 360px) {
+  .dm-footer-payments-row {
+    max-width: 200px;
+    gap: 6px;
+  }
+  .dm-footer-payment-badge {
+    padding: 6px;
+    border-radius: 8px;
+  }
+  .dm-footer-payment-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ---------- product page benefit badges single-row layout ---------- */
+.dm-product-benefits-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  margin-bottom: 24px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.dm-product-benefit-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: #faecef;
+  border: 1px solid #f0dde1;
+  border-radius: 999px;
+  padding: 8px 15px;
+  font-size: 13px;
+  color: #8f5360;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dm-product-benefit-check {
+  color: #c2974f;
+  flex-shrink: 0;
+}
+
+/* Responsive: small screens (tablet and smaller) */
+@media (max-width: 768px) {
+  .dm-product-benefits-container {
+    gap: 8px;
+  }
+  .dm-product-benefit-badge {
+    padding: 6px 12px;
+    font-size: 12px;
+    gap: 5px;
+  }
+}
+
+/* Responsive: mobile (extremely narrow screens) */
+@media (max-width: 480px) {
+  .dm-product-benefits-container {
+    gap: 6px;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 4px;
+    /* Hide scrollbar */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .dm-product-benefits-container::-webkit-scrollbar {
+    display: none;
+  }
+  .dm-product-benefit-badge {
+    padding: 5px 10px;
+    font-size: 11px;
+    gap: 4px;
+  }
+}
+
+
+
+
 .dm-footer-bottom {
   display: flex;
   flex-wrap: wrap;
@@ -393,7 +556,7 @@ textarea::placeholder {
 }
 .dm-footer-social {
   display: flex;
-  gap: 10px;
+  gap: 14px;
 }
 @media (max-width: 640px) {
   .dm-footer-bottom {
@@ -411,12 +574,11 @@ textarea::placeholder {
 
 .dm-social-icon {
   flex-shrink: 0;
-  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 .dm-social-icon:hover {
-  background: #f3c9d3;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(184, 134, 146, 0.18);
+  transform: scale(1.1);
+  opacity: 0.8;
 }
 
 /* Card wishlist button responsive sizing */
@@ -1010,5 +1172,29 @@ html[dir="rtl"] .dm-rtl-flip {
     );
   }
 }
+
+/* ---------- promotional ingredient pills ---------- */
+.dm-promo-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: #8a6a3a;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 5px 11px;
+  border-radius: 999px;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(184, 134, 146, 0.08);
+}
+
+@media (max-width: 640px) {
+  .dm-promo-pill {
+    padding: 4px 8px;
+    font-size: 11px;
+    gap: 5px;
+  }
+}
+
 
 

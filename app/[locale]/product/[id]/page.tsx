@@ -74,10 +74,10 @@ export default async function ProductPage({ params }: Props) {
           <div className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(30px,4vw,40px)", color: "#b76e79", marginBottom: 18 }}>{money(p.price)}</div>
           <p style={{ fontSize: 15.5, color: "#7c6065", lineHeight: 1.65, margin: "0 0 22px", maxWidth: 480 }}>{content.desc}</p>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 24 }}>
+          <div className="dm-product-benefits-container">
             {content.benefits.map((b) => (
-              <div key={b} style={{ display: "flex", alignItems: "center", gap: 7, background: "#faecef", border: "1px solid #f0dde1", borderRadius: 999, padding: "8px 15px", fontSize: 13, color: "#8f5360" }}>
-                <span style={{ color: "#c2974f" }}>✓</span>
+              <div key={b} className="dm-product-benefit-badge">
+                <span className="dm-product-benefit-check">✓</span>
                 {b}
               </div>
             ))}
