@@ -32,7 +32,7 @@ const inputBase: React.CSSProperties = {
 
 export default function CheckoutContent() {
   const router = useRouter();
-  const { cart, subtotal, shipping, discount, total } = useCartState();
+  const { cart, subtotal, shipping, discount, total, hydrated } = useCartState();
   const { clearCart } = useCartActions();
   const { showToast } = useToast();
 
@@ -68,6 +68,21 @@ export default function CheckoutContent() {
   };
 
   const border = (k: keyof Form) => `1px solid ${errors[k] ? "#e6a3a3" : "#e3c3cc"}`;
+
+  // Don't render the order summary from un-hydrated cart state — wait for the
+  // persisted cart so totals/line items don't flicker after a refresh.
+  if (!hydrated) {
+    return (
+      <div className="dm-grid-responsive-two-col" style={{ gap: "clamp(18px,2.5vw,32px)", alignItems: "start" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 22 }} aria-busy="true" aria-label="Loading checkout">
+          <div className="dm-skeleton" style={{ height: 180, borderRadius: 20 }} />
+          <div className="dm-skeleton" style={{ height: 180, borderRadius: 20 }} />
+          <div className="dm-skeleton" style={{ height: 220, borderRadius: 20 }} />
+        </div>
+        <div className="dm-skeleton" style={{ height: 360, borderRadius: 20 }} />
+      </div>
+    );
+  }
 
   if (placed) {
     return (

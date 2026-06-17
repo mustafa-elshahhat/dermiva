@@ -8,9 +8,20 @@ export interface CartItem {
   qty: number;
 }
 
+export interface Address {
+  id: string;
+  name: string;
+  phone: string;
+  address: string;
+  city: string;
+  gov: string;
+  isDefault: boolean;
+}
+
 interface StoreState {
   cart: CartItem[];
   wishlist: string[];
+  addresses: Address[];
   promo: string;
   promoApplied: boolean;
   recent: string[];
@@ -45,24 +56,28 @@ interface StoreContextValue extends StoreState, CartTotals {
   addRecent: (term: string) => void;
 }
 
+// Initial runtime state must be empty/neutral — no demo cart, wishlist, recent
+// searches, or user data. Real values come only from persisted client storage
+// after hydration, so nothing fake ever flashes before the saved state loads.
 const DEFAULTS: StoreState = {
-  cart: [
-    { id: "super-serum", qty: 1 },
-    { id: "lip-balm", qty: 2 },
-  ],
-  wishlist: ["hair-therapy-oil"],
+  cart: [],
+  wishlist: [],
+  addresses: [],
   promo: "",
   promoApplied: false,
-  recent: ["Vitamin C", "Lip Balm", "Hair Oil"],
+  recent: [],
   loggedIn: false,
   userName: "",
   userEmail: "",
   toast: "",
 };
 
-const STORAGE_KEY = "dermiva-store-v1";
+// Bumped to v2: previous builds persisted demo defaults into v1, so returning
+// testers would otherwise hydrate stale demo data. v2 starts everyone clean.
+const STORAGE_KEY = "dermiva-store-v2";
 
 const StoreContext = createContext<StoreContextValue | null>(null);
+const HydrationContext = createContext<boolean>(false);
 const CartStateContext = createContext<(CartTotals & { cart: CartItem[]; hydrated: boolean }) | null>(null);
 const CartActionsContext = createContext<{
   addToCart: (id: string, qty?: number) => void;
@@ -83,6 +98,11 @@ const AuthContext = createContext<{
   login: (email: string, name?: string) => void;
   register: (email: string, name: string) => void;
   logout: () => void;
+  hydrated: boolean;
+} | null>(null);
+const AddressesContext = createContext<{
+  addresses: Address[];
+  setAddresses: (next: Address[]) => void;
   hydrated: boolean;
 } | null>(null);
 const ToastContext = createContext<{
@@ -107,10 +127,13 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   // Hydrate from localStorage after mount (keeps SSR markup === first client render).
   useEffect(() => {
+    if (typeof window === "undefined") return;
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const saved = JSON.parse(raw);
+        // Merge over DEFAULTS so any newly-added slice (e.g. addresses) stays an
+        // array even when older saved blobs predate it.
         setState((s) => ({ ...s, ...saved, toast: "" }));
       }
     } catch {
@@ -121,7 +144,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   // Persist the durable slices (not the transient toast).
   useEffect(() => {
-    if (!hydrated) return;
+    if (!hydrated || typeof window === "undefined") return;
     try {
       const { toast, ...persist } = state;
       void toast;
@@ -190,6 +213,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     },
     [addToCart]
   );
+
+  const setAddresses = useCallback((next: Address[]) => {
+    setState((s) => ({ ...s, addresses: next }));
+  }, []);
 
   const setPromo = useCallback((v: string) => {
     setState((s) => ({ ...s, promo: v }));
@@ -275,6 +302,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     hydrated,
   }), [state.loggedIn, state.userName, state.userEmail, login, register, logout, hydrated]);
 
+  const addressesValue = useMemo(() => ({
+    addresses: state.addresses,
+    setAddresses,
+    hydrated,
+  }), [state.addresses, setAddresses, hydrated]);
+
   const toastValue = useMemo(() => ({
     toast: state.toast,
     showToast,
@@ -312,24 +345,43 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   }), [state, totals, hydrated, addToCart, setQty, removeFromCart, clearCart, toggleWishlist, moveToCart, setPromo, applyPromo, showToast, login, register, logout, addRecent]);
 
   return (
-    <CartStateContext.Provider value={cartStateValue}>
-      <CartActionsContext.Provider value={cartActionsValue}>
-        <WishlistContext.Provider value={wishlistValue}>
-          <AuthContext.Provider value={authValue}>
-            <ToastContext.Provider value={toastValue}>
-              <SearchContext.Provider value={searchValue}>
-                <PromoContext.Provider value={promoValue}>
-                  <StoreContext.Provider value={legacyStoreValue}>
-                    {children}
-                  </StoreContext.Provider>
-                </PromoContext.Provider>
-              </SearchContext.Provider>
-            </ToastContext.Provider>
-          </AuthContext.Provider>
-        </WishlistContext.Provider>
-      </CartActionsContext.Provider>
-    </CartStateContext.Provider>
+    <HydrationContext.Provider value={hydrated}>
+      <CartStateContext.Provider value={cartStateValue}>
+        <CartActionsContext.Provider value={cartActionsValue}>
+          <WishlistContext.Provider value={wishlistValue}>
+            <AuthContext.Provider value={authValue}>
+              <AddressesContext.Provider value={addressesValue}>
+                <ToastContext.Provider value={toastValue}>
+                  <SearchContext.Provider value={searchValue}>
+                    <PromoContext.Provider value={promoValue}>
+                      <StoreContext.Provider value={legacyStoreValue}>
+                        {children}
+                      </StoreContext.Provider>
+                    </PromoContext.Provider>
+                  </SearchContext.Provider>
+                </ToastContext.Provider>
+              </AddressesContext.Provider>
+            </AuthContext.Provider>
+          </WishlistContext.Provider>
+        </CartActionsContext.Provider>
+      </CartStateContext.Provider>
+    </HydrationContext.Provider>
   );
+}
+
+/**
+ * Reusable hydration flag. Returns false during SSR and the first client render,
+ * then true once persisted client state has loaded. Gate any UI that depends on
+ * user/cart/wishlist state behind this so demo/empty values never flash.
+ */
+export function useHydrated() {
+  return useContext(HydrationContext);
+}
+
+export function useAddresses() {
+  const ctx = useContext(AddressesContext);
+  if (!ctx) throw new Error("useAddresses must be used within StoreProvider");
+  return ctx;
 }
 
 export function useCartState() {

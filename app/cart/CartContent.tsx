@@ -8,12 +8,27 @@ import { useCartState, useCartActions, usePromo } from "@/lib/store";
 
 export default function CartContent() {
   const router = useRouter();
-  const { cart, subtotal, shipping, discount, total } = useCartState();
+  const { cart, subtotal, shipping, discount, total, hydrated } = useCartState();
   const { setQty, removeFromCart } = useCartActions();
   const { promo, promoApplied, setPromo, applyPromo } = usePromo();
 
   const lines = cart.map((c) => ({ ...getProduct(c.id)!, qty: c.qty, id: c.id })).filter((l) => l.name);
   const freeShipNote = subtotal > 0 && subtotal < 500 ? `Add ${money(500 - subtotal)} for free shipping` : "";
+
+  // Wait for persisted cart to load before deciding between items / empty state,
+  // otherwise a saved cart briefly renders as "empty" right after a refresh.
+  if (!hydrated) {
+    return (
+      <div className="dm-grid-responsive-two-col" style={{ gap: "clamp(18px,2.5vw,32px)", alignItems: "start" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }} aria-busy="true" aria-label="Loading cart">
+          {[0, 1].map((i) => (
+            <div key={i} className="dm-skeleton" style={{ height: 112, borderRadius: 18 }} />
+          ))}
+        </div>
+        <div className="dm-skeleton" style={{ height: 320, borderRadius: 20 }} />
+      </div>
+    );
+  }
 
   if (lines.length === 0) {
     return (

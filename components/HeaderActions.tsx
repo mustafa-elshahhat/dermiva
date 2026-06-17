@@ -2,11 +2,13 @@
 
 import React from "react";
 import Link from "next/link";
-import { useCartState, useWishlist, useAuth } from "@/lib/store";
+import { useCartState, useWishlist, useAuth, useHydrated } from "@/lib/store";
 import { SearchIcon, AccountIcon, HeartIcon, CartIcon } from "./icons";
 
-function Badge({ count }: { count: number }) {
-  if (count <= 0) return null;
+function Badge({ count, show }: { count: number; show: boolean }) {
+  // Render nothing until persisted state has hydrated so the counter never
+  // flashes a stale/zero value before the saved cart & wishlist load.
+  if (!show || count <= 0) return null;
   return (
     <span style={{ position: "absolute", top: 4, right: 4, background: "#c07f8d", color: "#fff", fontSize: 10, minWidth: 16, height: 16, borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 4px", fontWeight: 600 }}>
       {count}
@@ -17,7 +19,8 @@ function Badge({ count }: { count: number }) {
 export default function HeaderActions() {
   const { cartCount } = useCartState();
   const { wishlist } = useWishlist();
-  const { loggedIn, hydrated } = useAuth();
+  const { loggedIn } = useAuth();
+  const hydrated = useHydrated();
 
   const accountHref = hydrated && loggedIn ? "/account" : "/login";
 
@@ -31,11 +34,11 @@ export default function HeaderActions() {
       </Link>
       <Link href="/wishlist" aria-label="Wishlist" title="Wishlist" className="dm-icon-btn dm-header-desktop-only">
         <HeartIcon />
-        <Badge count={wishlist.length} />
+        <Badge count={wishlist.length} show={hydrated} />
       </Link>
       <Link href="/cart" aria-label="Cart" title="Cart" className="dm-icon-btn">
         <CartIcon />
-        <Badge count={cartCount} />
+        <Badge count={cartCount} show={hydrated} />
       </Link>
     </div>
   );

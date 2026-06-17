@@ -8,11 +8,23 @@ import { useWishlist, useCartActions } from "@/lib/store";
 
 export default function WishlistContent() {
   const router = useRouter();
-  const { wishlist, toggleWishlist, moveToCart } = useWishlist();
+  const { wishlist, toggleWishlist, moveToCart, hydrated } = useWishlist();
 
   const items = wishlist
     .map((id) => getProduct(id))
     .filter((p): p is NonNullable<typeof p> => p !== undefined);
+
+  // Hold the layout with skeletons until the saved wishlist hydrates so the
+  // empty-state message never flashes for users who actually have saved items.
+  if (!hydrated) {
+    return (
+      <div className="dm-grid-products" aria-busy="true" aria-label="Loading wishlist">
+        {[0, 1, 2].map((i) => (
+          <div key={i} className="dm-skeleton" style={{ height: 360, borderRadius: 18 }} />
+        ))}
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (

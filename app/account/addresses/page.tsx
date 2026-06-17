@@ -3,17 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAuth, useToast } from "@/lib/store";
-
-interface Address {
-  id: string;
-  name: string;
-  phone: string;
-  address: string;
-  city: string;
-  gov: string;
-  isDefault: boolean;
-}
+import { useAuth, useToast, useAddresses, type Address } from "@/lib/store";
 
 const inputBase: React.CSSProperties = {
   width: "100%",
@@ -27,24 +17,14 @@ const inputBase: React.CSSProperties = {
   boxSizing: "border-box",
 };
 
-const DEFAULT_ADDRESSES: Address[] = [
-  {
-    id: "addr-1",
-    name: "Jasmine Aly",
-    phone: "0100 123 4567",
-    address: "12 El Obour Buildings, Floor 14",
-    city: "Heliopolis",
-    gov: "Cairo",
-    isDefault: true,
-  },
-];
-
 export default function AddressesPage() {
   const router = useRouter();
   const { loggedIn, hydrated } = useAuth();
   const { showToast } = useToast();
-  const [addresses, setAddresses] = useState<Address[]>(DEFAULT_ADDRESSES);
-  
+  // Addresses come from persisted store state and start empty — no demo address
+  // is ever shown. New/edited addresses are written straight back to storage.
+  const { addresses, setAddresses } = useAddresses();
+
   // Form State
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
@@ -100,10 +80,10 @@ export default function AddressesPage() {
 
   const handleDelete = (id: string) => {
     const isDef = addresses.find((a) => a.id === id)?.isDefault;
-    let newAddrs = addresses.filter((a) => a.id !== id);
-    if (isDef && newAddrs.length > 0) {
-      newAddrs[0].isDefault = true; // Nominate new default
-    }
+    const newAddrs = addresses
+      .filter((a) => a.id !== id)
+      // If we removed the default, nominate the first remaining address.
+      .map((a, i) => (isDef && i === 0 ? { ...a, isDefault: true } : a));
     setAddresses(newAddrs);
     showToast("Address deleted");
   };

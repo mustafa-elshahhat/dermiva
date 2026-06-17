@@ -5,10 +5,11 @@ import Link from "next/link";
 import ProductImage from "@/components/ProductImage";
 import ProductGrid from "@/components/ProductGrid";
 import { CATS, PRODUCTS, searchProducts, getCategoryProduct, productImage, type CategoryKey } from "@/lib/catalog";
-import { useSearch } from "@/lib/store";
+import { useSearch, useHydrated } from "@/lib/store";
 
 export default function SearchPage() {
   const { recent } = useSearch();
+  const hydrated = useHydrated();
   const [query, setQuery] = useState("");
   const q = query.trim();
   const results = searchProducts(query);
@@ -33,13 +34,19 @@ export default function SearchPage() {
 
       {!q ? (
         <div style={{ maxWidth: 600, margin: "0 auto 32px" }}>
-          <div style={{ fontSize: 12.5, color: "#a98e93", letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 12 }}>Recent Searches</div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 9 }}>
-            {recent.map((term) => (
-              <button key={term} onClick={() => setQuery(term)} className="dm-chip">{term}</button>
-            ))}
-          </div>
-          <div style={{ fontSize: 12.5, color: "#a98e93", letterSpacing: ".06em", textTransform: "uppercase", margin: "26px 0 14px" }}>Browse Categories</div>
+          {/* Recent searches come from persisted client state — only show once
+              hydrated and non-empty so nothing flashes before saved terms load. */}
+          {hydrated && recent.length > 0 ? (
+            <>
+              <div style={{ fontSize: 12.5, color: "#a98e93", letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 12 }}>Recent Searches</div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 9 }}>
+                {recent.map((term) => (
+                  <button key={term} onClick={() => setQuery(term)} className="dm-chip">{term}</button>
+                ))}
+              </div>
+            </>
+          ) : null}
+          <div style={{ fontSize: 12.5, color: "#a98e93", letterSpacing: ".06em", textTransform: "uppercase", margin: recent.length > 0 && hydrated ? "26px 0 14px" : "0 0 14px" }}>Browse Categories</div>
           <div className="dm-grid-cats">
             {catKeys.map((k) => {
               const catProduct = getCategoryProduct(k);
