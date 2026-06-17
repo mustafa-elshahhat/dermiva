@@ -18,9 +18,6 @@ const HERO_INGREDIENTS = ["Vitamin C", "Niacinamide", "Hyaluronic Acid", "Alpha 
 export default function HomePage() {
   const catKeys = Object.keys(CATS) as CategoryKey[];
   const superSerum = getProduct("super-serum")!;
-  const hairOil = getProduct("hair-therapy-oil")!;
-  const hairMask = getProduct("hair-mask")!;
-  const shampoo = getProduct("repair-shampoo")!;
 
   return (
     <div className="dm-fade">
@@ -129,26 +126,17 @@ export default function HomePage() {
 
       {/* COLLECTION BANNER */}
       <section style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "0 clamp(16px,4vw,40px) clamp(36px,5vw,56px)" }}>
-        <Link href="/category/hair" className="dm-hero-container" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 20, overflow: "hidden", background: "radial-gradient(120% 120% at 85% 50%,#f3d3da,#ecbfc9 60%,#e3aeba)", borderRadius: 24, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
-          <div className="dm-hero-child-left">
-            <h3 className="dm-serif" style={{ fontWeight: 700, fontSize: "clamp(30px,4.5vw,48px)", color: "#8f5360", margin: "0 0 10px", lineHeight: 1.02 }}>
-              Hair Therapy
-              <br />
-              Collection
-            </h3>
-            <p style={{ fontSize: 15, color: "#7c5560", margin: "0 0 22px", maxWidth: 340 }}>Stronger, shinier &amp; healthier hair you&apos;ll love — powered by nourishing oils and repair actives.</p>
-            <span className="dm-btn-primary" style={{ display: "inline-block", fontSize: 13, fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", padding: "13px 30px" }}>Explore Collection</span>
-          </div>
-          <div className="dm-hero-child-right" style={{ height: "clamp(180px,24vw,240px)", display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 10 }}>
-            <div style={{ width: "34%", height: "70%" }}>
-              <ProductImage image={productImage(hairOil)} mode="cutout" name="Hair Therapy Oil" kind="pump" />
-            </div>
-            <div style={{ width: "38%", height: "54%" }}>
-              <ProductImage image={productImage(hairMask)} mode="cutout" name="Hair Mask" kind="jar" />
-            </div>
-            <div style={{ width: "30%", height: "80%" }}>
-              <ProductImage image={productImage(shampoo)} mode="cutout" name="Repair Shampoo" kind="pump" />
-            </div>
+        <Link href="/category/hair" className="dm-collection" aria-label="Explore the Hair Therapy Collection">
+          <picture className="dm-collection__media">
+            <source media="(min-width: 1024px)" srcSet="/hair-therapy-collection/hair-therapy-collection-desktop.webp" />
+            <source media="(min-width: 768px)" srcSet="/hair-therapy-collection/hair-therapy-collection-tablet.webp" />
+            <img src="/hair-therapy-collection/hair-therapy-collection-mobile.webp" alt="Dermiva Hair Therapy Collection — nourishing oils, masks and repair shampoo" loading="lazy" />
+          </picture>
+          <div className="dm-collection__overlay" aria-hidden="true" />
+          <div className="dm-collection__content">
+            <h3 className="dm-serif dm-collection__title">Hair Therapy Collection</h3>
+            <p className="dm-collection__text">Stronger, shinier &amp; healthier hair you&apos;ll love — powered by nourishing oils and repair actives.</p>
+            <span className="dm-btn-primary dm-collection__cta">Explore Collection</span>
           </div>
         </Link>
       </section>

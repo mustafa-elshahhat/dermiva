@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import BrandLogo from "./BrandLogo";
 import { PAYMENT_METHODS } from "@/lib/payments";
+import { SOCIAL_LINKS } from "@/lib/social";
 
 const LINKS = [
   { label: "About Us", href: "/about" },
@@ -16,8 +17,6 @@ const LINKS = [
   { label: "Terms", href: "/policy/terms" },
   { label: "Contact Us", href: "/contact" },
 ];
-
-const SOCIAL = ["IG", "FB", "TT"];
 
 export default function SiteFooter() {
   return (
@@ -67,13 +66,28 @@ export default function SiteFooter() {
             </Link>
           ))}
         </div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center", justifyContent: "space-between", paddingTop: 18 }}>
+        <div className="dm-footer-bottom" style={{ paddingTop: 18 }}>
           <div style={{ fontSize: 12, color: "#a98e93" }}>© 2026 Dermiva. All rights reserved. Made in Egypt.</div>
-          <div style={{ display: "flex", gap: 10 }}>
-            {SOCIAL.map((s) => (
-              <span key={s} style={{ width: 34, height: 34, borderRadius: "50%", background: "#f3dde2", display: "flex", alignItems: "center", justifyContent: "center", color: "#b07c88", fontSize: 13, fontWeight: 600 }}>
-                {s}
-              </span>
+          <div className="dm-footer-social">
+            {SOCIAL_LINKS.map((s) => (
+              <a
+                key={s.id}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Dermiva on ${s.label}`}
+                className="dm-social-icon"
+                style={{ width: 34, height: 34, borderRadius: "50%", background: "#f3dde2", display: "flex", alignItems: "center", justifyContent: "center" }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={s.icon}
+                  alt={s.label}
+                  width={20}
+                  height={20}
+                  style={{ objectFit: "contain", display: "block" }}
+                />
+              </a>
             ))}
           </div>
         </div>

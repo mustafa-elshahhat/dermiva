@@ -366,6 +366,41 @@ textarea::placeholder {
   transform: translateY(-2px);
 }
 
+.dm-footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+}
+.dm-footer-social {
+  display: flex;
+  gap: 10px;
+}
+@media (max-width: 640px) {
+  .dm-footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 16px;
+  }
+  .dm-footer-social {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.dm-social-icon {
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.dm-social-icon:hover {
+  background: #f3c9d3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(184, 134, 146, 0.18);
+}
+
 /* Card wishlist button responsive sizing */
 .dm-card-wishlist-btn {
   position: absolute;
@@ -436,31 +471,6 @@ textarea::placeholder {
 @media (min-width: 768px) {
   .dm-header-desktop-only {
     display: flex !important;
-  }
-}
-
-.dm-hero-container {
-  padding: clamp(28px, 4vw, 56px);
-}
-@media (max-width: 360px) {
-  .dm-hero-container {
-    padding: 16px !important;
-  }
-}
-
-.dm-hero-child-left {
-  flex: 1 1 320px;
-  min-width: 280px;
-}
-.dm-hero-child-right {
-  flex: 1 1 320px;
-  min-width: 280px;
-}
-@media (max-width: 480px) {
-  .dm-hero-child-left,
-  .dm-hero-child-right {
-    flex-basis: 100% !important;
-    min-width: 0 !important;
   }
 }
 
@@ -634,6 +644,115 @@ textarea::placeholder {
   }
   .dm-hero__content {
     max-width: 48%;
+  }
+}
+
+/* ===== Hair Therapy Collection banner: responsive full-card image ===== */
+.dm-collection {
+  position: relative;
+  display: flex;
+  align-items: flex-start; /* mobile: text sits in the upper safe area */
+  overflow: hidden;
+  border-radius: 24px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  aspect-ratio: 1080 / 1280; /* mobile: tall portrait */
+  background: radial-gradient(120% 120% at 85% 50%, #f3d3da, #ecbfc9 60%, #e3aeba); /* fallback */
+  box-shadow: 0 16px 40px rgba(184, 134, 146, 0.16);
+}
+.dm-collection__media,
+.dm-collection__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.dm-collection__media img {
+  object-fit: cover;
+  object-position: center top; /* mobile: keep products lower in frame */
+  display: block;
+}
+.dm-collection__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* mobile: soft top-to-bottom blush wash behind the text */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 248, 248, 0.88) 0%,
+    rgba(255, 238, 244, 0.65) 42%,
+    rgba(255, 238, 244, 0.1) 72%,
+    transparent 100%
+  );
+}
+.dm-collection__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 600px;
+  padding: clamp(24px, 6vw, 40px);
+}
+.dm-collection__title {
+  font-weight: 700;
+  font-size: clamp(30px, 4.5vw, 48px);
+  line-height: 1.04;
+  color: #8f5360;
+  margin: 0 0 12px;
+  text-shadow: 0 1px 3px rgba(255, 248, 248, 0.55);
+}
+.dm-collection__text {
+  font-size: clamp(0.95rem, 1.2vw, 1.12rem);
+  color: #6f4d55;
+  max-width: 34ch;
+  line-height: 1.55;
+  margin: 0 0 24px;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(255, 250, 250, 0.55);
+}
+.dm-collection__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 clamp(28px, 4vw, 40px);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .dm-collection {
+    aspect-ratio: 1536 / 760; /* tablet */
+    align-items: center; /* text vertically centered, on the left */
+  }
+  .dm-collection__media img {
+    object-position: center;
+  }
+  .dm-collection__overlay {
+    /* left-to-right pearl/blush wash over the text column */
+    background: linear-gradient(
+      90deg,
+      rgba(255, 248, 248, 0.84) 0%,
+      rgba(255, 238, 244, 0.62) 42%,
+      rgba(255, 238, 244, 0.12) 68%,
+      transparent 100%
+    );
+  }
+  .dm-collection__content {
+    max-width: 56%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dm-collection {
+    aspect-ratio: 1920 / 620; /* desktop: wide banner */
+    min-height: 420px;
+  }
+  .dm-collection__content {
+    max-width: 50%;
   }
 }
 

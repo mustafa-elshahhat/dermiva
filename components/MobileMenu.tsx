@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import BrandLogo from "./BrandLogo";
 
@@ -19,9 +20,14 @@ const DRAWER_LINKS = [
 
 export default function MobileMenu() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const wasOpen = useRef(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (menuOpen) {
@@ -62,10 +68,10 @@ export default function MobileMenu() {
         </div>
       </button>
 
-      {menuOpen && (
+      {menuOpen && mounted && createPortal(
         <div
           onClick={() => setMenuOpen(false)}
-          style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(80,55,60,.4)", backdropFilter: "blur(2px)" }}
+          style={{ position: "fixed", inset: 0, height: "100dvh", zIndex: 1000, background: "rgba(80,55,60,.4)", backdropFilter: "blur(2px)" }}
         >
           <div
             onClick={(e) => e.stopPropagation()}
@@ -75,6 +81,8 @@ export default function MobileMenu() {
               left: 0,
               bottom: 0,
               width: "min(80vw,320px)",
+              height: "100dvh",
+              maxHeight: "100dvh",
               background: "#fdf6f4",
               boxShadow: "6px 0 30px rgba(120,80,90,.2)",
               padding: 24,
@@ -110,7 +118,8 @@ export default function MobileMenu() {
               </Link>
             ))}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
