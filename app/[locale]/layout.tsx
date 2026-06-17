@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Cormorant_Garamond, Jost, IBM_Plex_Sans_Arabic } from "next/font/google";
+import localFont from "next/font/local";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import "../globals.css";
@@ -11,24 +11,69 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ToastHost from "@/components/ToastHost";
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["600", "700"],
+const cormorant = localFont({
+  src: [
+    {
+      path: "../../public/fonts/cormorant-garamond/cormorant-garamond-v21-latin-600.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/cormorant-garamond/cormorant-garamond-v21-latin-700.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-cormorant",
   display: "swap",
 });
 
-const jost = Jost({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+const jost = localFont({
+  src: [
+    {
+      path: "../../public/fonts/jost/jost-v20-latin-regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/jost/jost-v20-latin-500.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/jost/jost-v20-latin-600.woff2",
+      weight: "600",
+      style: "normal",
+    },
+  ],
   variable: "--font-jost",
   display: "swap",
 });
 
 // Arabic-capable font, applied only under /ar via CSS (html[lang="ar"]).
-const ibmArabic = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  weight: ["400", "500", "600", "700"],
+const ibmArabic = localFont({
+  src: [
+    {
+      path: "../../public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-v15-arabic-regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-v15-arabic-500.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-v15-arabic-600.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-v15-arabic-700.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-arabic",
   display: "swap",
 });
